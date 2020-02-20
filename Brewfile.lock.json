@@ -17,19 +17,22 @@
         "revision": "50bcd1eb86f3505ea3806bebac7edffe5768880e"
       },
       "homebrew/bundle": {
-        "revision": "c51e14809eab037c492f1bad5cc73ba6320f3e7e"
+        "revision": "04a8b37bbdd9bb801a5fde72fd82232846cf2b69"
       },
       "homebrew/cask": {
-        "revision": "246186ea7456557a099ac57b95d092dec8402a65"
+        "revision": "8f8b84d0a087f2d3781ddc97d4ca1bc88ee09cd0"
       },
       "homebrew/core": {
-        "revision": "f28d84f8b02090b602beed0cf9f1fdaf2ef3276d"
+        "revision": "8b84e893e2220b3c28ff6def1d441adb2e5a916f"
       },
       "teamookla/speedtest": {
         "revision": "b79ea77017ea57c98658225883d7ecc3d4410fbd"
       },
       "twpayne/taps": {
         "revision": "ff2b99f7281a218da528952a14fb0d2664fcdc89"
+      },
+      "homebrew/cask-drivers": {
+        "revision": "c7ad0e7af2e8e352cc638fda712a129106e692ed"
       }
     },
     "cask": {
@@ -121,6 +124,24 @@
         "version": "3.2.1",
         "options": {
           "full_name": "wireshark"
+        }
+      },
+      "hyper": {
+        "version": "3.0.2",
+        "options": {
+          "full_name": "hyper"
+        }
+      },
+      "logitech-options": {
+        "version": "8.10.64",
+        "options": {
+          "full_name": "logitech-options"
+        }
+      },
+      "scroll-reverser": {
+        "version": "1.7.6",
+        "options": {
+          "full_name": "scroll-reverser"
         }
       }
     },
@@ -1229,7 +1250,28 @@
       },
       "getantibody/tap/antibody": null,
       "teamookla/speedtest/speedtest": null,
-      "twpayne/taps/chezmoi": null
+      "twpayne/taps/chezmoi": null,
+      "go": {
+        "version": "1.13.8",
+        "bottle": {
+          "cellar": "/usr/local/Cellar",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/go-1.13.8.catalina.bottle.tar.gz",
+              "sha256": "8305b022bd8a799e4809c72e23d54cbb19ebe7c93506aba8387905e0980beabb"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/go-1.13.8.mojave.bottle.tar.gz",
+              "sha256": "39312df94599f8c4bc9ce394b09121a9c5ac2fe81514900b77107227de0e8ddf"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/go-1.13.8.high_sierra.bottle.tar.gz",
+              "sha256": "e97af4feacaeaba7c1647ff9b56cad0b972fb09998810c91bd7c844091dd9a57"
+            }
+          }
+        }
+      }
     }
   },
   "system": {
@@ -1237,7 +1279,7 @@
       "catalina": {
         "HOMEBREW_VERSION": "2.2.6",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "f28d84f8b02090b602beed0cf9f1fdaf2ef3276d",
+        "Homebrew/homebrew-core": "8b84e893e2220b3c28ff6def1d441adb2e5a916f",
         "CLT": "11.3.1.0.1.1576735732",
         "Xcode": "11.3.1",
         "macOS": "10.15.3"
