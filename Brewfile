@@ -66,6 +66,7 @@ brew "rbenv"
 # S
 brew "teamookla/speedtest/speedtest"
 brew "ssh-copy-id"
+brew "starship"
 # T
 brew "tcpflow"
 brew "tcpreplay"
