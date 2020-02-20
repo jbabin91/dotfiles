@@ -1,0 +1,56 @@
+#!/bin/sh
+alias reload!='exec "$SHELL" -l'
+
+# Update brew and flutter
+alias ud='bubu && flutter upgrade'
+
+# Edit dotfiles
+alias edit='e ~/.dotfiles'
+
+# General UNIX
+alias c='clear'
+alias cp='cp -iv'
+alias df='df -h'
+alias du='du -h'
+alias dud='du -d 1 -h'
+alias duf='du -sh *'
+alias mkdir='mkdir -pv'
+alias mv='mv -iv'
+alias path='echo -e ${PATH//:/\\n}'
+alias pi='ping -Anc 5 1.1.1.1'
+alias zr='source ~/.zshrc'
+alias ze='e ~/.zshrc'
+alias srm='srm -iv'
+
+# Colorsls
+alias ls='colorls'
+alias la='colorls -a'
+alias ll='colorls -la'
+
+# Finder
+alias saf='defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder'
+alias haf='defaults write com.apple.finder AppleShowAllFiles FALSE; killall Finder'
+alias o='open . &'
+alias dsstore_bye_bye='find . -name "*.DS_Store" -type f -delete'
+alias defr='defaults read'
+alias defw='defaults write'
+
+# Development
+alias co='cd ~/Code'
+alias wo='cd ~/Work'
+alias de='cd ~/development'
+alias cgo="cd $GOPATH/src/github.com/jbabin91"
+alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
+
+# Moving around
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias .2='cd ../../'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+
+# zsh history cleanup
+alias clear_history='echo "" > ~/.zsh_history & exec $shell -l'

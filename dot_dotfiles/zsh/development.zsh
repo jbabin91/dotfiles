@@ -1,0 +1,20 @@
+# ANDROID TOOLS
+export PATH="~/Library/Android/sdk/platform-tools:$PATH"
+
+# Azure Devops
+export PATH=~/TEE-CLC-14.114.0:$PATH
+export TF_AUTO_SAVE_CREDENTIALS=0
+
+# Flutter
+export PATH=$PATH:~/development/flutter/bin
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
+# pyenv
+eval "$(pyenv init -)"
+
+# rbenv
+eval "$(rbenv init -)"
