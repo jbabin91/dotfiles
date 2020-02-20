@@ -9,6 +9,13 @@
 antibody bundle < "$HOME/.antibody" > "$HOME/.zsh-plugins"
 source "$HOME/.zsh-plugins"
 
+# === Other shell parts ===
+
+source "$HOME/.dotfiles/git/.aliases"
+source "$HOME/.dotfiles/homebrew/.aliases"
+source "$HOME/.dotfiles/zsh/.aliases"
+source "$HOME/.dotfiles/zsh/.development"
+
 # === Local variables and overrides ===
 
 if [[ -f "$HOME/.shell_env_local" ]]; then
