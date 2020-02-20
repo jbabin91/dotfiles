@@ -33,6 +33,7 @@ brew "dns2tcp"
 # E
 # F
 brew "fcrackzip"
+brew "Schniz/tap/fnm"
 brew "fzf"
 # G
 brew "gmp"

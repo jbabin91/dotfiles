@@ -20,7 +20,7 @@
         "revision": "04a8b37bbdd9bb801a5fde72fd82232846cf2b69"
       },
       "homebrew/cask": {
-        "revision": "1ee8838c87d66c2f62680419418476c4ce14c264"
+        "revision": "938ea5203e559cdb1fbdd30a694edf65f2ff19c4"
       },
       "homebrew/core": {
         "revision": "8b84e893e2220b3c28ff6def1d441adb2e5a916f"
@@ -1313,7 +1313,8 @@
             }
           }
         }
-      }
+      },
+      "schniz/tap/fnm": null
     }
   },
   "system": {
