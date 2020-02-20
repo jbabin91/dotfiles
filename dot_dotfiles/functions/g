@@ -1,0 +1,3 @@
+#!/bin/zsh
+# shellcheck disable=SC2164
+cd "$GOPATH/src/github.com/$1"

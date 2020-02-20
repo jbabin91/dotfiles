@@ -1,0 +1,3 @@
+#!/bin/zsh
+#compdef c
+_files -W $PROJECTS -/
