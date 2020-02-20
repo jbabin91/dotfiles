@@ -31,7 +31,6 @@ brew "curl"
 brew "diff-so-fancy"
 brew "dns2tcp"
 # E
-
 # F
 brew "fcrackzip"
 brew "fzf"
@@ -46,25 +45,22 @@ brew "grep"
 brew "hashpump"
 brew "htop"
 # I
-
 # J
 brew "john"
 brew "jq"
 # K
 brew "knock"
 # L
-
 # M
 brew "mtr"
 # N
-
+brew "neovim"
 # O
 brew "openssh"
 # P
 brew "pngcheck"
 brew "pyenv"
 # Q
-
 # R
 brew "rbenv"
 # S
