@@ -127,6 +127,7 @@ cask "logitech-options"
 # S
 cask "scroll-reverser"
 cask "spotify"
+cask "steam"
 # T
 # U
 # V

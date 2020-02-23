@@ -20,10 +20,10 @@
         "revision": "04a8b37bbdd9bb801a5fde72fd82232846cf2b69"
       },
       "homebrew/cask": {
-        "revision": "938ea5203e559cdb1fbdd30a694edf65f2ff19c4"
+        "revision": "144d319a630a48b3ed281fa055afa4c206cdea82"
       },
       "homebrew/core": {
-        "revision": "8b84e893e2220b3c28ff6def1d441adb2e5a916f"
+        "revision": "e82db49ee0bdd6f235cb0824f2fae19a802eb138"
       },
       "teamookla/speedtest": {
         "revision": "b79ea77017ea57c98658225883d7ecc3d4410fbd"
@@ -142,6 +142,12 @@
         "version": "1.7.6",
         "options": {
           "full_name": "scroll-reverser"
+        }
+      },
+      "steam": {
+        "version": "latest",
+        "options": {
+          "full_name": "steam"
         }
       }
     },
@@ -1322,7 +1328,7 @@
       "catalina": {
         "HOMEBREW_VERSION": "2.2.6",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "8b84e893e2220b3c28ff6def1d441adb2e5a916f",
+        "Homebrew/homebrew-core": "e82db49ee0bdd6f235cb0824f2fae19a802eb138",
         "CLT": "11.3.1.0.1.1576735732",
         "Xcode": "11.3.1",
         "macOS": "10.15.3"
