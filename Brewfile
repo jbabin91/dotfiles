@@ -41,6 +41,7 @@ brew "git"
 brew "git-lfs"
 brew "go"
 brew "goaccess"
+brew "gpg"
 brew "grep"
 # H
 brew "hashpump"
