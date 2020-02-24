@@ -1,10 +1,14 @@
-{{- $git_name := promptString "Display name for git commits" -}}
-{{- $git_email := promptString "Email for git commits" -}}
+{{- $name := promptString "Enter your full name" -}}
+{{- $email := promptString "Enter your email address" -}}
 {{- $darwin_hostname := promptString "Hostname for macOS" -}}
 [data]
-    git_name = "{{ $git_name }}"
-    git_email = "{{ $git_email }}"
+    name = "{{ $name }}"
+    email = "{{ $email }}"
     darwin_hostname = "{{ $darwin_hostname }}"
-    sshKey = "{{ $git_email }} SSH key"
+    [data.git]
+        name = "{{ $name }}"
+        email = "{{ $email }}"
+    [data.github]
+        sshKey = "{{ $email }} SSH key"
 [gpg]
     recepients = "E7FDDD7C2AF6661D6AAC8E2A3E48CC55E3D9AA29"

@@ -1,6 +1,6 @@
 [user]
-	name = {{ .git_name }}
-	email = {{ .git_email }}
+	name = {{ .git.name }}
+	email = {{ .git.email }}
 [difftool "diffmerge"]
 	cmd = diffmerge $LOCAL $REMOTE
 [apply]
