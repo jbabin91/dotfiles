@@ -80,6 +80,7 @@ brew "tree"
 brew "ucspi-tcp"
 # V
 brew "vbindiff"
+brew "vim"
 # W
 brew "wget"
 brew "wifi-password"

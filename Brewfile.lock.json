@@ -2,7 +2,7 @@
   "entries": {
     "tap": {
       "adoptopenjdk/openjdk": {
-        "revision": "c9ec51274542f14386bd8ae9973fb7ef66d849c1"
+        "revision": "c90188349b1e4782fb2b8a8ce19b102405c8f837"
       },
       "bramstein/webfonttools": {
         "revision": "094e4bd309d6618161baf9357bd10a27bb66c9ef"
@@ -20,19 +20,19 @@
         "revision": "04a8b37bbdd9bb801a5fde72fd82232846cf2b69"
       },
       "homebrew/cask": {
-        "revision": "2eac7b34c2739277cdec7f05db2c0cb9fba46cdb"
+        "revision": "fdea1c5a40c9ee2695998cd06dc56fa0bd85ede4"
       },
       "homebrew/core": {
-        "revision": "ae7c184b597c88df00655d2c94955f4e993d27f1"
+        "revision": "d58d431780beec7a3fb159d70a16167eeb3e7ef5"
       },
       "teamookla/speedtest": {
         "revision": "b79ea77017ea57c98658225883d7ecc3d4410fbd"
       },
       "twpayne/taps": {
-        "revision": "ff2b99f7281a218da528952a14fb0d2664fcdc89"
+        "revision": "88b05f5bcaa14cfc5551c20a22eb1cd5dd7bc27a"
       },
       "homebrew/cask-drivers": {
-        "revision": "4b5c0fabd419ba2f3289bcfe94d3e1d98dcbd5d1"
+        "revision": "654a0a8905a4d9e58fcb287a3143cf54a94fda06"
       }
     },
     "cask": {
@@ -1258,22 +1258,22 @@
       "teamookla/speedtest/speedtest": null,
       "twpayne/taps/chezmoi": null,
       "go": {
-        "version": "1.13.8",
+        "version": "1.14",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
           "files": {
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/go-1.13.8.catalina.bottle.tar.gz",
-              "sha256": "8305b022bd8a799e4809c72e23d54cbb19ebe7c93506aba8387905e0980beabb"
+              "url": "https://homebrew.bintray.com/bottles/go-1.14.catalina.bottle.tar.gz",
+              "sha256": "a4e81b1025b77af039a34888545ce0f4a3a332b1ed6358ca8107e878d25e46aa"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/go-1.13.8.mojave.bottle.tar.gz",
-              "sha256": "39312df94599f8c4bc9ce394b09121a9c5ac2fe81514900b77107227de0e8ddf"
+              "url": "https://homebrew.bintray.com/bottles/go-1.14.mojave.bottle.tar.gz",
+              "sha256": "998c9c9f95091a3567d9ac27def2d3d4d33aeae06e621d78bf76f3f4f4a2a793"
             },
             "high_sierra": {
-              "url": "https://homebrew.bintray.com/bottles/go-1.13.8.high_sierra.bottle.tar.gz",
-              "sha256": "e97af4feacaeaba7c1647ff9b56cad0b972fb09998810c91bd7c844091dd9a57"
+              "url": "https://homebrew.bintray.com/bottles/go-1.14.high_sierra.bottle.tar.gz",
+              "sha256": "c26d2ecb7e2c53a78fa0cca9b7117355f953ebf1b4bd31eef04ebe4e576a174b"
             }
           }
         }
@@ -1321,7 +1321,28 @@
         }
       },
       "schniz/tap/fnm": null,
-      "gpg": null
+      "gpg": null,
+      "vim": {
+        "version": "8.2.0250_1",
+        "bottle": {
+          "cellar": "/usr/local/Cellar",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0250_1.catalina.bottle.tar.gz",
+              "sha256": "9bb4fdc5b68110fc17ab05c30bacdd7a8648e63d7cef5411bf8b53ffc1d72d8e"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0250_1.mojave.bottle.tar.gz",
+              "sha256": "bf8e48a5fb5e299d24e46124009a7edb358c4b074675d663d9269bb289632af8"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0250_1.high_sierra.bottle.tar.gz",
+              "sha256": "c30b613ee22ad44854c0d929df8eeccd7d7e2a33865078c97ae94342b2922bda"
+            }
+          }
+        }
+      }
     }
   },
   "system": {
@@ -1329,7 +1350,7 @@
       "catalina": {
         "HOMEBREW_VERSION": "2.2.6",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "ae7c184b597c88df00655d2c94955f4e993d27f1",
+        "Homebrew/homebrew-core": "d58d431780beec7a3fb159d70a16167eeb3e7ef5",
         "CLT": "11.3.1.0.1.1576735732",
         "Xcode": "11.3.1",
         "macOS": "10.15.3"
