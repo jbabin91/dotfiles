@@ -17,13 +17,13 @@
         "revision": "50bcd1eb86f3505ea3806bebac7edffe5768880e"
       },
       "homebrew/bundle": {
-        "revision": "04a8b37bbdd9bb801a5fde72fd82232846cf2b69"
+        "revision": "0796bb72fa0b6615cdb51d0ec07ca405e4550870"
       },
       "homebrew/cask": {
-        "revision": "fdea1c5a40c9ee2695998cd06dc56fa0bd85ede4"
+        "revision": "efc58bb9bb9d32d2ee10a9f3e8d1322e826536b3"
       },
       "homebrew/core": {
-        "revision": "d58d431780beec7a3fb159d70a16167eeb3e7ef5"
+        "revision": "47eace2f818d49ea2bf4f27f2cd6b675ba63f794"
       },
       "teamookla/speedtest": {
         "revision": "b79ea77017ea57c98658225883d7ecc3d4410fbd"
@@ -32,7 +32,10 @@
         "revision": "88b05f5bcaa14cfc5551c20a22eb1cd5dd7bc27a"
       },
       "homebrew/cask-drivers": {
-        "revision": "654a0a8905a4d9e58fcb287a3143cf54a94fda06"
+        "revision": "bf7cc3aafa7deb4b84ac034494df2e0275273b92"
+      },
+      "d12frosted/emacs-plus": {
+        "revision": "fa0f7f09ba3486a66095f2fa085d297da033089b"
       }
     },
     "cask": {
@@ -1342,6 +1345,23 @@
             }
           }
         }
+      },
+      "emacs-plus": {
+        "version": "26.3",
+        "bottle": {
+          "cellar": "/usr/local/Cellar",
+          "prefix": "/usr/local",
+          "files": {
+            "mojave": {
+              "url": "https://dl.bintray.com/d12frosted/emacs-plus/emacs-plus-26.3.mojave.bottle.tar.gz",
+              "sha256": "6b59ea5c941b754f5008039be319e4437ebd66dc2e1a50fdf890cf226c078386"
+            },
+            "catalina": {
+              "url": "https://dl.bintray.com/d12frosted/emacs-plus/emacs-plus-26.3.catalina.bottle.tar.gz",
+              "sha256": "cb589861c8a697869107d1cbacc9cc920a8e7257b5c371b7e590b05e7e04c92c"
+            }
+          }
+        }
       }
     }
   },
@@ -1350,7 +1370,7 @@
       "catalina": {
         "HOMEBREW_VERSION": "2.2.6",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "d58d431780beec7a3fb159d70a16167eeb3e7ef5",
+        "Homebrew/homebrew-core": "47eace2f818d49ea2bf4f27f2cd6b675ba63f794",
         "CLT": "11.3.1.0.1.1576735732",
         "Xcode": "11.3.1",
         "macOS": "10.15.3"

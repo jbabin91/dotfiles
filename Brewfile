@@ -1,6 +1,7 @@
 # taps
 tap "adoptopenjdk/openjdk"
 tap "bramstein/webfonttools"
+tap "d12frosted/emacs-plus"
 tap "dteoh/sqa"
 tap "fabianishere/personal"
 tap "getantibody/tap"
@@ -31,6 +32,7 @@ brew "curl"
 brew "diff-so-fancy"
 brew "dns2tcp"
 # E
+brew "emacs-plus"
 # F
 brew "fcrackzip"
 brew "Schniz/tap/fnm"
