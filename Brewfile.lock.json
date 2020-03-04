@@ -17,13 +17,13 @@
         "revision": "50bcd1eb86f3505ea3806bebac7edffe5768880e"
       },
       "homebrew/bundle": {
-        "revision": "0796bb72fa0b6615cdb51d0ec07ca405e4550870"
+        "revision": "ec62daa9d5c1889082a54861f6028ddaa5834489"
       },
       "homebrew/cask": {
-        "revision": "efc58bb9bb9d32d2ee10a9f3e8d1322e826536b3"
+        "revision": "94f4d27fa30fb92b9d1cf25890fd627838a7ffd8"
       },
       "homebrew/core": {
-        "revision": "47eace2f818d49ea2bf4f27f2cd6b675ba63f794"
+        "revision": "4d4270c2682534bbf55eae28334038c147d0b892"
       },
       "teamookla/speedtest": {
         "revision": "b79ea77017ea57c98658225883d7ecc3d4410fbd"
@@ -32,7 +32,7 @@
         "revision": "88b05f5bcaa14cfc5551c20a22eb1cd5dd7bc27a"
       },
       "homebrew/cask-drivers": {
-        "revision": "bf7cc3aafa7deb4b84ac034494df2e0275273b92"
+        "revision": "93ec34de083694e60908ec34214faa3f6c1b3837"
       },
       "d12frosted/emacs-plus": {
         "revision": "fa0f7f09ba3486a66095f2fa085d297da033089b"
@@ -151,6 +151,12 @@
         "version": "latest",
         "options": {
           "full_name": "steam"
+        }
+      },
+      "gitkraken": {
+        "version": "6.5.3",
+        "options": {
+          "full_name": "gitkraken"
         }
       }
     },
@@ -942,30 +948,22 @@
         }
       },
       "telnet": {
-        "version": "60",
+        "version": "63",
         "bottle": {
           "cellar": ":any_skip_relocation",
           "prefix": "/usr/local",
           "files": {
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/telnet-60.catalina.bottle.tar.gz",
-              "sha256": "dc7703272c5912ca4c44b79b8969478fc5742eef6740de8af55db189a4d1dbb7"
+              "url": "https://homebrew.bintray.com/bottles/telnet-63.catalina.bottle.tar.gz",
+              "sha256": "7435a9fd2515158762a85197a4ad7141e430383e185e002da169dbbb638c952f"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/telnet-60.mojave.bottle.tar.gz",
-              "sha256": "d63cb3bdfa4f1dce67cf0956b2fa36d15b0a429a71a6e5538df1a9f517b76589"
+              "url": "https://homebrew.bintray.com/bottles/telnet-63.mojave.bottle.tar.gz",
+              "sha256": "d5009f496dc6cf0c13b936996f98b91b0f12733ea9462843b56a39fc53b20fe0"
             },
             "high_sierra": {
-              "url": "https://homebrew.bintray.com/bottles/telnet-60.high_sierra.bottle.tar.gz",
-              "sha256": "31ab0f184327fd51fa3273df44bb3f4f2fd78049c15998795fea7e7ee72439d8"
-            },
-            "sierra": {
-              "url": "https://homebrew.bintray.com/bottles/telnet-60.sierra.bottle.tar.gz",
-              "sha256": "fd42af8e2c7670c2554ee11c6443f701f6045b9a89c40d3a8463232a8a9a7f90"
-            },
-            "el_capitan": {
-              "url": "https://homebrew.bintray.com/bottles/telnet-60.el_capitan.bottle.tar.gz",
-              "sha256": "048572040593f5674d28136d7de979e03b276f96e1063c930709b22527b963e2"
+              "url": "https://homebrew.bintray.com/bottles/telnet-63.high_sierra.bottle.tar.gz",
+              "sha256": "af38f3c6dd4ff5eda2248671958e66595b39e74cdeecca52af4efb495bc659a7"
             }
           }
         }
@@ -1000,22 +998,22 @@
         }
       },
       "tmux": {
-        "version": "3.0a",
+        "version": "3.0a_1",
         "bottle": {
           "cellar": ":any",
           "prefix": "/usr/local",
           "files": {
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/tmux-3.0a.catalina.bottle.tar.gz",
-              "sha256": "3d29caf7e2b87c9f1af575b4ec10af3e29c5de6979a8bd884153d9e8e1b69f20"
+              "url": "https://homebrew.bintray.com/bottles/tmux-3.0a_1.catalina.bottle.tar.gz",
+              "sha256": "d83b378969a8af595451db10bf4b8eb251a8ed4217cb13e161b3dbe20330d1f8"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/tmux-3.0a.mojave.bottle.tar.gz",
-              "sha256": "6cfd3987dcda2901a3ed423138db7782ea88a993e1409c4ebb9d647b1c007e8a"
+              "url": "https://homebrew.bintray.com/bottles/tmux-3.0a_1.mojave.bottle.tar.gz",
+              "sha256": "4acca70a1bba7bb762081015373c438a930af6a6b28e9e1409c4b84ae78ad514"
             },
             "high_sierra": {
-              "url": "https://homebrew.bintray.com/bottles/tmux-3.0a.high_sierra.bottle.tar.gz",
-              "sha256": "c7c42853ca6a3a5ad6ab6544defee14e450643f5ace274b9cf00d348e8525993"
+              "url": "https://homebrew.bintray.com/bottles/tmux-3.0a_1.high_sierra.bottle.tar.gz",
+              "sha256": "bc934e88baba7f0549c3b5916ed19211764ecaf6c95e46624c2f641b631abdb9"
             }
           }
         }
@@ -1326,22 +1324,22 @@
       "schniz/tap/fnm": null,
       "gpg": null,
       "vim": {
-        "version": "8.2.0250_1",
+        "version": "8.2.0300",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
           "files": {
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0250_1.catalina.bottle.tar.gz",
-              "sha256": "9bb4fdc5b68110fc17ab05c30bacdd7a8648e63d7cef5411bf8b53ffc1d72d8e"
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0300.catalina.bottle.tar.gz",
+              "sha256": "0ab185d6ce98e80a18e1d9171c79977ef9106bcf030018532151b1c0e23d3fc0"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0250_1.mojave.bottle.tar.gz",
-              "sha256": "bf8e48a5fb5e299d24e46124009a7edb358c4b074675d663d9269bb289632af8"
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0300.mojave.bottle.tar.gz",
+              "sha256": "42b6809909e30c131dca41014465abb5fa3d450f1a22ad4b602c7a4850a85d4b"
             },
             "high_sierra": {
-              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0250_1.high_sierra.bottle.tar.gz",
-              "sha256": "c30b613ee22ad44854c0d929df8eeccd7d7e2a33865078c97ae94342b2922bda"
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0300.high_sierra.bottle.tar.gz",
+              "sha256": "c84533aeffc46febb5dd86ea09ed57f06b62cb86627e9358c94ad62484dfb1f0"
             }
           }
         }
@@ -1368,9 +1366,9 @@
   "system": {
     "macos": {
       "catalina": {
-        "HOMEBREW_VERSION": "2.2.6",
+        "HOMEBREW_VERSION": "2.2.7",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "47eace2f818d49ea2bf4f27f2cd6b675ba63f794",
+        "Homebrew/homebrew-core": "4d4270c2682534bbf55eae28334038c147d0b892",
         "CLT": "11.3.1.0.1.1576735732",
         "Xcode": "11.3.1",
         "macOS": "10.15.3"

@@ -112,6 +112,7 @@ cask "dotnet-sdk"
 # E
 # F
 # G
+cask "gitkraken"
 cask "google-chrome"
 # H
 cask "hyper"
