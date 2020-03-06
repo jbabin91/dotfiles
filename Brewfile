@@ -103,6 +103,7 @@ cask "adoptopenjdk"
 cask "alfred"
 cask "android-studio"
 # B
+cask "brave-browser"
 # C
 # D
 cask "discord"
