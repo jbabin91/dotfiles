@@ -127,6 +127,7 @@ cask "logitech-options"
 # N
 # O
 # P
+cask "postman"
 # Q
 # R
 # S
