@@ -11,6 +11,7 @@ tap "homebrew/cask-drivers"
 tap "homebrew/core"
 tap "teamookla/speedtest"
 tap "twpayne/taps"
+tap "prisma/prisma"
 
 # Brew installs alphabeticical
 # A
@@ -63,6 +64,7 @@ brew "neovim"
 brew "openssh"
 # P
 brew "pngcheck"
+brew "prisma"
 brew "pyenv"
 # Q
 # R
