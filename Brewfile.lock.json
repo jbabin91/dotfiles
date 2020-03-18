@@ -20,7 +20,7 @@
         "revision": "491180c6f8bbd2b1496ab25aee4889b7c3de8caf"
       },
       "homebrew/cask": {
-        "revision": "4e7746998843c1fcf0156cf97a38876e3b6cae6f"
+        "revision": "b6ac3795c1df9f97242481c0817b1165e3e6306a"
       },
       "homebrew/core": {
         "revision": "d7e7114767e205075e9d0faaac21868bce5e3b1f"
@@ -79,7 +79,7 @@
         }
       },
       "dotnet-sdk": {
-        "version": "3.1.102,3533d626-4784-4944-9d3a-e62b9b46d11a:770e2b9c1a40546a19e063c39996fe7d",
+        "version": "3.1.200,fd4c60cd-04a0-4175-ad80-e05d3d90e45e:e7e55bd77cdd6cc99c4ff37dc6fe1ce2",
         "options": {
           "full_name": "dotnet-sdk"
         }
