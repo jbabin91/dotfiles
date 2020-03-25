@@ -6,8 +6,9 @@ tap "dteoh/sqa"
 tap "fabianishere/personal"
 tap "getantibody/tap"
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-drivers"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
 tap "homebrew/core"
 tap "teamookla/speedtest"
 tap "twpayne/taps"
@@ -112,6 +113,7 @@ cask "dockey"
 cask "dotnet-sdk"
 # E
 # F
+cask "font-victor-mono"
 # G
 cask "gitkraken"
 cask "google-chrome"
