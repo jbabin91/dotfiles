@@ -113,6 +113,7 @@ cask "dockey"
 cask "dotnet-sdk"
 # E
 # F
+cask "font-jetbrainsmono-nerd-font-mono"
 cask "font-victor-mono"
 # G
 cask "gitkraken"
