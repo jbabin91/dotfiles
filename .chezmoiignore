@@ -13,3 +13,7 @@ run_once_configure-macos.sh
 {{- if ne .chezmoi.os "linux" }}
 .hushlogin
 {{- end }}
+# Symlink files
+.tmux.conf
+.tmux.conf.local
+.hyper.js
