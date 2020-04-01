@@ -56,6 +56,7 @@ brew "jq"
 # K
 brew "knock"
 # L
+brew "libpq"
 # M
 brew "mtr"
 # N
