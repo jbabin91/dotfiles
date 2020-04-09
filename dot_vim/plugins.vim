@@ -35,17 +35,18 @@ Plug 'w0rp/ale'
 "----------------------------------------------------------------
 " 5. Autocomplete
 "----------------------------------------------------------------
-Plug 'Shougo/deoplete.nvim', { 'commit': '17ffeb9', 'do': 'UpdateRemotePlugins' }
-Plug 'Shougo/neosnippet.vim', { 'commit': '037b7a7' }
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/context_filetype.vim'
-Plug 'ervandew/supertab'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'marlonfan/coc-phpls', {'do': 'yarn install --frozen-lockfile'}"
+" Plug 'Shougo/deoplete.nvim', { 'commit': '17ffeb9', 'do': 'UpdateRemotePlugins' }
+" Plug 'Shougo/neosnippet.vim', { 'commit': '037b7a7' }
+" Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/context_filetype.vim'
+" Plug 'ervandew/supertab'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
+Plug 'marlonfan/coc-phpls', {'do': 'yarn install --frozen-lockfile'}"
+Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile'}"
 
 "----------------------------------------------------------------
 " 6. Languages
@@ -53,7 +54,7 @@ Plug 'ervandew/supertab'
 " C/C++ support
 Plug 'Rip-Rip/clang_complete'
 " Go support
-Plug 'fatih/vim-go', { 'tag': 'v1.19' }
+Plug 'fatih/vim-go', { 'tag': 'v1.19', 'do': ':GoInstallBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 Plug 'zchee/deoplete-go', { 'do': 'make', 'commit': 'fa73f06'}
 " Perl support
