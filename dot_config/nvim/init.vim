@@ -7,6 +7,7 @@ let g:vim_home = get(g:, 'vim_home', expand('~/.vim/'))
 let config_list = [
       \ 'plugins.vim',
       \ 'config.vim',
+      \ 'ui.vim',
       \ 'mappings.vim',
       \ 'plugin_settings/*.vim'
       \]

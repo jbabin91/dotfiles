@@ -9,7 +9,7 @@ if match(&runtimepath, 'coc') != -1
   let g:coc_user_config = get(g:, 'coc_user_config', {})
 
   " Rename the current word in the cursor
-  nmap <leader>cr <Plug>(coc-rename)
+  nmap <leader>rn <Plug>(coc-rename)
 
   " Remap keys for gotos
   nmap <silent> gd <Plug>(coc-definition)
@@ -41,4 +41,18 @@ if match(&runtimepath, 'coc') != -1
       call CocActionAsync('doHover')
     endif
   endfunction
+
+  " use <tab> for trigger completion and navigate to the next complete item
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+
+  inoremap <silent><expr> <Tab>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<Tab>" :
+        \ coc#refresh()
+
+  " use <c-space>for trigger completion
+  inoremap <silent><expr> <c-space> coc#refresh()
 endif

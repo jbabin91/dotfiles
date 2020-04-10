@@ -35,7 +35,6 @@ Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mbbill/undotree'
 Plug 'dense-analysis/ale'
-Plug 'Yggdroot/indentLine'
 
 "----------------------------------------------------------------
 " 5. Autocomplete
@@ -54,8 +53,8 @@ Plug 'marlonfan/coc-phpls', {'do': 'yarn install --frozen-lockfile'}"
 Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile'}"
 
 " Tab completion
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 " Language Specific Snippets
 Plug 'greg-js/vim-react-es6-snippets'
@@ -109,6 +108,10 @@ Plug 'tpope/vim-dotenv'
 " 7. Syntax files support
 "----------------------------------------------------------------
 Plug 'Shougo/neco-syntax'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'ntpeters/vim-better-whitespace'
 
 "----------------------------------------------------------------
 " 8. Edition
@@ -183,13 +186,15 @@ Plug 'fvictorio/vim-extract-variable'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'dyng/ctrlsf.vim'
 Plug 'liuchengxu/vim-clap'
+Plug 'kamykn/spelunker.vim'
 
 "----------------------------------------------------------------
 " 12. Color scheme
 "----------------------------------------------------------------
 " Plug 'morhetz/gruvbox'
 " Plug 'gerardbm/vim-atomic'
-Plug 'drewtempelmeyer/palenight.vim'
+" Plug 'drewtempelmeyer/palenight.vim'
+Plug 'arcticicestudio/nord-vim'
 
 "----------------------------------------------------------------
 " 13. Plugins that should be loaded last
