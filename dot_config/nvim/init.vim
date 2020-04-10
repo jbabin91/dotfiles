@@ -1,8 +1,6 @@
 " NoCompatible {{{1
 set nocp
 
-let mapleader = ";"
-
 let g:vim_home = get(g:, 'vim_home', expand('~/.vim/'))
 
 " Load all vim configs {{{1

@@ -12,6 +12,8 @@ Plug 'vim-airline/vim-airline-themes'
 "----------------------------------------------------------------
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'
 
 "----------------------------------------------------------------
@@ -24,13 +26,16 @@ Plug 'xolox/vim-misc'
 " 4. Tools
 "----------------------------------------------------------------
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree' "" A tree explorer
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tsony-tsonev/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'valloric/listtoggle'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mbbill/undotree'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+Plug 'Yggdroot/indentLine'
 
 "----------------------------------------------------------------
 " 5. Autocomplete
@@ -47,6 +52,13 @@ Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
 Plug 'marlonfan/coc-phpls', {'do': 'yarn install --frozen-lockfile'}"
 Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile'}"
+
+" Tab completion
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+" Language Specific Snippets
+Plug 'greg-js/vim-react-es6-snippets'
 
 "----------------------------------------------------------------
 " 6. Languages
@@ -79,6 +91,10 @@ Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'othree/jspc.vim'
 Plug 'maksimr/vim-jsbeautify'
+Plug 'yuezk/vim-js'
+Plug 'glanotte/vim-jasmine'
+" TypeScript support
+Plug 'HerringtonDarkholme/yats.vim'
 " CSS support
 Plug 'JulesWang/css.vim'
 Plug 'hail2u/vim-css3-syntax'
@@ -86,6 +102,8 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'othree/html5.vim'
 " VimL support
 Plug 'Shougo/neco-vim', { 'commit' : '4c0203b' }
+" .env syntax highlighting
+Plug 'tpope/vim-dotenv'
 
 "----------------------------------------------------------------
 " 7. Syntax files support
@@ -109,16 +127,53 @@ Plug 'FooSoft/vim-argwrap'
 Plug 'gerardbm/vim-md-headings'
 
 "----------------------------------------------------------------
-" 9. Misc
+" 9. Search
+"----------------------------------------------------------------
+Plug 'henrik/vim-indexed-search'                     " Gives a count of the number of matches, configured to stay on current match with indexed_search_dont_move=1
+Plug 'nelstrom/vim-visual-star-search'               " Don't jump to the next search, stay on current one
+Plug 'haya14busa/incsearch.vim'                      " better incremental search, highlights in realtime everywhere as you type
+Plug 'henrik/vim-qargs'                              " Project wide find and replace http://thepugautomatic.com/2012/07/project-wide-search-and-replace-in-vim-with-qdo/
+Plug 'junegunn/fzf',
+      \ { 'dir': '~/.fzf', 'do': './install --all' } " Fuzzy Find
+Plug 'mileszs/ack.vim'                               " project wide search
+Plug 'yssl/QFEnter'                                  " open splits from quickfix
+
+"----------------------------------------------------------------
+" 10. Writing
+"----------------------------------------------------------------
+Plug 'itspriddle/vim-marked'
+Plug 'kana/vim-textobj-user'
+Plug 'plasticboy/vim-markdown'
+Plug 'reedes/vim-lexical'
+Plug 'reedes/vim-litecorrect'
+Plug 'reedes/vim-pencil'
+Plug 'reedes/vim-textobj-quote'
+Plug 'reedes/vim-textobj-sentence'
+Plug 'suan/vim-instant-markdown'
+
+"----------------------------------------------------------------
+" 11. Dash Docs
+"----------------------------------------------------------------
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    " Do Mac stuff here
+    Plug 'rizzatti/funcoo.vim'
+    Plug 'rizzatti/dash.vim'
+  endif
+endif
+
+"----------------------------------------------------------------
+" 11. Misc
 "----------------------------------------------------------------
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-characterize'
 Plug 'tyru/open-browser.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'junegunn/goyo.vim'
-Plug 'mattn/webapi-vim'
 Plug 'mattn/emmet-vim'
+Plug 'jonhiggs/MacDict.vim'
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+Plug 'mattn/calendar-vim'
 Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'RRethy/vim-illuminate'
 Plug 'MattesGroeger/vim-bookmarks'
@@ -130,10 +185,41 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'liuchengxu/vim-clap'
 
 "----------------------------------------------------------------
-" 10. Color scheme
+" 12. Color scheme
 "----------------------------------------------------------------
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 " Plug 'gerardbm/vim-atomic'
+Plug 'drewtempelmeyer/palenight.vim'
+
+"----------------------------------------------------------------
+" 13. Plugins that should be loaded last
+"----------------------------------------------------------------
+Plug 'ryanoasis/vim-devicons'
 
 " Initialize plugin system
 call plug#end()
+
+" Vim Plug automatically manage plugin installing and cleaning on load
+let s:need_install = keys(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
+let s:need_clean = len(s:need_install) + len(globpath(g:plug_home, '*', 0, 1)) > len(filter(values(g:plugs), 'stridx(v:val.dir, g:plug_home) == 0'))
+let s:need_install = join(s:need_install, ' ')
+if has('vim_starting')
+  if s:need_clean
+    autocmd VimEnter * PlugClean!
+  endif
+  if len(s:need_install)
+    execute 'autocmd VimEnter * PlugInstall --sync' s:need_install '| source $MYVIMRC'
+    finish
+  endif
+else
+  if s:need_clean
+    PlugClean!
+  endif
+  if len(s:need_install)
+    execute 'PlugInstall --sync' s:need_install '| source $MYVIMRC'
+    finish
+  endif
+endif""
+
+"" vim:fdm=expr:fdl=0
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='

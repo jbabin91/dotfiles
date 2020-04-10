@@ -1,6 +1,14 @@
 " use utf-8 encoding
 set encoding=utf-8
 
+let mapleader = ","   "remap leader to ',' which is much easier than '\'
+let maplocalleader = "\\" "add a local leader of '\'
+
+" Enables true colors
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 " colorscheme
 syntax on
 
@@ -23,6 +31,13 @@ set cursorline
 " Highlight all search matches
 set hlsearch
 
+set ignorecase
+set smartcase
+set smarttab
+
+" Turns off old regexp engine
+set re=1
+
 " Tab settings
 set tabstop=2
 set shiftwidth=2
@@ -34,7 +49,7 @@ set splitbelow
 set splitright
 
 " Enable mouse
-set mouse=a
+" set mouse=a
 
 " Following
 set foldmethod=syntax
