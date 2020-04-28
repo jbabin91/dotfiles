@@ -108,7 +108,6 @@ Plug 'tpope/vim-dotenv'
 " 7. Syntax files support
 "----------------------------------------------------------------
 Plug 'Shougo/neco-syntax'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ntpeters/vim-better-whitespace'

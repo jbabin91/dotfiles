@@ -1,9 +1,5 @@
 " Enables true colors
-if (has("termguicolors"))
-  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+set termguicolors
 
 " colorscheme
 syntax on
@@ -38,10 +34,3 @@ set listchars+=nbsp:░
 
 " split style
 set fillchars=vert:▒
-
-" Remap tmux italic characters
-" set t_ZH=^[[3m
-" set t_ZR=^[[23m
-
-" this will show italics if your terminal supports that
-" hi Comment cterm=italic gui=italic
