@@ -102,6 +102,7 @@ brew "zsh"
 # Cask install alphabeticical
 # A
 cask "adoptopenjdk"
+cask "alacritty"
 cask "alfred"
 cask "android-studio"
 # B
