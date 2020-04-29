@@ -83,19 +83,15 @@ plugins=(
   yarn
   z
   zsh-dircolors-solarized
-  {{- if eq .chezmoi.os "darwin" }}
   ssh-agent
-  {{- end }}
 )
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
-{{ if eq .chezmoi.os "darwin" -}}
 ulimit -n 10000
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-{{- end }}
 
 # Enable command caching and force prefix matching
 zstyle ':completion:*' accept-exact '*(N)'
