@@ -93,6 +93,7 @@ brew "woff2"
 brew "xpdf"
 brew "xz"
 # Y
+brew "koekeishiya/formulae/yabai"
 brew "yarn"
 brew "ykpers"
 brew "ykman"
@@ -129,6 +130,7 @@ cask "iina"
 cask "iterm2"
 # J
 # K
+cask "karabiner-elements"
 # L
 cask "logitech-options"
 # M

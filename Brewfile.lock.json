@@ -23,7 +23,7 @@
         "revision": "14836818d3ef0be7443d4cb8d9a979825d9430cb"
       },
       "homebrew/core": {
-        "revision": "b7bb68c21e09ed5042bb6960095d7dc74befa35d"
+        "revision": "ec7fd030b57d0829746c5aa2a1852f146e5fe4bf"
       },
       "teamookla/speedtest": {
         "revision": "b79ea77017ea57c98658225883d7ecc3d4410fbd"
@@ -235,6 +235,12 @@
         "version": "0.4.2",
         "options": {
           "full_name": "alacritty"
+        }
+      },
+      "karabiner-elements": {
+        "version": "12.9.0",
+        "options": {
+          "full_name": "karabiner-elements"
         }
       }
     },
@@ -1451,7 +1457,8 @@
             }
           }
         }
-      }
+      },
+      "koekeishiya/formulae/yabai": null
     }
   },
   "system": {
@@ -1459,7 +1466,7 @@
       "catalina": {
         "HOMEBREW_VERSION": "2.2.14",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "b7bb68c21e09ed5042bb6960095d7dc74befa35d",
+        "Homebrew/homebrew-core": "ec7fd030b57d0829746c5aa2a1852f146e5fe4bf",
         "CLT": "1103.0.32.29",
         "Xcode": "11.4.1",
         "macOS": "10.15.4"
