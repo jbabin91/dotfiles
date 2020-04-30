@@ -107,3 +107,4 @@ source $HOME/.shell_env
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 #zprof
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
