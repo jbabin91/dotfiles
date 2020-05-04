@@ -17,6 +17,7 @@ let config_list = [
       \ 'plugin_configs/*.vim',
       \ 'themes/*.vim',
       \]
+
 for files in config_list
   for f in glob(g:vim_home.files, 1, 1)
     exec 'source' f

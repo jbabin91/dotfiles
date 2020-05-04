@@ -21,5 +21,13 @@
   "explorer.keyMappings": {
     "<cr>": ["expandable?", "expand", "open"],
     "v": "open:vsplit"
+  },
+
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
   }
 }
