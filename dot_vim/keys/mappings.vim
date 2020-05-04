@@ -3,11 +3,9 @@ vnoremap < <gv
 vnoremap > >gv
 
 if exists('g:vscode')
-
-" Simulate same TAB behavior in VSCode
-nmap <Tab> :Tabnext<CR>
-nmap <S-Tab> :Tabprev<CR>
-
+  " Simulate same TAB behavior in VSCode
+  nmap <Tab> :Tabnext<CR>
+  nmap <S-Tab> :Tabprev<CR>
 else
   " Better nav for omnicomplete
   inoremap <expr> <c-j> ("\<C-n>")
@@ -16,6 +14,9 @@ else
   " I hate escape more than anything else
   inoremap jk <Esc>
   inoremap kj <Esc>
+
+  " One of the most annoying things about vim was that I frequently typed :W instead of :w.
+  command! W w
 
   " Easy CAPS
   " inoremap <c-u> <ESC>viwUi

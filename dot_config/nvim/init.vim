@@ -13,9 +13,9 @@ let config_list = [
       \ 'plugins.vim',
       \ 'config.vim',
       \ 'ui.vim',
-      \ 'mappings.vim',
-      \ 'lua/*.lua'
-      \ 'plugin_configs/*.vim'
+      \ 'keys/*.vim',
+      \ 'plugin_configs/*.vim',
+      \ 'themes/*.vim',
       \]
 for files in config_list
   for f in glob(g:vim_home.files, 1, 1)
