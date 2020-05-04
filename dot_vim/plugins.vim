@@ -180,11 +180,14 @@ Plug 'RRethy/vim-illuminate'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'mrded/vim-wrapper'
 Plug 'tpope/vim-commentary'
+Plug 'jbgutierrez/vim-better-comments'
 Plug 'fvictorio/vim-extract-variable'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'dyng/ctrlsf.vim'
 Plug 'liuchengxu/vim-clap'
 Plug 'kamykn/spelunker.vim'
+Plug 'liuchengxu/vim-which-key'
+Plug 'mhinz/vim-startify'
 
 "----------------------------------------------------------------
 " 12. Color scheme

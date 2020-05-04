@@ -1,4 +1,9 @@
-" NoCompatible {{{1
+"    ____      _ __        _
+"   /  _/___  (_) /__   __(_)___ ___
+"   / // __ \/ / __/ | / / / __ `__ \
+" _/ // / / / / /__| |/ / / / / / / /
+"/___/_/ /_/_/\__(_)___/_/_/ /_/ /_/
+
 set nocp
 
 let g:vim_home = get(g:, 'vim_home', expand('~/.vim/'))
@@ -9,7 +14,8 @@ let config_list = [
       \ 'config.vim',
       \ 'ui.vim',
       \ 'mappings.vim',
-      \ 'plugin_settings/*.vim'
+      \ 'lua/*.lua'
+      \ 'plugin_configs/*.vim'
       \]
 for files in config_list
   for f in glob(g:vim_home.files, 1, 1)
