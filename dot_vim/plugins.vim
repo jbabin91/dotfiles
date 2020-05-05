@@ -35,6 +35,7 @@ Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mbbill/undotree'
 Plug 'dense-analysis/ale'
+Plug 'justinmk/vim-sneak'
 
 "----------------------------------------------------------------
 " 5. Autocomplete
