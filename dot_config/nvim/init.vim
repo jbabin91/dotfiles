@@ -13,6 +13,7 @@ let config_list = [
       \ 'plugins.vim',
       \ 'config.vim',
       \ 'ui.vim',
+      \ 'general/*.vim',
       \ 'keys/*.vim',
       \ 'plugin_configs/*.vim',
       \ 'themes/*.vim',
