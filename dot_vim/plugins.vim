@@ -36,6 +36,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mbbill/undotree'
 Plug 'dense-analysis/ale'
 Plug 'justinmk/vim-sneak'
+Plug 'unblevable/quick-scope'
 
 "----------------------------------------------------------------
 " 5. Autocomplete
