@@ -32,9 +32,10 @@ alias ze='e ~/.zshrc'
 alias srm='srm -iv'
 
 # Colorsls
-alias ls='colorls'
-alias la='colorls -a'
-alias ll='colorls -la'
+alias ls='colorls --almost-all --sort-files --group-directories-first'
+alias la='colorls --all --sort-files --group-directories-first'
+alias ll='colorls --almost-all --sort-files --group-directories-first'
+alias lgs='colorls --git-status --almost-all --sort-files --group-directories-first'
 
 # Finder
 alias saf='defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder'
