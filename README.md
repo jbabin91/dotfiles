@@ -12,3 +12,5 @@ Jace Babin's dotfiles, managed with [`chezmoi`](https://github.com/twpayne/chezm
 
 2. Init dotfiles
    - `chezmoi init --apply https://github.com/jbabin91/dotfiles.git`
+
+Work in progress
