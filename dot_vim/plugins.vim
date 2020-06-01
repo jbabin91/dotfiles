@@ -46,12 +46,13 @@ Plug 'unblevable/quick-scope'
 " Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/context_filetype.vim'
 " Plug 'ervandew/supertab'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'marlonfan/coc-phpls', {'do': 'yarn install --frozen-lockfile'}"
-Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile'}"
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'marlonfan/coc-phpls', {'do': 'yarn install --frozen-lockfile'}"
+" Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile'}"
+Plug 'kiteco/vim-plugin'
 
 " Tab completion
 " Plug 'SirVer/ultisnips'
