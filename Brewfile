@@ -41,7 +41,6 @@ tap "schniz/tap"
 tap "somdoron/formulae"
 # T
 tap "teamookla/speedtest"
-tap "twpayne/taps"
 # U
 # V
 # W
@@ -62,6 +61,7 @@ brew "binutils"
 brew "binwalk"
 # C
 brew "cifer"
+brew "chezmoi"
 brew "coreutils"
 brew "cowsay"
 brew "ctags"
@@ -100,8 +100,6 @@ brew "john"
 brew "jq"
 # K
 brew "knock"
-brew "koekeishiya/formulae/skhd"
-brew "koekeishiya/formulae/yabai"
 # L
 brew "lastpass-cli"
 brew "libpq"
@@ -139,7 +137,6 @@ brew "the_silver_searcher"
 brew "tldr"
 brew "tmux"
 brew "tree"
-brew "twpayne/taps/chezmoi"
 # U
 brew "ucspi-tcp"
 # V
@@ -197,12 +194,10 @@ cask "iina"
 cask "iterm2"
 # J
 # K
-cask "karabiner-elements"
 cask "kitty"
 # L
 cask "logitech-options"
 # M
-cask "meteorologist"
 cask "mono-mdk-for-visual-studio"
 # N
 cask "nvalt"
