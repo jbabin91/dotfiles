@@ -54,6 +54,7 @@ tap "teamookla/speedtest"
 # A
 brew "ack"
 brew "aircrack-ng"
+brew "asdf"
 # B
 brew "bat"
 brew "bfg"
@@ -72,8 +73,10 @@ brew "diff-so-fancy"
 brew "dns2tcp"
 # E
 brew "emacs-plus"
+brew "exa"
 # F
 brew "fcrackzip"
+brew "fish"
 brew "fzf"
 # G
 brew "getantibody/tap/antibody"
@@ -127,6 +130,7 @@ brew "schniz/tap/fnm"
 brew "sqlite"
 brew "ssh-copy-id"
 brew "subversion"
+brew "starship"
 # T
 brew "tcpflow"
 brew "tcpreplay"
