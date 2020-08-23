@@ -5,9 +5,6 @@ set nocompatible
 " security
 set modelines=0
 
-" hide buffers, not close them
-set hidden
-
 " maintain undo history between sessions
 set undofile
 set undodir=~/.vim/undo
@@ -34,12 +31,6 @@ set wildignore+=*.swp,.lock,.DS_Store,._*
 " make backspace behave in a sane manner
 set backspace=indent,eol,start
 
-" use utf-8 encoding
-set encoding=utf-8
-
-let mapleader = ","   "remap leader to ',' which is much easier than '\'
-let maplocalleader = "\\" "add a local leader of '\'
-
 " Enable spell check
 set spelllang=en_us
 
@@ -51,14 +42,16 @@ set smartcase
 set infercase
 set smarttab
 
-" Turns off old regexp engine
+" Force vim to use older regex engine.
+" https://stackoverflow.com/a/16920294/655204
 set re=1
 
-" Tab settings
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-" set expandtab
+" Set built-in file system explorer to use layout similar to the NERDTree plugin
+let g:netrw_liststyle=3
+
+set grepprg=rg
+
+let g:grep_cmd_opts = '--line-numbers --noheading --ignore-dir=log --ignore-dir=tmp'
 
 " tabs are tabs
 set noexpandtab
@@ -66,16 +59,14 @@ set noexpandtab
 " enable auto indentation
 set autoindent
 
-" Split screen
-set splitbelow
-set splitright
+" Enable built-in matchit plugin
+runtime macros/matchit.vim
 
 " searching
 set hlsearch
 set incsearch
-if has("nvim")
-  set inccommand=split
-endif
+
+set inccommand=nosplit
 
 " Enable mouse
 " set mouse=a
@@ -83,9 +74,6 @@ endif
 " Following
 set foldmethod=syntax
 set foldlevelstart=20 " All folds open when opening a file
-
-" coffee pasta
-set clipboard^=unnamedplus
 
 " tmux will only forward escape sequences to the terminal if surrounded by a
 " DCS sequences
