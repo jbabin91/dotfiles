@@ -5,8 +5,11 @@ let g:far#source = 'agnvim'
 let g:far#file_mask_favorites = ['%', '**/*.*', '**/*.html', '**/*.haml', '**/*.js', '**/*.css', '**/*.scss', '**/*.rb']
 
 " NERDTree
-nmap <silent> <F3> :NERDTreeToggle<CR>
-map <leader>' :NERDTreeToggle<CR>
+map <tab> :NERDTreeToggle<CR>
+map <C-m> :NERDTreeFind<CR>
+
+" Map leader + r to refresh NerdTree
+nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
 let NERDTreeShowHidden=1
 let NERDTreeIgnore=['\.png$', '\.jpg$', '\.gif$', '\.mp3$', '\.ogg$', '\.mp4$',
       \ '\.avi$','.webm$','.mkv$','\.pdf$', '\.zip$', '\.tar.gz$',

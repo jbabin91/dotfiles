@@ -1,3 +1,4 @@
+" Vim-plug Setup
 let autoload_plug_path = stdpath('data') . '/site/autoload/plug.vim'
 if !filereadable(autoload_plug_path)
   silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs
@@ -41,6 +42,7 @@ Plug 'nelstrom/vim-textobj-rubyblock'   " A custom text object for selecting rub
 Plug 'junegunn/fzf', { 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'              " A tree explorer plugin for vim                        | https://github.com/scrooloose/nerdtree
+Plug 'jistr/vim-nerdtree-tabs'          " A plugin for NERDTree making it independent of tabs.  | https://github.com/jistr/vim-nerdtree-tabs
 Plug 'Xuyuanp/nerdtree-git-plugin'      " A plugin of NERDTree showing git status               | https://github.com/Xuyuanp/nerdtree-git-plugin
 Plug 'brooth/far.vim'                   " Find And Replace Vim plugin                           | https://github.com/brooth/far.vim
 Plug 'christoomey/vim-tmux-navigator'   " Seamless navigation between tmux panes and vim splits | https://github.com/christoomey/vim-tmux-navigator
@@ -92,8 +94,6 @@ Plug 'christoomey/vim-tmux-runner'      " Command runner for sending commands fr
 
 call plug#end()
 
-call plug#end()
-
 " Vim Plug automatically manage plugin installing and cleaning on load
 let s:need_install = keys(filter(copy(g:plugs), '!isdirectory(v:val.dir)'))
 let s:need_clean = len(s:need_install) + len(globpath(g:plug_home, '*', 0, 1)) > len(filter(values(g:plugs), 'stridx(v:val.dir, g:plug_home) == 0'))
@@ -114,4 +114,7 @@ else
     execute 'PlugInstall --sync' s:need_install '| source $MYVIMRC'
     finish
   endif
-endif""
+endif
+
+"" vim:fdm=expr:fdl=0
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
