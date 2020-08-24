@@ -5,7 +5,7 @@ let g:far#source = 'agnvim'
 let g:far#file_mask_favorites = ['%', '**/*.*', '**/*.html', '**/*.haml', '**/*.js', '**/*.css', '**/*.scss', '**/*.rb']
 
 " NERDTree
-map <tab> :NERDTreeToggle<CR>
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
 map <C-m> :NERDTreeFind<CR>
 
 " Map leader + r to refresh NerdTree

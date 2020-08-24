@@ -1,7 +1,7 @@
 " set leader key
 "map <Space> <Leader>
 "nmap <space> <leader>
-let mapleader = ","   "remap leader to ',' which is much easier than '\'
+let mapleader = " "   "remap leader to ',' which is much easier than '\'
 let maplocalleader = "\\" "add a local leader of '\'
 nnoremap <Space> <Nop>
 set iskeyword+=-                      	" treat dash separated words as a word text object"
