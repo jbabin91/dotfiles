@@ -6,17 +6,14 @@
 
 set nocp
 
-let g:vim_home = get(g:, 'vim_home', expand('~/.nvim/'))
+let g:vim_home = get(g:, 'vim_home', expand('~/.config/.nvim/'))
 
 " Load all vim configs {{{1
 let config_list = [
-      \ 'plugins.vim',
-      \ 'config.vim',
-      \ 'ui.vim',
-      \ 'plugin_configs.vim',
       \ 'extras/*.vim',
       \ 'general/*.vim',
       \ 'keys/*.vim',
+      \ 'plugins/*.vim',
       \ 'themes/*.vim',
       \]
 

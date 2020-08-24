@@ -1,0 +1,82 @@
+[core]
+  autocrlf = input
+  editor = vim
+  pager = "diff-so-fancy | less --tabs=4 -RFX"
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+  trustctime = false
+  ignorecase = false
+  preloadIndex = true
+[pull]
+  rebase = false
+[push]
+  default = current
+  followTags = true
+[branch]
+  autoSetupMerge = always
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+  ui = auto
+[help]
+  autocorrect = 20
+[merge]
+  log = true
+[mergetoll]
+  prompt = false
+  keepBackup = false
+[diff]
+  renames = copies
+  mnemonicprefix = true
+  algorithm = patience
+  compactionHeuristic = true
+[fetch]
+  prune = true
+[advice]
+  commitBeforeMerge = true
+  detachedHead = true
+  implicitIdentiry = true
+  pushNonFastForward = false
+  resolveConflict = true
+  statusHints = false
+[alias]
+  br = branch
+  ch = checkout
+  ch- = checkout -
+  co = commit
+  fe = fetch
+  pu = push
+  st = status
+  gl = log --oneline --decorate --stat --graph
+  branches = !git for-each-ref --sort=committerdate --format='%(committerdate:relative):%(authorname):%(refname:short)' refs/remotes | column -t -s:
+  commits = !git log --pretty=format:"%ad:%an:%d:%B" --branches --date=short --all --since=1.week.ago
+[status]
+  short = true
+  branch = false
+[credential]
+  helper = store
+[tag]
+  verbose = true
+[commit]
+  verbose = true
+[gpg]
+  program = gpg
+[submodule]
+  fetchJobs = 0
+  recurse = true
+[remote]
+  pushDefault = origin
+[rerere]
+  enabled = true
+[log]
+  mailmap = true
+  abbrevCommit = true
+[transfer]
+  fsckObjects = false
+[user]
+  useConfigOnly = true
+[include]
+  path=".gitconfig_personal"
+[init]
+  defaultBranch = main

@@ -7,6 +7,6 @@ set background=dark
 silent! colorscheme nord
 
 let g:lightline = {
-  \  'colorscheme': 'nord',
-  \  'component': { 'lineinfo': '⭡ %3l:%-2v' },
-  \  })
+  \   'colorscheme': 'nord',
+  \   'component': { 'lineinfo': '⭡ %3l:%-2v' },
+  \ }
