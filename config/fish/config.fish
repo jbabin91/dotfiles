@@ -22,8 +22,6 @@ if not functions -q fisher
 end
 
 if status is-interactive
-  cd $HOME
-
   # Abbreviations
   source $XDG_CONFIG_HOME/fish/abbr.fish
 
