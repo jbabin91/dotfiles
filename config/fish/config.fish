@@ -34,6 +34,9 @@ if status is-interactive
   # Starship Theme
   starship init fish | source
 
+  # asdf
+  echo -e "\nsource (brew --prefix asdf)/asdf.fish" >> ~/.config/fish/config.fish
+
   if test -e $XDG_CONFIG_HOME/fish/colors.fish
     source $XDG_CONFIG_HOME/fish/colors.fish
   end
@@ -42,3 +45,9 @@ if status is-interactive
     source $DOTFILES/local/config.fish.local
   end
 end
+
+source (brew --prefix asdf)/asdf.fish
+
+source (brew --prefix asdf)/asdf.fish
+
+source (brew --prefix asdf)/asdf.fish
