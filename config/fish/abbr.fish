@@ -1,5 +1,5 @@
 function a
-  abbr -a -g $argv
+    abbr -a -g $argv
 end
 
 # asdf
@@ -75,18 +75,18 @@ a tl 'tmux ls'
 a tlw 'tmux list-windows'
 
 # Brew package manager
-a bc    'brew cleanup'
-a bu    'brew update'
-a bd    'brew doctor'
-a bg    'brew upgrade --all'
-a bo    'brew outdated'
+a bc 'brew cleanup'
+a bu 'brew update'
+a bd 'brew doctor'
+a bg 'brew upgrade --all'
+a bo 'brew outdated'
 a brews 'brew list -1'
-a bs0   'brew services stop'
-a bs1   'brew services start'
-a bs    'brew services'
-a bsc   'brew services cleanup'
-a bsl   'brew services list'
-a bsr   'brew services restart'
+a bs0 'brew services stop'
+a bs1 'brew services start'
+a bs 'brew services'
+a bsc 'brew services cleanup'
+a bsl 'brew services list'
+a bsr 'brew services restart'
 
 # Yarn
 a y 'yarn'

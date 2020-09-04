@@ -1,25 +1,25 @@
 function sudo!!
-  eval sudo $history[1]
+    eval sudo $history[1]
 end
 
 # `shellswitch [bash|zsh|fish]`
 function shellswitch
-  chsh -s (brew --prefix)/bin/$argv
+    chsh -s (brew --prefix)/bin/$argv
 end
 
 function bubc
-  brew upgrade && brew cleanup
+    brew upgrade && brew cleanup
 end
 
 function bubo
-  brew update && brew outdated
+    brew update && brew outdated
 end
 
 function bubu
-  bubo && bubc
+    bubo && bubc
 end
 
 # Update brew and flutter
 function ud
-  bubu && flutter upgrade
+    bubu && flutter upgrade
 end

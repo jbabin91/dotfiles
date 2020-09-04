@@ -1,3 +1,3 @@
 function ed
-  $EDITOR $DOTFILES
+    $EDITOR $DOTFILES
 end

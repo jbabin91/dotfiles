@@ -5,7 +5,7 @@ let g:far#source = 'agnvim'
 let g:far#file_mask_favorites = ['%', '**/*.*', '**/*.html', '**/*.haml', '**/*.js', '**/*.css', '**/*.scss', '**/*.rb']
 
 " NERDTree
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
+map <silent> <C-k>b :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>
 
 " Map leader + r to refresh NerdTree
@@ -71,7 +71,7 @@ nnoremap <silent> <F4> :BufExplorer<CR>
 map <leader>ob :Obsession<CR>
 
 " vim-test
-nmap <silent> t<C-n> :TestNearest<CR>
+" nmap <silent> t<C-n> :TestNearest<CR>
 nmap <silent> t<C-f> :TestFile<CR>
 nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>

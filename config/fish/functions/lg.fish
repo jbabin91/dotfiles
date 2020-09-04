@@ -1,4 +1,4 @@
 # Opens lazygit
 function lg
-  lazygit
+    lazygit
 end
