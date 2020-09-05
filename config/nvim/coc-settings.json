@@ -4,10 +4,6 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "ﯦ",
 
-  "eslint.run": "onSave",
-  "eslint.autoFixOnSave": true,
-  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescript.tsx", "typescriptreact", "vue"],
-
   "javascript.format.enabled": false,
   "javascript.showUnused": false,
   "javascript.suggestionActions.enabled": false,

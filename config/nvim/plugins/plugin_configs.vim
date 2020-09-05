@@ -154,7 +154,6 @@ let g:coc_global_extensions = [
       \ 'coc-css',
       \ 'coc-diagnostic',
       \ 'coc-emmet',
-      \ 'coc-eslint',
       \ 'coc-html',
       \ 'coc-pairs',
       \ 'coc-json',
