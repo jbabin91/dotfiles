@@ -12,7 +12,6 @@ tap "dteoh/sqa"
 tap "fabianishere/personal"
 # G
 tap "getantibody/tap"
-tap "github/gh"
 # H
 tap "heroku/brew"
 tap "homebrew/bundle"
@@ -82,7 +81,6 @@ brew "fzf"
 brew "getantibody/tap/antibody"
 brew "git-lfs"
 brew "git"
-brew "github/gh/gh"
 brew "gmp"
 brew "gnupg"
 brew "go"
@@ -111,7 +109,7 @@ brew "lolcat"
 brew "mtr"
 # N
 brew "neofetch"
-brew "neovim"
+brew "neovim", args: ["HEAD"]
 # O
 brew "openssh"
 brew "openssl@1.1"
