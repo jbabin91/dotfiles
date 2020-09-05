@@ -12,15 +12,18 @@
     - "~/.config/fish/functions"
     - "~/.config/git"
     - "~/.config/nvim"
-    - "~/.config/nvim/after"
-    - "~/.config/nvim/colorschemes"
-    - "~/.config/nvim/extras"
+    - "~/.config/nvim/autoload"
     - "~/.config/nvim/ftplugin"
     - "~/.config/nvim/general"
     - "~/.config/nvim/keys"
-    - "~/.config/nvim/plugins"
-    - "~/.config/nvim/spell"
+    - "~/.config/nvim/lua"
+    - "~/.config/nvim/plug-config"
+    - "~/.config/nvim/snips"
+    - "~/.config/nvim/syntax"
     - "~/.config/nvim/themes"
+    - "~/.config/nvim/utils"
+    - "~/.config/nvim/vim-plug"
+    - "~/.config/nvim/vscode"
 
 - link:
     # $HOME level files
@@ -48,14 +51,8 @@
     # NVIM Config
     ~/.config/nvim/init.vim: config/nvim/init.vim
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
-    ~/.config/nvim/after/plugin:
-      path: config/nvim/after/plugin/*.vim
-      glob: true
-    ~/.config/nvim/colorschemes:
-      path: config/nvim/colorschemes/*.vim
-      glob: true
-    ~/.config/nvim/extras:
-      path: config/nvim/extras/*.vim
+    ~/.config/nvim/autoload:
+      path: config/nvim/autoload/*.vim
       glob: true
     ~/.config/nvim/ftplugin:
       path: config/nvim/ftplugin/*.vim
@@ -66,11 +63,26 @@
     ~/.config/nvim/keys:
       path: config/nvim/keys/*.vim
       glob: true
-    ~/.config/nvim/plugins:
-      path: config/nvim/plugins/*.vim
+    ~/.config/nvim/lua:
+      path: config/nvim/lua/*.lua
+      glob: true
+    ~/.config/nvim/plug-config:
+      path: config/nvim/plug-config/*.vim
+      glob: true
+    ~/.config/nvim/snips:
+      path: config/nvim/snips/*.snippets
+      glob: true
+    ~/.config/nvim/syntax:
+      path: config/nvim/syntax/*.vim
       glob: true
     ~/.config/nvim/themes:
       path: config/nvim/themes/*.vim
+      glob: true
+    ~/.config/nvim/vim-plug:
+      path: config/nvim/vim-plug/*.vim
+      glob: true
+    ~/.config/nvim/vscode:
+      path: config/nvim/vscode/*.vim
       glob: true
     # Starship Config
     ~/.config/starship.toml: config/starship.toml
