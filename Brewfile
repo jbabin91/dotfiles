@@ -12,7 +12,6 @@ tap "dteoh/sqa"
 tap "fabianishere/personal"
 # G
 tap "getantibody/tap"
-tap "github/gh"
 # H
 tap "heroku/brew"
 tap "homebrew/bundle"
@@ -54,6 +53,7 @@ tap "teamookla/speedtest"
 # A
 brew "ack"
 brew "aircrack-ng"
+brew "asdf"
 # B
 brew "bat"
 brew "bfg"
@@ -72,14 +72,15 @@ brew "diff-so-fancy"
 brew "dns2tcp"
 # E
 brew "emacs-plus"
+brew "exa"
 # F
 brew "fcrackzip"
+brew "fish"
 brew "fzf"
 # G
 brew "getantibody/tap/antibody"
 brew "git-lfs"
 brew "git"
-brew "github/gh/gh"
 brew "gmp"
 brew "gnupg"
 brew "go"
@@ -108,7 +109,7 @@ brew "lolcat"
 brew "mtr"
 # N
 brew "neofetch"
-brew "neovim"
+brew "neovim", args: ["HEAD"]
 # O
 brew "openssh"
 brew "openssl@1.1"
@@ -127,6 +128,7 @@ brew "schniz/tap/fnm"
 brew "sqlite"
 brew "ssh-copy-id"
 brew "subversion"
+brew "starship"
 # T
 brew "tcpflow"
 brew "tcpreplay"
