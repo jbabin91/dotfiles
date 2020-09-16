@@ -25,8 +25,9 @@ let g:coc_global_extensions = [
     \ 'coc-yank',
     \ 'coc-json',
     \ 'coc-marketplace',
+    \ 'coc-tailwindcss',
+    \ 'coc-tabnine',
     \ ]
-    " \ 'coc-tabnine',
     " \ 'coc-highlight',
 
 " Use tab for trigger completion with characters ahead and navigate.

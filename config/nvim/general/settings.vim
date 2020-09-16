@@ -1,4 +1,4 @@
-set iskeyword+=-                      	" treat dash separated words as a word text object"
+set iskeyword+=-                        " treat dash separated words as a word text object"
 set formatoptions-=cro                  " Stop newline continution of comments
 
 syntax enable                           " Enables syntax highlighing
@@ -7,7 +7,7 @@ set nowrap                              " Display long lines as just one line
 set encoding=utf-8                      " The encoding displayed
 set pumheight=10                        " Makes popup menu smaller
 set fileencoding=utf-8                  " The encoding written to file
-set ruler              			            " Show the cursor position all the time
+set ruler              	                " Show the cursor position all the time
 set cmdheight=2                         " More space for displaying messages
 set mouse=a                             " Enable your mouse
 set splitbelow                          " Horizontal splits will automatically be below
