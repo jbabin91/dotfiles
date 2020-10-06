@@ -87,8 +87,6 @@
     ~/.config/nvim/vscode:
       path: config/nvim/vscode/*.vim
       glob: true
-    # Starship Config
-    ~/.config/starship.toml: config/starship.toml
     # Tmux Config
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.tmux.conf.local: tmux/.tmux.conf.local
@@ -96,6 +94,5 @@
     ~/tmux.terminfo: tmux/tmux.terminfo
 
 - shell:
-    - chsh -s $(which fish)
     - [chsh -s $(which fish), Making fish the default shell]
     - [git submodule update --init --recursive, Installing submodules]
