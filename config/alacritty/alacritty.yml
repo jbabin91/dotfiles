@@ -18,13 +18,13 @@ live_config_reload: true
 # Font configuration
 font:
   normal:
-    family: JetBrainsMono Nerd Font Mono
+    family: Victor Mono
     style: Regular
   bold:
-    family: JetBrainsMono Nerd Font Mono
+    family: Victor Mono
     style: Bold
   italic:
-    family: JetBrainsMono Nerd Font Mono
+    family: Victor Mono
     style: Italic
   size: 11.0
   offset:
@@ -82,8 +82,7 @@ key_bindings:
   - { key: Insert, mods: Shift, action: PasteSelection }
   - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: Equals, mods: Control, action: IncreaseFontSize }
-  - { key: Add, mods: Control, action: IncreaseFontSize }
-  - { key: Subtract, mods: Control, action: DecreaseFontSize }
+  - { key: Plus, mods: Control, action: IncreaseFontSize }
   - { key: Minus, mods: Control, action: DecreaseFontSize }
   - { key: H, mods: Command|Control, action: Hide }
   - { key: M, mods: Command|Control, action: Minimize }
