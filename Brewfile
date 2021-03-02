@@ -75,7 +75,6 @@ brew "emacs-plus"
 brew "exa"
 # F
 brew "fcrackzip"
-brew "fish"
 brew "fzf"
 # G
 brew "getantibody/tap/antibody"

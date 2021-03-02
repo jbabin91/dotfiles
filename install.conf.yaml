@@ -7,25 +7,8 @@
 - clean:
     - "~"
     - "~/.config/alacritty"
-    - "~/.config/kitty"
-    - "~/.config/fish"
-    - "~/.config/fish/completions"
-    - "~/.config/fish/conf.d"
-    - "~/.config/fish/functions"
     - "~/.config/git"
     - "~/.config/nvim"
-    - "~/.config/nvim/autoload"
-    - "~/.config/nvim/ftplugin"
-    - "~/.config/nvim/general"
-    - "~/.config/nvim/keys"
-    - "~/.config/nvim/lua"
-    - "~/.config/nvim/plug-config"
-    - "~/.config/nvim/snips"
-    - "~/.config/nvim/syntax"
-    - "~/.config/nvim/themes"
-    - "~/.config/nvim/utils"
-    - "~/.config/nvim/vim-plug"
-    - "~/.config/nvim/vscode"
 
 - link:
     # $HOME level files
@@ -34,59 +17,46 @@
     ~/.hushlogin: .hushlogin
     # Alacritty Config
     ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
-    ~/.config/kitty/kitty.conf: config/kitty/kitty.conf
-    # Fish Config
-    ~/.config/fish/abbr.fish: config/fish/abbr.fish
-    ~/.config/fish/colors.fish: config/fish/colors.fish
-    ~/.config/fish/config.fish: config/fish/config.fish
-    ~/.config/fish/fishfile: config/fish/fishfile
-    ~/.config/fish/functions.fish: config/fish/functions.fish
-    ~/.config/fish/completions:
-      path: config/fish/completions/*.fish
-      glob: true
-    ~/.config/fish/functions:
-      path: config/fish/functions/*.fish
-      glob: true
     # Git Config
     ~/.config/git/config: config/git/.gitconfig
     ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
     ~/.config/git/ignore: config/git/.gitignore_global
     # NVIM Config
-    ~/.config/nvim/init.vim: config/nvim/init.vim
-    ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
-    ~/.config/nvim/autoload:
-      path: config/nvim/autoload/*.vim
-      glob: true
-    ~/.config/nvim/ftplugin:
-      path: config/nvim/ftplugin/*.vim
-      glob: true
-    ~/.config/nvim/general:
-      path: config/nvim/general/*.vim
-      glob: true
-    ~/.config/nvim/keys:
-      path: config/nvim/keys/*.vim
-      glob: true
-    ~/.config/nvim/lua:
-      path: config/nvim/lua/*.lua
-      glob: true
-    ~/.config/nvim/plug-config:
-      path: config/nvim/plug-config/*.vim
-      glob: true
-    ~/.config/nvim/snips:
-      path: config/nvim/snips/*.snippets
-      glob: true
-    ~/.config/nvim/syntax:
-      path: config/nvim/syntax/*.vim
-      glob: true
-    ~/.config/nvim/themes:
-      path: config/nvim/themes/*.vim
-      glob: true
-    ~/.config/nvim/vim-plug:
-      path: config/nvim/vim-plug/*.vim
-      glob: true
-    ~/.config/nvim/vscode:
-      path: config/nvim/vscode/*.vim
-      glob: true
+    # ~/.config/nvim/init.vim: config/nvim/init.vim
+    # ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
+    # ~/.config/nvim/autoload:
+    #   path: config/nvim/autoload/*.vim
+    #   glob: true
+    # ~/.config/nvim/ftplugin:
+    #   path: config/nvim/ftplugin/*.vim
+    #   glob: true
+    # ~/.config/nvim/general:
+    #   path: config/nvim/general/*.vim
+    #   glob: true
+    # ~/.config/nvim/keys:
+    #   path: config/nvim/keys/*.vim
+    #   glob: true
+    # ~/.config/nvim/lua:
+    #   path: config/nvim/lua/*.lua
+    #   glob: true
+    # ~/.config/nvim/plug-config:
+    #   path: config/nvim/plug-config/*.vim
+    #   glob: true
+    # ~/.config/nvim/snips:
+    #   path: config/nvim/snips/*.snippets
+    #   glob: true
+    # ~/.config/nvim/syntax:
+    #   path: config/nvim/syntax/*.vim
+    #   glob: true
+    # ~/.config/nvim/themes:
+    #   path: config/nvim/themes/*.vim
+    #   glob: true
+    # ~/.config/nvim/vim-plug:
+    #   path: config/nvim/vim-plug/*.vim
+    #   glob: true
+    # ~/.config/nvim/vscode:
+    #   path: config/nvim/vscode/*.vim
+    #   glob: true
     # Tmux Config
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.tmux.conf.local: tmux/.tmux.conf.local
@@ -94,5 +64,4 @@
     ~/tmux.terminfo: tmux/tmux.terminfo
 
 - shell:
-    - [chsh -s $(which fish), Making fish the default shell]
     - [git submodule update --init --recursive, Installing submodules]
