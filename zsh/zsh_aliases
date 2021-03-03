@@ -1,4 +1,8 @@
 #!/bin/zsh
+
+# editor
+alias e="code"
+
 # General UNIX
 alias c='clear'
 alias cp='cp -iv'
