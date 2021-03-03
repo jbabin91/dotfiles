@@ -32,8 +32,6 @@ zinit light-mode for \
 #####################
 # PLUGINS           #
 #####################
-# SSH-AGENT
-zinit light bobsoppe/zsh-ssh-agent
 # AUTOSUGGESTIONS, TRIGGER PRECMD HOOK UPON LOAD
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 zinit ice wait"0a" lucid atload"_zsh_autosuggest_start"
@@ -159,10 +157,10 @@ setopt inc_append_history     # add commands to HISTFILE in order of execution
 setopt share_history          # share command history data
 setopt always_to_end          # cursor moved to the end in full completion
 setopt hash_list_all          # hash everything before completion
-# setopt completealiases        # complete alisases
+# setopt completealiases      # complete alisases
 setopt always_to_end          # when completing from the middle of a word, move the cursor to the end of the word
 setopt complete_in_word       # allow completion from within a word/phrase
-setopt nocorrect                # spelling correction for commands
+setopt nocorrect              # spelling correction for commands
 setopt list_ambiguous         # complete as much of a completion until it gets ambiguous.
 setopt nolisttypes
 setopt listpacked
@@ -178,8 +176,8 @@ export EDITOR='nvim'
 export VISUAL=$EDITOR
 export PAGER='less'
 export SHELL='/bin/zsh'
-export LANG='it_IT.UTF-8'
-export LC_ALL='it_IT.UTF-8'
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
 export BAT_THEME="gruvbox"
 if [[ ! $(tmux ls) ]]; then
   tmux new -s λ
