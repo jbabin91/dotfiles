@@ -9,8 +9,11 @@
     - '~/.config'
 
 - link:
-    ~/.editorconfig: .editorconfig
-    ~/.hushlogin: .hushlogin
+    # General
+    ~/.editorconfig: general/.editorconfig
+    ~/.hushlogin: general/.hushlogin
+    ~/Brewfile: general/Brewfile
+    ~/Brewfile.lock.json: general/Brewfile.lock.json
     # Alacritty Config
     ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
     # Git Config
