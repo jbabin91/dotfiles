@@ -5,14 +5,10 @@
       relink: true
 
 - clean:
-    - "~"
-    - "~/.config/alacritty"
-    - "~/.config/git"
-    - "~/.config/nvim"
+    - '~'
+    - '~/.config'
 
 - link:
-    # $HOME level files
-    ~/.tool-versions: .tool-versions
     ~/.editorconfig: .editorconfig
     ~/.hushlogin: .hushlogin
     # Alacritty Config
@@ -21,47 +17,9 @@
     ~/.config/git/config: config/git/.gitconfig
     ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
     ~/.config/git/ignore: config/git/.gitignore_global
-    # NVIM Config
-    # ~/.config/nvim/init.vim: config/nvim/init.vim
-    # ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
-    # ~/.config/nvim/autoload:
-    #   path: config/nvim/autoload/*.vim
-    #   glob: true
-    # ~/.config/nvim/ftplugin:
-    #   path: config/nvim/ftplugin/*.vim
-    #   glob: true
-    # ~/.config/nvim/general:
-    #   path: config/nvim/general/*.vim
-    #   glob: true
-    # ~/.config/nvim/keys:
-    #   path: config/nvim/keys/*.vim
-    #   glob: true
-    # ~/.config/nvim/lua:
-    #   path: config/nvim/lua/*.lua
-    #   glob: true
-    # ~/.config/nvim/plug-config:
-    #   path: config/nvim/plug-config/*.vim
-    #   glob: true
-    # ~/.config/nvim/snips:
-    #   path: config/nvim/snips/*.snippets
-    #   glob: true
-    # ~/.config/nvim/syntax:
-    #   path: config/nvim/syntax/*.vim
-    #   glob: true
-    # ~/.config/nvim/themes:
-    #   path: config/nvim/themes/*.vim
-    #   glob: true
-    # ~/.config/nvim/vim-plug:
-    #   path: config/nvim/vim-plug/*.vim
-    #   glob: true
-    # ~/.config/nvim/vscode:
-    #   path: config/nvim/vscode/*.vim
-    #   glob: true
-    # Tmux Config
-    ~/.tmux.conf: tmux/.tmux.conf
-    ~/.tmux.conf.local: tmux/.tmux.conf.local
-    ~/tmux-256color.terminfo: tmux/tmux-256color.terminfo
-    ~/tmux.terminfo: tmux/tmux.terminfo
+    # ZSH
+    ~/.zshrc: zsh/zshrc
+    ~/.zsh_aliases: zsh/zsh_aliases
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
+    - [git submodule update --init --recursive, Installing submodule]

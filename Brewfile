@@ -53,7 +53,6 @@ tap "teamookla/speedtest"
 # A
 brew "ack"
 brew "aircrack-ng"
-brew "asdf"
 # B
 brew "bat"
 brew "bfg"
@@ -75,6 +74,7 @@ brew "emacs-plus"
 brew "exa"
 # F
 brew "fcrackzip"
+brew "fnm"
 brew "fzf"
 # G
 brew "getantibody/tap/antibody"
@@ -109,6 +109,7 @@ brew "mtr"
 # N
 brew "neofetch"
 brew "neovim", args: ["HEAD"]
+brew "nvm"
 # O
 brew "openssh"
 brew "openssl@1.1"
@@ -123,7 +124,6 @@ brew "ranger"
 brew "rbenv"
 brew "readline"
 # S
-brew "schniz/tap/fnm"
 brew "sqlite"
 brew "ssh-copy-id"
 brew "subversion"
@@ -151,7 +151,6 @@ brew "woff2"
 brew "xpdf"
 brew "xz"
 # Y
-brew "yadm"
 brew "yarn"
 brew "ykman"
 brew "ykpers"
@@ -165,10 +164,8 @@ brew "zsh"
 # Cask install alphabeticical
 # A
 cask "adoptopenjdk"
-cask "alacritty"
 cask "alfred"
 # B
-cask "brave-browser"
 # C
 # D
 cask "day-o"
@@ -179,9 +176,9 @@ cask "dotnet-sdk"
 cask "dozer"
 # E
 # F
-cask "font-firacode-nerd-font"
-cask "font-firacode-nerd-font-mono"
-cask "font-jetbrainsmono-nerd-font-mono"
+cask "font-fira-code"
+cask "font-fira-mono"
+cask "font-jetbrains-mono"
 cask "font-victor-mono"
 # G
 cask "gitkraken"
@@ -208,7 +205,6 @@ cask "steam"
 # T
 # U
 # V
-cask "visual-studio-code"
 cask "vlc"
 # W
 # X

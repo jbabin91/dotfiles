@@ -115,3 +115,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 #zprof
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Apply starship theme
+# eval "$(starship init zsh)"
