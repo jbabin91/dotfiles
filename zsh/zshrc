@@ -1,9 +1,4 @@
 #####################
-# FIRST PROMPT LINE #
-#####################
-neofetch
-
-#####################
 # ZINIT             #
 #####################
 ### Added by Zinit's installer
@@ -87,6 +82,11 @@ zinit light lukechilds/zsh-nvm
 # Ruby
 zinit ice wait"1" lucid
 zinit light Meroje/zsh-rbenv
+# Python
+zinit ice atclone'PYENV_ROOT="$PWD" ./libexec/pyenv init - > zpyenv.zsh && git clone https://github.com/pyenv/pyenv-virtualenv ./plugins/pyenv-virtualenv' \
+    atinit'export PYENV_ROOT="$PWD"' atpull"%atclone" \
+    as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
+zinit light pyenv/pyenv
 # EXA
 zinit ice wait"2" lucid from"gh-r" as"program" mv"exa* -> exa"
 zinit light ogham/exa
@@ -138,6 +138,7 @@ zinit light "chriswalz/bit"
 zinit autoload'#manydots-magic' for knu/zsh-manydots-magic
 # z
 zinit light agkozak/zsh-z
+
 #####################
 # HISTORY           #
 #####################
@@ -169,6 +170,7 @@ unsetopt BEEP
 setopt vi
 
 chpwd() exa --git --icons --classify --group-directories-first --time-style=long-iso --group --color-scale
+
 #####################
 # ENV VARIABLE      #
 #####################
@@ -182,18 +184,22 @@ export BAT_THEME="gruvbox"
 if [[ ! $(tmux ls) ]]; then
   tmux new -s λ
 fi
+
 #####################
 # COLORING          #
 #####################
 autoload colors && colors
+
 #####################
 # ALIASES           #
 #####################
 source $HOME/.zsh_aliases
+
 #####################
 # Functions         #
 #####################
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+
 #####################
 # FANCY-CTRL-Z      #
 #####################
@@ -212,6 +218,7 @@ function fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
 #####################
 # FZF SETTINGS      #
 #####################
@@ -249,27 +256,11 @@ function fzf-gcloud-config-set-project() {
 }
 zle -N fzf-gcloud-config-set-project
 bindkey '^G' fzf-gcloud-config-set-project
+
 #####################
 # PATH              #
 #####################
-# export PATH=$PATH:/usr/local/go/bin:~/.local/bin:~/bin
-#####################
-# GO SETTINGS       #
-#####################
-# export GOPATH=$HOME/Dev/go
-#####################
-# FLUTTER SETTINGS  #
-#####################
-# export PATH="$PATH:$HOME/Dev/flutter/bin"
-###########################
-# ANDROID STUDIO SETTINGS #
-###########################
-# export PATH="$PATH:/opt/android-studio/bin"
-#####################
-# RVM VARIABLE      #
-#####################
-# export PATH="$PATH:$HOME/.rvm/bin"
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+source $HOME/.zsh_paths
 
 #####################
 # THEME             #

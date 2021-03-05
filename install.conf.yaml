@@ -24,6 +24,7 @@
     ~/.zshrc: zsh/zshrc
     ~/.zsh_aliases: zsh/zsh_aliases
     ~/.zsh_functions: zsh/zsh_functions
+    ~/.zsh_paths: zsh/zsh_paths
 
 - shell:
     - [git submodule update --init --recursive, Installing submodule]

@@ -1,6 +1,5 @@
 # taps
 # A
-tap "adoptopenjdk/openjdk"
 # B
 tap "bramstein/webfonttools"
 # C
@@ -52,6 +51,7 @@ tap "teamookla/speedtest"
 # Brew installs alphabeticical
 # A
 brew "ack"
+brew "asdf"
 brew "aircrack-ng"
 # B
 brew "bat"
@@ -71,10 +71,8 @@ brew "diff-so-fancy"
 brew "dns2tcp"
 # E
 brew "emacs-plus"
-brew "exa"
 # F
 brew "fcrackzip"
-brew "fnm"
 brew "fzf"
 # G
 brew "getantibody/tap/antibody"
@@ -109,19 +107,14 @@ brew "mtr"
 # N
 brew "neofetch"
 brew "neovim", args: ["HEAD"]
-brew "nvm"
 # O
 brew "openssh"
 brew "openssl@1.1"
 # P
 brew "pngcheck"
 brew "postgresql"
-brew "pyenv"
-brew "python"
 # Q
 # R
-brew "ranger"
-brew "rbenv"
 brew "readline"
 # S
 brew "sqlite"
@@ -163,8 +156,10 @@ brew "zsh"
 
 # Cask install alphabeticical
 # A
-cask "adoptopenjdk"
+cask "adoptopenjdk8"
 cask "alfred"
+cask "android-sdk"
+cask "android-studio"
 # B
 # C
 # D
@@ -185,6 +180,7 @@ cask "gitkraken"
 # H
 cask "hyper"
 # I
+cask "intel-haxm"
 cask "iterm2"
 # J
 # K
@@ -198,8 +194,10 @@ cask "postman"
 # Q
 cask "quitter"
 # R
+cask "responsively"
 # S
 cask "scroll-reverser"
+cask "slack"
 cask "spotify"
 cask "steam"
 # T
