@@ -5,8 +5,9 @@
       relink: true
 
 - clean:
-    - '~'
+    - '~/'
     - '~/.config'
+    - '~/.zsh'
 
 - link:
     # General
@@ -15,20 +16,23 @@
     ~/Brewfile: general/Brewfile
     ~/Brewfile.lock.json: general/Brewfile.lock.json
     # Alacritty Config
-    ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
+    ~/.config/alacritty/:
+      glob: true
+      path: config/alacritty/*
     # Git Config
     ~/.config/git/config: config/git/.gitconfig
     ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
     ~/.config/git/ignore: config/git/.gitignore_global
     # Kitty
-    ~/.config/kitty/kitty.conf: config/kitty/kitty.conf
-    ~/.config/kitty/nord.conf: config/kitty/nord.conf
+    ~/.config/kitty/kitty.conf:
+      glob: true
+      path: config/kitty/*
     # ZSH
     ~/.zshrc: zsh/zshrc
-    ~/.zshenv: zsh/zshenv
-    ~/.zsh_aliases: zsh/zsh_aliases
-    ~/.zsh_functions: zsh/zsh_functions
-    ~/.zsh_paths: zsh/zsh_paths
+    ~/.zsh/:
+      glob: true
+      path: zsh/*
+      exclude: [zsh/zshrc]
 
 - shell:
     - [git submodule update --init --recursive, Installing submodule]
