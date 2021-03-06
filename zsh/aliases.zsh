@@ -66,13 +66,10 @@ alias fd='flutter doctor'
 alias yolo='git commit -m "$(curl -s http://whatthecommit.com/index.txt)"'
 
 # GIT
-alias git='bit'
-
 alias gl='git pull --prune'
 alias glg='git log --graph --decorate --oneline --abbrev-commit'
 alias glga='glg --all'
-alias gp='git sync'
-# alias gp='git push origin HEAD'
+alias gp='git push origin HEAD'
 alias gpa='git push origin --all'
 alias gd='git diff'
 alias gc='git commit -s'
@@ -81,5 +78,5 @@ alias gco='git checkout'
 alias gb='git branch -v'
 alias ga='git add'
 alias gaa='git add -A'
-alias gcm='git save '
+alias gcm="git commit -m"
 alias gs='git status -sb'
