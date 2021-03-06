@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # editor
-alias e="code"
+alias e='code'
 
 # General UNIX
 alias c='clear'
@@ -27,8 +27,8 @@ alias la="exa -la --git --group-directories-first"
 # Development
 alias co='cd ~/code'
 alias wo='cd ~/work'
-alias cgo="cd $GOPATH/src/github.com/jbabin91"
-alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
+alias cgo='cd $GOPATH/src/github.com/jbabin91'
+alias ios='open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app'
 
 # Moving around
 alias ..='cd ..'
@@ -58,13 +58,19 @@ alias bubo='brew update && brew outdated'
 alias bubu='bubo && bubc'
 alias ud='bubu'
 
+# Flutter
+alias fu='flutter upgrade'
+alias fd='flutter doctor'
+
 # GIT GUD
 alias yolo='git commit -m "$(curl -s http://whatthecommit.com/index.txt)"'
 
 # GIT
+alias git='bit'
+
 alias gl='git pull --prune'
-alias glg="git log --graph --decorate --oneline --abbrev-commit"
-alias glga="glg --all"
+alias glg='git log --graph --decorate --oneline --abbrev-commit'
+alias glga='glg --all'
 alias gp='git push origin HEAD'
 alias gpa='git push origin --all'
 alias gd='git diff'

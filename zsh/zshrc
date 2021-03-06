@@ -322,9 +322,10 @@ zinit light "chriswalz/bit"
 zinit ice wait blockf lucid atpull'zinit creinstall -q .'
 zinit load zsh-users/zsh-completions
 
-# #####################
-# # FANCY-CTRL-Z      #
-# #####################
+# - - - - - - - - - - - - - - - - - - - -
+# FANCY-CTRL-Z
+# - - - - - - - - - - - - - - - - - - - -
+
 function fg-fzf() {
 	job="$(jobs | fzf -0 -1 | sed -E 's/\[(.+)\].*/\1/')" && echo '' && fg %$job
 }
@@ -341,9 +342,10 @@ function fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
-# #####################
-# # FZF SETTINGS      #
-# #####################
+# - - - - - - - - - - - - - - - - - - - -
+# FZF SETTINGS
+# - - - - - - - - - - - - - - - - - - - -
+
 export FZF_DEFAULT_OPTS="
 --ansi
 --layout=default
@@ -362,10 +364,9 @@ export FZF_DEFAULT_OPTS="
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-#####################
-# FZF-GC-PROJECT    #
-#####################
-# Thanks to sei40kr/zsh-fzf-gcloud
+# - - - - - - - - - - - - - - - - - - - -
+# FZF-GC-PROJECT
+# - - - - - - - - - - - - - - - - - - - -
 
 function fzf-gcloud-config-set-project() {
     local project="$(gcloud projects list |
