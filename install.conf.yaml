@@ -24,7 +24,7 @@
     ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
     ~/.config/git/ignore: config/git/.gitignore_global
     # Kitty
-    ~/.config/kitty/kitty.conf:
+    ~/.config/kitty/:
       glob: true
       path: config/kitty/*
     # ZSH
