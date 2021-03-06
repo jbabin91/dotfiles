@@ -18,13 +18,13 @@ live_config_reload: true
 # Font configuration
 font:
   normal:
-    family: Victor Mono
+    family: JetBrains Mono NL
     style: Regular
   bold:
-    family: Victor Mono
+    family: JetBrains Mono NL
     style: Bold
   italic:
-    family: Victor Mono
+    family: JetBrains Mono NL
     style: Italic
   size: 11.0
   offset:
