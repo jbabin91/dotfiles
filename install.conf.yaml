@@ -20,8 +20,12 @@
     ~/.config/git/config: config/git/.gitconfig
     ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
     ~/.config/git/ignore: config/git/.gitignore_global
+    # Kitty
+    ~/.config/kitty/kitty.conf: config/kitty/kitty.conf
+    ~/.config/kitty/nord.conf: config/kitty/nord.conf
     # ZSH
     ~/.zshrc: zsh/zshrc
+    ~/.zshenv: zsh/zshenv
     ~/.zsh_aliases: zsh/zsh_aliases
     ~/.zsh_functions: zsh/zsh_functions
     ~/.zsh_paths: zsh/zsh_paths

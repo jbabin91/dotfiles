@@ -183,6 +183,7 @@ cask "intel-haxm"
 cask "iterm2"
 # J
 # K
+cask "kitty"
 # L
 cask "logitech-options"
 # M
