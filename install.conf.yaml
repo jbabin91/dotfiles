@@ -27,6 +27,10 @@
     ~/.config/kitty/:
       glob: true
       path: config/kitty/*
+    # NVIM
+    ~/.config/nvim/:
+      glob: true
+      path: config/nvim/*
     # ZSH
     ~/.zshrc: zsh/zshrc
     ~/.zsh/:
