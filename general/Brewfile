@@ -144,7 +144,6 @@ brew "woff2"
 brew "xpdf"
 brew "xz"
 # Y
-brew "yarn"
 brew "ykman"
 brew "ykpers"
 # Z

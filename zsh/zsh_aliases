@@ -21,8 +21,8 @@ alias reload!='exec "$SHELL" -l'
 
 # EXA
 alias ls="exa"
-alias la="exa -as type"
-alias ll="exa -las type"
+alias ll="exa -ll"
+alias la="exa -la --git --group-directories-first"
 
 # Development
 alias co='cd ~/code'
@@ -57,6 +57,9 @@ alias bubc='brew upgrade && brew cleanup'
 alias bubo='brew update && brew outdated'
 alias bubu='bubo && bubc'
 alias ud='bubu'
+
+# GIT GUD
+alias yolo='git commit -m "$(curl -s http://whatthecommit.com/index.txt)"'
 
 # GIT
 alias gl='git pull --prune'
