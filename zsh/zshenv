@@ -1,5 +1,9 @@
 source "$HOME/.cargo/env"
 
+# - - - - - - - - - - - - - - - - - - - -
+# General Settings
+# - - - - - - - - - - - - - - - - - - - -
+
 export EDITOR='nvim'
 export VISUAL=$EDITOR
 export PAGER='less'
@@ -7,28 +11,41 @@ export SHELL='/bin/zsh'
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 
-#####################
-# FLUTTER SETTINGS  #
-#####################
+# - - - - - - - - - - - - - - - - - - - -
+# Flutter Settings
+# - - - - - - - - - - - - - - - - - - - -
+
 export PATH="$PATH:$HOME/.development/flutter/bin"
 
-#####################
-# GO SETTINGS       #
-#####################
+# - - - - - - - - - - - - - - - - - - - -
+# Go Settings
+# - - - - - - - - - - - - - - - - - - - -
+
 export PATH="$PATH:/usr/local/go/bin"
 
-###########################
-# ANDROID STUDIO SETTINGS #
-###########################
+# - - - - - - - - - - - - - - - - - - - -
+# Android Studio Settings
+# - - - - - - - - - - - - - - - - - - - -
+
 # export PATH="$PATH:/opt/android-studio/bin"
 
-#####################
-# RVM VARIABLE      #
-#####################
+# - - - - - - - - - - - - - - - - - - - -
+# RVM Settings
+# - - - - - - - - - - - - - - - - - - - -
+
 # export PATH="$PATH:$HOME/.rvm/bin"
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-#####################
-# Brew Settings     #
-#####################
+# - - - - - - - - - - - - - - - - - - - -
+# Brew Settings
+# - - - - - - - - - - - - - - - - - - - -
+
 export PATH="/usr/local/sbin:$PATH"
+
+# - - - - - - - - - - - - - - - - - - - -
+# Python Settings
+# - - - - - - - - - - - - - - - - - - - -
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi

@@ -228,3 +228,5 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
     exec 2>&3 3>&-
     zprof > $ZSH_LOGS/zshprofile$(date +'%s')
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
