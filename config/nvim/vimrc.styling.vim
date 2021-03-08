@@ -14,6 +14,9 @@ set background=dark
 let g:tokyonight_style =  'storm'
 let g:tokyonight_enable_italic = 1
 
+" Set Airline theme
+let g:airline_theme='tokyonight'
+
 " Set Color Theme
 colorscheme tokyonight
 

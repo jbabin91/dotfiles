@@ -2,6 +2,7 @@
 
 # editor
 alias e='code'
+alias vi='nvim'
 
 # General UNIX
 alias c='clear'
