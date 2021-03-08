@@ -7,16 +7,16 @@ let mapleader = ","
 let maplocalleader = "\\"
 
 " Plugins: Load all the plugins
-runtime vimrc.plugins
+runtime vimrc.plugins.vim
 
 " Standard: file settings
-runtime vimrc.standards
+runtime vimrc.standards.vim
 
 " " Plugin: Indent level navigation
-runtime vimrc.indent_level_navigation
+runtime vimrc.indent_level_navigation.vim
 
 " " Plugin: vimbits
-runtime vimrc.vimbits
+runtime vimrc.vimbits.vim
 
 " " Styling: All styles
-runtime vimrc.styling
+runtime vimrc.styling.vim

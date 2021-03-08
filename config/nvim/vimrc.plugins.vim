@@ -28,6 +28,7 @@ set noshowmode
 
 " Plugins: Theme
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'ghifarit53/tokyonight-vim'
 
 " Plugins: Indent Guides -----------------------------------------------------
 Plug 'vim-scripts/Indent-Guides'

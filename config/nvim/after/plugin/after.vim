@@ -8,4 +8,4 @@ endif
 
 let g:after_vim_loaded = 1
 
-runtime ../vimrc.after
+runtime ../vimrc.after.vim

@@ -9,7 +9,13 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
 set termguicolors
 set background=dark
-colorscheme Tomorrow-Night
+
+" Theme specific settings
+let g:tokyonight_style =  'storm'
+let g:tokyonight_enable_italic = 1
+
+" Set Color Theme
+colorscheme tokyonight
 
 set cursorline
 
