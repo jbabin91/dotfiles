@@ -31,6 +31,10 @@
     ~/.config/nvim/:
       glob: true
       path: config/nvim/*
+    # Karabiner
+    ~/.config/karabiner/:
+      glob: true
+      path: config/karabiner/*
     # ZSH
     ~/.zshrc: zsh/zshrc
     ~/.zsh/:

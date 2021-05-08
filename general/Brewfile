@@ -34,6 +34,7 @@ tap "koekeishiya/formulae"
 tap "prisma/prisma"
 # Q
 # R
+brew "rbenv"
 # S
 tap "schniz/tap"
 tap "somdoron/formulae"
@@ -60,13 +61,11 @@ brew "binutils"
 brew "binwalk"
 # C
 brew "cifer"
-brew "chezmoi"
 brew "coreutils"
 brew "cowsay"
 brew "ctags"
 brew "curl"
 # D
-brew "d12frosted/emacs-plus/emacs-plus"
 brew "diff-so-fancy"
 brew "dns2tcp"
 # E
@@ -92,17 +91,17 @@ brew "htop"
 brew "httpie"
 # I
 # J
-brew "jesseduffield/lazydocker/lazydocker"
-brew "jesseduffield/lazygit/lazygit"
 brew "john"
 brew "jq"
 # K
 brew "knock"
 # L
-brew "lastpass-cli"
+brew "lazydocker"
+brew "lazygit"
 brew "libpq"
 brew "lolcat"
 # M
+brew "mas"
 brew "mtr"
 # N
 brew "neofetch"
@@ -120,7 +119,6 @@ brew "readline"
 brew "sqlite"
 brew "ssh-copy-id"
 brew "subversion"
-brew "starship"
 # T
 brew "tcpflow"
 brew "tcpreplay"
@@ -131,6 +129,7 @@ brew "the_silver_searcher"
 brew "tldr"
 brew "tmux"
 brew "tree"
+brew "thefuck"
 # U
 brew "ucspi-tcp"
 # V
@@ -159,15 +158,13 @@ cask "adoptopenjdk8"
 cask "alfred"
 cask "android-sdk"
 cask "android-studio"
+cask "azure-data-studio"
 # B
 # C
 # D
-cask "day-o"
 cask "discord"
 cask "docker"
-cask "dockey"
 cask "dotnet-sdk"
-cask "dozer"
 # E
 # F
 cask "font-fira-code"
@@ -181,8 +178,10 @@ cask "hyper"
 # I
 cask "intel-haxm"
 cask "iterm2"
+cask "itsycal"
 # J
 # K
+cask "karabiner-elements"
 cask "kitty"
 # L
 cask "logitech-options"
@@ -208,3 +207,6 @@ cask "vlc"
 # X
 # Y
 # Z
+
+# AppStore
+mas 'Amphetamine', id: 937984704
