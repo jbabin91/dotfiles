@@ -79,5 +79,5 @@ alias gco='git checkout'
 alias gb='git branch -v'
 alias ga='git add'
 alias gaa='git add -A'
-alias gcm="git commit -m"
+alias gcm='git commit -am'
 alias gs='git status -sb'

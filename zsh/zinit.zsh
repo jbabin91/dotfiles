@@ -22,12 +22,6 @@ autoload -Uz _zinit
 # Most Themes Use This Option.
 setopt promptsubst
 
-# These plugins provide many aliases - atload''
-zinit wait lucid for \
-        OMZ::lib/git.zsh \
-    atload"unalias grv" \
-        OMZ::plugins/git/git.plugin.zsh
-
 if [ "$(uname)" = "Darwin" ]; then
     zinit ice as"program" pick"target/release/starship" \
         atclone"cargo build --release" atpull"%atclone" \
@@ -62,7 +56,6 @@ zinit wait lucid light-mode for \
       OMZ::lib/completion.zsh \
       OMZ::lib/functions.zsh \
       OMZ::lib/diagnostics.zsh \
-      OMZ::lib/git.zsh \
       OMZ::lib/grep.zsh \
       OMZ::lib/key-bindings.zsh \
       OMZ::lib/misc.zsh \
