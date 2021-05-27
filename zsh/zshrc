@@ -153,10 +153,10 @@ setopt list_ambiguous         # complete as much of a completion until it gets a
 #     command-not-found functionality
 #     python's virtualenvwrapper
 
-# "${HOME}/.zsh/functions.zsh" \
-for file in "${HOME}/.zsh/aliases.zsh" \
+for file in "${HOME}/.zsh/zshenv" \
+            "${HOME}/.zsh/aliases.zsh" \
             "${HOME}/.zsh/zinit.zsh" \
-            "${HOME}/.zsh/zshenv"
+            "${HOME}/.zsh/functions.zsh"
 do
     [ -s "${file}" ] && source "${file}"
 done
