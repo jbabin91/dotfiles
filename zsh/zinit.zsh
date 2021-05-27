@@ -22,6 +22,11 @@ autoload -Uz _zinit
 # Most Themes Use This Option.
 setopt promptsubst
 
+# zinit wait lucid for \
+#         OMZ::lib/git.zsh \
+#     atload"unalias grv" \
+#         OMZ::plugins/git/git.plugin.zsh
+
 if [ "$(uname)" = "Darwin" ]; then
     zinit ice as"program" pick"target/release/starship" \
         atclone"cargo build --release" atpull"%atclone" \
