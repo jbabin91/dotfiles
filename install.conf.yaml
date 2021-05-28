@@ -1,13 +1,18 @@
 - defaults:
     link:
+      glob: true
       create: true
-      force: true
       relink: true
+      force: true
 
 - clean:
-    - '~/'
-    - '~/.config/'
-    - '~/.zsh/'
+    ~/:
+      force: false
+    ~/.config:
+      recursive: true
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodule]
 
 - link:
     # General
@@ -23,20 +28,19 @@
     ~/.config/git/ignore: config/git/.gitignore_global
     # Kitty
     ~/.config/kitty/:
-      glob: true
       path: config/kitty/*
-    # NVIM
-    ~/.config/nvim/:
-      glob: true
-      path: config/nvim/*
     # Karabiner
     ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
-    # ZSH
-    ~/.zshrc: zsh/zshrc
-    ~/.zsh/:
-      glob: true
-      path: zsh/*
-      exclude: [zsh/zshrc]
+    ~/.config/fish/functions/fish_greeting.fish: config/fish/functions/fish_greeting.fish
+    ~/.config/fish/fish_plugins: config/fisher/plugins
+    ~/.config/fish/conf.d/starship.fish: config/starship/conf.d/starship.fish
+    ~/.config/bat/config: config/bat/config
+    ~/.config/htop/htoprc: config/htop/htoprc
+    ~/.config/.ssh/config.dotfiles: config/ssh/config.dotfiles
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodule]
+    - description: 'Bootstrap fish'
+      command: './script/bootstrap.fish'
+      stdout: true
+      stderr: true
+      stdin: true
