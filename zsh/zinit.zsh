@@ -107,10 +107,10 @@ zinit ice wait"1" lucid
 zinit light Aloxaf/fzf-tab
 
 # Python
-zinit ice atclone'PYENV_ROOT="$PWD" ./libexec/pyenv init - > zpyenv.zsh && git clone https://github.com/pyenv/pyenv-virtualenv ./plugins/pyenv-virtualenv' \
-    atinit'export PYENV_ROOT="$PWD"' atpull"%atclone" \
-    as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
-zinit light pyenv/pyenv
+# zinit ice atclone'PYENV_ROOT="$PWD" ./libexec/pyenv init --path > zpyenv.zsh && git clone https://github.com/pyenv/pyenv-virtualenv ./plugins/pyenv-virtualenv' \
+#     atinit'export PYENV_ROOT="$PWD"' atpull"%atclone" \
+#     as'command' pick'bin/pyenv' src"zpyenv.zsh" nocompile'!'
+# zinit light pyenv/pyenv
 
 # # EXA
 zinit ice wait"2" lucid from"gh-r" as"program" mv"exa* -> exa"
