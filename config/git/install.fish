@@ -14,4 +14,5 @@ if command -qa exa
   abbr -a gaa 'git add -A'
   abbr -a gcm 'git commit -am'
   abbr -a gs 'git status -sb'
+  abbr -a yolo 'git commit -m "(curl -s http://whatthecommit.com/index.txt)"'
 end
