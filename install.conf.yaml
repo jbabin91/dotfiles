@@ -31,9 +31,13 @@
       path: config/kitty/*
     # Karabiner
     ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
+    # Fish
     ~/.config/fish/functions/fish_greeting.fish: config/fish/functions/fish_greeting.fish
     ~/.config/fish/fish_plugins: config/fisher/plugins
+    # Fish theme
     ~/.config/fish/conf.d/starship.fish: config/starship/conf.d/starship.fish
+    # vim
+    ~/.vimrc: config/vim/vimrc
     ~/.config/bat/config: config/bat/config
     ~/.config/htop/htoprc: config/htop/htoprc
     ~/.config/.ssh/config.dotfiles: config/ssh/config.dotfiles
