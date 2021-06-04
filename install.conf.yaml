@@ -40,7 +40,14 @@
     ~/.vimrc: config/vim/vimrc
     ~/.config/bat/config: config/bat/config
     ~/.config/htop/htoprc: config/htop/htoprc
+    # ssh
     ~/.config/.ssh/config.dotfiles: config/ssh/config.dotfiles
+    # yabai
+    ~/.config/yabai/yabairc: config/yabai/yabairc
+    # skhd
+    ~/.config/skhd/skhdrc: config/skhd/skhdrc
+    # spotifyd
+    ~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
 
 - shell:
     - description: 'Bootstrap fish'
