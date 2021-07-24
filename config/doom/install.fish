@@ -1,40 +1,61 @@
 #!/usr/bin/env fish
 
-if test -d ~/.config/doom
-    echo "DOOM Emacs personal configuration already set up"
-else
-    # echo "Cloning personal configuration.."
-    # echo "git clone git@github.com:Flirre/.doom.d.git ~/.config/doom"
-    # and echo \n"Successfully cloned personal configuration"\n\n
-    # or echo \n"Failed to clone personal configuration"\n\n
+function info
+	echo [(set_color --bold blue) ' .. ' (set_color normal)] $argv
 end
 
+function user
+	echo [(set_color --bold red) ' ?? ' (set_color normal)] $argv
+end
+
+function success
+	echo [(set_color --bold green) ' OK ' (set_color normal)] $argv
+end
+
+function abort
+	echo [(set_color --bold yellow) ABRT (set_color normal)] $argv
+	exit 1
+end
+
+# Implement this if pulling doom config from a different repo.
+# if test -d ~/.config/doom
+#     info "DOOM Emacs personal configuration already set up"
+# else
+    # info "Cloning personal configuration.."
+    # # configure this with repo containing doom configs
+    # echo "git clone git@github.com:Flirre/.doom.d.git ~/.config/doom"
+    # and success "Successfully cloned personal configuration"
+    # or abort "Failed to clone personal configuration"
+# end
+
 if test -d ~/.doom-emacs.d
-    echo "DOOM Emacs is already downloaded"
+    info "DOOM Emacs is already downloaded"
 else
-    echo "Cloning DOOM Emacs.."
+    info "Cloning DOOM Emacs.."
     git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.doom-emacs.d
-    and echo "Successfully cloned DOOM Emacs"\n\n
-    or echo "Failed to clone DOOM Emacs"\n\n
+    and success "Successfully cloned DOOM Emacs"
+    or abort "Failed to clone DOOM Emacs"
 end
 
 if not test -d ~/.doom-emacs/.local/straight
-    echo "Installing DOOM Emacs.."
+    info "Installing DOOM Emacs.."
     ~/.doom-emacs/bin/doom install
-    and echo "Successfully installed DOOM Emacs"\n\n
-    or echo "Failed to install DOOM Emacs"\n\n
-    echo "Compiling DOOM Emacs.."
+    and success "Successfully installed DOOM Emacs"
+    or abort "Failed to install DOOM Emacs"
+    info "Compiling DOOM Emacs.."
     ~/.doom-emacs/bin/doom compile
-    and "Successfully compiled DOOM Emacs"\n\n
-    or echo "failed to compile DOOM Emacs"\n\n
+    and success "Successfully compiled DOOM Emacs"
+    or abort "failed to compile DOOM Emacs"
 else
-    echo "DOOM Emacs already installed"
+    info "DOOM Emacs already installed"
 end
 
 # Add doom to path if not already added.
 if not contains $HOME/.doom-emacs/bin $fish_user_paths
-    echo "Adding DOOM to user path"
+    info "Adding DOOM to user path"
     set -Ua fish_user_paths ~/.doom-emacs/bin
+    and success "Sucessfully added DOOM to user path"
+    or abort "failed to add DOOM to user path"
 else
-    echo "DOOM Emacs already present on path"
+    info "DOOM Emacs already present on path"
 end

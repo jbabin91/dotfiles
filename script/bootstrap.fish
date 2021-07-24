@@ -5,11 +5,11 @@
 set DOTFILES_ROOT (pwd -P)
 
 function info
-	echo [(set_color --bold) ' .. ' (set_color normal)] $argv
+	echo [(set_color --bold blue) ' .. ' (set_color normal)] $argv
 end
 
 function user
-	echo [(set_color --bold) ' ?? ' (set_color normal)] $argv
+	echo [(set_color --bold red) ' ?? ' (set_color normal)] $argv
 end
 
 function success
