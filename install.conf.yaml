@@ -53,6 +53,15 @@
     # NVIM
     ~/.config/nvim/:
       path: config/nvim/*
+    # Doom Emacs
+    ~/.config/doom/config.org: config/doom/config.org
+    ~/.config/doom/config.el: config/doom/config.el
+    ~/.config/doom/init.el: config/doom/init.el
+    ~/.config/doom/packages.el: config/doom/packages.el
+    ~/.config/doom/custom.el: config/doom/custom.el
+    ~/.config/doom/doom-emacs-dash.png: config/doom/doom-emacs-dash.png
+    ~/.config/doom/eshell/:
+      path: config/doom/eshell/*
 
 - shell:
     - description: 'Bootstrap fish'
