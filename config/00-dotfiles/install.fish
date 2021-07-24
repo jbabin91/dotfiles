@@ -4,7 +4,7 @@ set -Ux VISUAL $EDITOR
 set -Ux WEDITOR code
 
 set -Ux DOTFILES ~/.dotfiles
-set -Ux PROJECTS ~/Developer
+set -Ux PROJECTS ~/Code
 
 set -Ua fish_user_paths $DOTFILES/bin $HOME/.bin
 
