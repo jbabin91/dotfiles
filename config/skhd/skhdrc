@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # open terminal
-cmd - return : /Applications/Kitty.app/Contents/Macos/kitty --single-instance -d ~
+# cmd - return : /Applications/Kitty.app/Contents/Macos/kitty --single-instance -d ~
 
 # Restart yabai
 fn + ctrl - q : launchctl kickstart -k "gui/501/homebrew.mxcl.yabai"; skhd --reload
