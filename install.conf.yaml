@@ -37,7 +37,7 @@
     # Fish theme
     ~/.config/fish/conf.d/starship.fish: config/starship/conf.d/starship.fish
     # vim
-    ~/.vimrc: config/vim/vimrc
+    # ~/.vimrc: config/vim/vimrc
     ~/.config/bat/config: config/bat/config
     ~/.config/htop/htoprc: config/htop/htoprc
     # ssh
@@ -51,8 +51,8 @@
     # Tmux
     ~/.tmux.conf: config/tmux/tmux.conf
     # NVIM
-    ~/.config/nvim/:
-      path: config/nvim/*
+    #~/.config/nvim/:
+    #  path: config/nvim/*
     # Doom Emacs
     ~/.config/doom/config.org: config/doom/config.org
     ~/.config/doom/config.el: config/doom/config.el
