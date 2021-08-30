@@ -7,12 +7,11 @@
 
 - clean:
     ~/:
-      force: false
     ~/.config:
       recursive: true
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodule]
+    - [git submodule update --init --recursive, Installing/updating submodules]
 
 - link:
     # General
@@ -27,20 +26,14 @@
     ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
     ~/.config/git/ignore: config/git/.gitignore_global
     # Kitty
-    ~/.config/kitty/:
-      path: config/kitty/*
+    ~/.config/kitty: config/kitty
     # Karabiner
     ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
     # Fish
-    ~/.config/fish/config.fish: config/fish/config.fish
-    ~/.config/fish/abbreviations.fish: config/fish/abbreviations.fish
-    ~/.config/fish/functions/fish_greeting.fish: config/fish/functions/fish_greeting.fish
-    ~/.config/fish/fish_plugins: config/fisher/plugins
-    # Fish theme
-    ~/.config/fish/conf.d/starship.fish: config/starship/conf.d/starship.fish
-    # vim
-    # ~/.vimrc: config/vim/vimrc
+    ~/.config/fish: config/fish
+    # bat
     ~/.config/bat/config: config/bat/config
+    # htop
     ~/.config/htop/htoprc: config/htop/htoprc
     # ssh
     ~/.config/.ssh/config.dotfiles: config/ssh/config.dotfiles
@@ -64,10 +57,9 @@
     ~/.config/doom/doom-emacs-dash.png: config/doom/doom-emacs-dash.png
     ~/.config/doom/eshell/:
       path: config/doom/eshell/*
-
-- shell:
-    - description: 'Bootstrap fish'
-      command: './script/bootstrap.fish'
-      stdout: true
-      stderr: true
-      stdin: true
+# - shell:
+#     - description: 'Bootstrap fish'
+#       command: './script/bootstrap.fish'
+#       stdout: false
+#       stderr: true
+#       stdin: true
