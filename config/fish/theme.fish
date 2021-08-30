@@ -11,6 +11,8 @@ set -g theme_title_use_abbreviated_path yes
 #
 ### base16 theme
 #
-if functions -q base16-monokai
-    base16-monokai
-end
+# if functions -q base16-monokai
+#     base16-monokai
+# end
+
+starship init fish | source
