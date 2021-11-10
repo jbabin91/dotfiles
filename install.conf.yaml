@@ -31,6 +31,8 @@
     ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
     # Fish
     ~/.config/fish: config/fish
+    # Neofetch
+    ~/.config/neofetch: config/neofetch
     # bat
     ~/.config/bat/config: config/bat/config
     # htop

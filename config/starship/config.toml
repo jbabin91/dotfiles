@@ -38,7 +38,7 @@ read_only = " 🔒"
 read_only_style = "fg:blue bold"
 style = "blue bold"
 format = "[$path ]($style)[$read_only]($read_only_style)"
-truncation_length = 1
+truncation_length = 2
 
 [git_branch]
 symbol = ""

@@ -10,3 +10,4 @@ oh-my-fish/plugin-gi
 oh-my-fish/plugin-rustup
 patrickf1/colored_man_pages.fish
 franciscolourenco/done
+lilyball/nix-env.fish
