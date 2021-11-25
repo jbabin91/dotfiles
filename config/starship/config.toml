@@ -1,79 +1,88 @@
-# starship config.toml
+[battery]
+full_symbol = "🔋"
+charging_symbol = "🔌"
+discharging_symbol = "⚡"
 
-# Use custom format
-format = """
-$username\
-$hostname\
-$directory\
-$git_branch\
-$git_state\
-$git_status\
-$dotnet\
-$kotlin\
-$rust\
-$python\
-$status\
-$line_break\
-$character"""
-
-# Wait 10 milliseconds for starship to check files under the current directory.
-scan_timeout = 10
-
-# Disable the blank line at the start of the prompt
-add_newline = true
+[[battery.display]]
+threshold = 30
+style = "bold red"
 
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vicmd_symbol = "[❮](bold green)"
+error_symbol = "[✖](bold red) "
+success_symbol = "[➜](bold green)"
+
+[cmd_duration]
+min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
+format = "took [$duration]($style)"
+
+[directory]
+truncation_length = 2
+format = "[$path]($style)[$lock_symbol]($lock_style)"
+
+[git_branch]
+format = " [$symbol$branch]($style) "
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
+
+[git_state]
+format = '[($state( $progress_current of $progress_total)\)]($style) '
+
+[git_status]
+conflicted = "⚔️ "
+ahead = "🏎️ 💨 ×${count}"
+behind = "🐢 ×${count}"
+diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
+untracked = "🛤️ ×${count}"
+stashed = "📦 "
+modified = "📝 ×${count}"
+staged = "🗃️ ×${count}"
+renamed = "📛 ×${count}"
+deleted = "🗑️ ×${count}"
+style = "bright-white"
+format = "$all_status$ahead_behind "
+
+[hostname]
+ssh_only = true
+format = "<[$hostname]($style)> "
+trim_at = "-"
+style = "bold dimmed white"
+disabled = false
+
+[username]
+style_user = "bold dimmed blue"
+format = "[$user]($style) "
+show_always = true
+disabled = true
+
+[time]
+use_12hr = true
+format = "🕙 $time($style) "
+style = "bright-white"
+disabled = true
+
+[package]
+disabled = true
+
+[nodejs]
+format = " [$symbol$version]($style) "
+style = "bold green"
+
+[python]
+format = " [$symbol$version]($style) "
+style = "bold green"
+
+[golang]
+format = " [$symbol$version]($style) "
+style = "bold blue"
+
+[rust]
+format = " [$symbol$version]($style) "
+style = "bold green"
 
 [aws]
 disabled = true
 
 [gcloud]
 disabled = true
-
-[directory]
-read_only = " 🔒"
-read_only_style = "fg:blue bold"
-style = "blue bold"
-format = "[$path ]($style)[$read_only]($read_only_style)"
-truncation_length = 2
-
-[git_branch]
-symbol = ""
-always_show_remote = false
-format = "[$symbol $branch]($style)"
-style = "purple bold"
-truncation_length = "2^63 - 1"
-truncation_symbol = "…"
-only_attached = false
-disabled = false
-
-[git_status]
-format = '([ $all_status$ahead_behind]($style))'
-style = "bold white"
-ahead =	"⏫ ${count} "
-behind = "⏬ ${count} "
-conflicted = "🔥 "
-untracked = "🔎 ${count} "
-modified = "🖍 ${count} "
-renamed = "⏩ ${count} "
-staged = "✅ ${count} "
-stashed = "💰 "
-deleted = "🗑️ ${count} "
-
-[package]
-disabled = true
-
-[status]
-disabled = false
-
-[time]
-disabled = false
-format = '⏰[ $time]($style) '
-time_format = "%T"
-style = 'white'
-
-[python]
-format = '[${symbol}(${version} )(\($virtualenv\))]($style) '
