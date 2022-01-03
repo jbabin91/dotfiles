@@ -84,6 +84,16 @@ alias psmem='ps auxf | sort -nr -k 4'
 alias pscpu='ps auxf | sort -nr -k 3'
 
 # git
+alias g="git"
+alias gs="git status"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gdca="git diff --cached --all"
+alias gdcaa="git diff --cached --all --stat"
+alias ga="git add ."
+alias gaa="git add -A ."
+alias gc="git commit -m"
+alias gp="git push"
 alias addup="git add -u"
 alias addall="git add ."
 alias branch="git branch"
