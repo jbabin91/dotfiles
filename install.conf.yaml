@@ -31,6 +31,10 @@
     ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
     # Fish
     ~/.config/fish: config/fish
+    # Starship
+    ~/.config/starship.toml: config/starship/config.toml
+    # ZSH
+    ~/.zshrc: config/zsh/.zshrc
     # Neofetch
     ~/.config/neofetch: config/neofetch
     # bat
@@ -40,13 +44,13 @@
     # ssh
     ~/.config/.ssh/config.dotfiles: config/ssh/config.dotfiles
     # yabai
-    ~/.config/yabai/yabairc: config/yabai/yabairc
+    #~/.config/yabai/yabairc: config/yabai/yabairc
     # skhd
-    ~/.config/skhd/skhdrc: config/skhd/skhdrc
+    #~/.config/skhd/skhdrc: config/skhd/skhdrc
     # spotifyd
-    ~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
+    #~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
     # Tmux
-    ~/.tmux.conf: config/tmux/tmux.conf
+    #~/.tmux.conf: config/tmux/tmux.conf
     # NVIM
     # ~/.config/nvim/:
     #  path: config/nvim/*
