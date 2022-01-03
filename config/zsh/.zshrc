@@ -119,9 +119,9 @@ alias newtag="git tag -a"
 
 # switch between shells
 # I do not recommend switching default SHELL from bash.
-alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
+alias tobash="chsh -s $(which bash) && echo 'Now log out.'"
+alias tozsh="chsh -s /bin/zsh && echo 'Now log out.'"
+alias tofish="chsh -s $(which fish) && echo 'Now log out.'"
 
 # dotfiles
 alias .f="cd ~/.dotfiles"

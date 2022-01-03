@@ -10,10 +10,10 @@ set TERM "xterm-256color" # Sets the terminal type
 set EDITOR "nvim"         # $EDITOR use Nvim in Terminal
 set VISUAL $EDITOR        # $VISUAL use Nvim in GUI mode
 
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$ANDROID_HOME/cmdline-tools/tools/bin/:$PATH
-export PATH=$ANDROID_HOME/emulator/:$PATH
-export PATH=$ANDROID_HOME/platform-tools/:$PATH
+set ANDROID_HOME $HOME/Library/Android/sdk
+set -U fish_user_paths $ANDROID_HOME/cmdline-tools/tools/bin/ $fish_user_paths
+set -U fish_user_paths $ANDROID_HOME/emulator/ $fish_user_paths
+set -U fish_user_paths $ANDROID_HOME/platform-tools/ $fish_user_paths
 
 ### SET MANPAGER
 ### Uncomment only one of these!
@@ -152,9 +152,9 @@ alias ytv-best="youtube-dl -f bestvideo+bestaudio "
 
 # switch between shells
 # I do not recommend switching default SHELL from bash.
-alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
+alias tobash="chsh -s (which bash) && echo 'Now log out.'"
+alias tozsh="chsh -s /bin/zsh && echo 'Now log out.'"
+alias tofish="chsh -s (which fish) && echo 'Now log out.'"
 
 # dotfiles
 alias .f="cd ~/.dotfiles"
