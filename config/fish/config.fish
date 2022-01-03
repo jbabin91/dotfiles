@@ -10,6 +10,11 @@ set TERM "xterm-256color" # Sets the terminal type
 set EDITOR "nvim"         # $EDITOR use Nvim in Terminal
 set VISUAL $EDITOR        # $VISUAL use Nvim in GUI mode
 
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$ANDROID_HOME/cmdline-tools/tools/bin/:$PATH
+export PATH=$ANDROID_HOME/emulator/:$PATH
+export PATH=$ANDROID_HOME/platform-tools/:$PATH
+
 ### SET MANPAGER
 ### Uncomment only one of these!
 
@@ -22,12 +27,22 @@ set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 ### "nvim" as manpager
 # set -x MANPAGER "nvim -c 'set ft=man' -"
 
+### FUNCTIONS ###
+
 ### SET EITHER DEFAuLT EMACS OR VI MODE ###
 function fish_user_key_bindings
   # fish_default_key_bindings
   fish_vi_key_bindings
 end
 ### END OF VI MODE ###
+
+function jdk
+  set java_version $argv
+  set -Ux JAVA_HOME (/usr/libexec/java_home -v $java_version)
+  java -version
+end
+
+### END OF FUNCTIONS ###
 
 ### AUTOCOMPLETE AND HIGHLIGHT COLORS ###
 set fish_color_normal brcyan
