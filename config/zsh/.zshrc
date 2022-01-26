@@ -62,6 +62,13 @@ alias doomdoctor="~/.emacs.d/bin/doom doctor"
 alias doomupgrade="~/.emacs.d/bin/doom upgrade"
 alias doompurge="~/.emacs.d/bin/doom purge"
 
+# Brew
+alias bu="brew update"
+alias buu="brew upgrade"
+alias bc="brew cleanup"
+alias bd="brew doctor"
+alias ud="brew update && brew upgrade && brew cleanup"
+
 # exa
 alias l="exa -al --color=always --group-directories-first --git --icons"
 alias ls="exa -al --color=always --group-directories-first --git --icons" # my preferred listing

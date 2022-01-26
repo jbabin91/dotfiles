@@ -48,7 +48,7 @@
     # skhd
     #~/.config/skhd/skhdrc: config/skhd/skhdrc
     # spotifyd
-    #~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
+    ~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
     # Tmux
     #~/.tmux.conf: config/tmux/tmux.conf
     # NVIM

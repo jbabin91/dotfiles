@@ -45,11 +45,11 @@ end
 ### END OF FUNCTIONS ###
 
 ### AUTOCOMPLETE AND HIGHLIGHT COLORS ###
-set fish_color_normal brcyan
-set fish_color_autosuggestion "#7d7d7d"
-set fish_color_command brcyan
-set fish_color_error "#ff6c6b"
-set fish_color_param brcyan
+# set fish_color_normal brcyan
+# set fish_color_autosuggestion "#7d7"
+# set fish_color_command brcyan
+# set fish_color_error "#ff6c6b"
+# set fish_color_param brcyan
 
 ### ALIASES ###
 alias c="clear"
@@ -74,6 +74,13 @@ alias doomsync="~/.emacs.d/bin/doom sync"
 alias doomdoctor="~/.emacs.d/bin/doom doctor"
 alias doomupgrade="~/.emacs.d/bin/doom upgrade"
 alias doompurge="~/.emacs.d/bin/doom purge"
+
+# Brew
+alias bu="brew update"
+alias buu="brew upgrade"
+alias bc="brew cleanup"
+alias bd="brew doctor"
+alias ud="brew update && brew upgrade && brew cleanup"
 
 # Changing "ls" to "exa"
 alias l="exa -al --color=always --group-directories-first --git --icons"
