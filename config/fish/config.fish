@@ -190,3 +190,4 @@ set -x CODE $HOME/code
 # Homebrew and brew-cask options
 fish_add_path /opt/homebrew/bin
 set -x HOMEBREW_CASK_OPTS "--appdir=/Applications"
+fish_add_path /usr/local/sbin
