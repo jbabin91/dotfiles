@@ -11,9 +11,9 @@ ZSH_THEME="robbyrussell"
 plugins=(
   vi-mode
   git
+  sudo
   yarn
   zsh-autosuggestions
-  sudo
   zsh-syntax-highlighting
 )
 
@@ -141,3 +141,7 @@ alias .zsh="cd ~/.dotfiles/config/zsh && nvim .zshrc"
 # Git/Work directories
 alias .g="cd ~/code/github/jbabin91"
 alias .w="cd ~/code/work"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+eval "$(starship init zsh)"
