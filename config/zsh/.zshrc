@@ -39,8 +39,6 @@ compinit
 kitty + complete setup zsh | source /dev/stdin
 
 # Aliases --------------------------------------------------------------
-alias c="clear"
-
 # root privileges
 alias doas="doas --"
 
@@ -82,13 +80,22 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
+# General UNIX
+alias c="clear"
+alias cp="cp -iv"
+alias df="df -h"                          # human-readable sizes
+alias du="du -d 1 -h"
+alias duf="du -sh *"
+alias mkdir="mkdir -pv"
+alias mv="mv -iv"
+alias path="echo -e ${PATH//:/\\n}"
+alias pi="ping -Anc 5 1.1.1.1"
+alias reload!='exec "$SHELL" -l'
+alias zr="source ~/.zshrc"
+alias rm="rm -iv"
+alias srm="srm -iv"
 
 # adding flags
-alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias lynx='lynx -cfg=~/.lynx/lynx.cfg -lss=~/.lynx/lynx.lss -vikeys'
 alias vifm='./.config/vifm/scripts/vifmrun'
@@ -115,7 +122,7 @@ alias gcm="git commit -s -m"
 alias gcam="git commit -s -a -m"
 alias glg="git log --graph --decorate --oneline --abbrev-commit"
 alias glga="glg --all"
-alias glnext="git log --oneline $(git describe --tags --abbrev=0 @^)..@"
+#alias glnext="git log --oneline $(git describe --tags --abbrev=0 @^)..@"
 alias gp="git push origin HEAD"
 alias gpa="git push origin --all"
 alias gpr="gp && git pr"
@@ -131,6 +138,9 @@ alias push="git push origin"
 alias tag="git tag"
 alias newtag="git tag -a"
 
+# LazyGit
+alias lg="lazygit"
+
 # switch between shells
 # I do not recommend switching default SHELL from bash.
 alias tobash="chsh -s $(which bash) && echo 'Now log out.'"
@@ -138,6 +148,7 @@ alias tozsh="chsh -s /bin/zsh && echo 'Now log out.'"
 alias tofish="chsh -s $(which fish) && echo 'Now log out.'"
 
 # dotfiles
+alias edit="e ~/.dotfiles"
 alias .f="cd ~/.dotfiles"
 alias .dot="cd ~/.dotfiles && nvim ."
 alias .fish="cd ~/.dotfiles/config/fish && nvim config.fish"
@@ -149,6 +160,12 @@ alias .zsh="cd ~/.dotfiles/config/zsh && nvim .zshrc"
 alias .g="cd ~/code/github/jbabin91"
 alias .w="cd ~/code/work"
 
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh" # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+
+# iTerm integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 eval "$(starship init zsh)"
