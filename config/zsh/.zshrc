@@ -66,6 +66,8 @@ alias buu="brew upgrade"
 alias bc="brew cleanup"
 alias bd="brew doctor"
 alias ud="brew update && brew upgrade && brew cleanup"
+# Homebrew settings
+export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
 
 # exa
 alias l="exa -al --color=always --group-directories-first --git --icons"
@@ -160,6 +162,9 @@ alias .zsh="cd ~/.dotfiles/config/zsh && nvim .zshrc"
 alias .g="cd ~/code/github/jbabin91"
 alias .w="cd ~/code/work"
 
+# Minikube
+alias kubectl="minikube kubectl --"
+
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh" # This loads nvm
@@ -167,5 +172,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # iTerm integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# zoxide
+eval "$(zoxide init zsh)"
 
 eval "$(starship init zsh)"

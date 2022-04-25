@@ -1,4 +1,6 @@
-# EditorConfig is awesome: http://EditorConfig.org
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
 
 # top-most EditorConfig file
 root = true
@@ -11,3 +13,9 @@ indent_style = space
 insert_final_newline = true
 max_line_length = 100
 trim_trailing_whitespace = true
+
+[*.md]
+indent_size = 4
+
+[*.py]
+indent_size = 4

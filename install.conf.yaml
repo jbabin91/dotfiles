@@ -22,9 +22,9 @@
     # Alacritty Config
     ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
     # Git Config
-    ~/.config/git/config: config/git/.gitconfig
-    ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
-    ~/.config/git/ignore: config/git/.gitignore_global
+    ~/.gitattributes: general/git/.gitattributes
+    ~/.gitconfig: general/git/.gitconfig
+    ~/.gitignore: general/git/.gitignore
     # Kitty
     ~/.config/kitty: config/kitty
     # Karabiner
@@ -50,7 +50,7 @@
     # spotifyd
     ~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
     # Tmux
-    #~/.tmux.conf: config/tmux/tmux.conf
+    ~/.tmux.conf: config/tmux/tmux.conf
     # NVIM
     # ~/.config/nvim/:
     #  path: config/nvim/*
@@ -63,9 +63,3 @@
     # ~/.config/doom/doom-emacs-dash.png: config/doom/doom-emacs-dash.png
     # ~/.config/doom/eshell/:
     #   path: config/doom/eshell/*
-# - shell:
-#     - description: 'Bootstrap fish'
-#       command: './script/bootstrap.fish'
-#       stdout: false
-#       stderr: true
-#       stdin: true
