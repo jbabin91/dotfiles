@@ -1,12 +1,22 @@
 {
-  "python.pythonPath": "python",
-  "python.venvPath": "~/venvs/",
-  "python.jediPath": "~/venvs/jedi/lib/python3.8/site-packages/",
-  "python.jediEnabled": true,
-  "suggest.timeout": 5000,
-  "python.formatting.provider": "black",
-  "python.formatting.blackPath": "~/venvs/black/bin/black",
-  "python.linting.pylintEnabled": true,
-  "python.linting.flake8Enabled": false,
-  "python.linting.pylintPath": "~/venvs/pylint/bin/pylint"
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "javascriptreact",
+    "typescript.tsx"
+  ],
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact",
+    "typescript.tsx"
+  ],
+  "diagnostic.errorSign": "•",
+  "diagnostic.warningSign": "•",
+  "diagnostic.infoSign": "•"
 }

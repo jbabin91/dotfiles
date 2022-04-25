@@ -1,13 +1,17 @@
 - defaults:
     link:
+      glob: true
       create: true
-      force: true
       relink: true
+      force: true
 
 - clean:
-    - '~/'
-    - '~/.config/'
-    - '~/.zsh/'
+    ~/:
+    ~/.config:
+      recursive: true
+
+- shell:
+    - [git submodule update --init --recursive, Installing/updating submodules]
 
 - link:
     # General
@@ -18,25 +22,44 @@
     # Alacritty Config
     ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
     # Git Config
-    ~/.config/git/config: config/git/.gitconfig
-    ~/.config/git/.gitconfig_personal: config/git/.gitconfig_personal
-    ~/.config/git/ignore: config/git/.gitignore_global
+    ~/.gitattributes: general/git/.gitattributes
+    ~/.gitconfig: general/git/.gitconfig
+    ~/.gitignore: general/git/.gitignore
     # Kitty
-    ~/.config/kitty/:
-      glob: true
-      path: config/kitty/*
-    # NVIM
-    ~/.config/nvim/:
-      glob: true
-      path: config/nvim/*
+    ~/.config/kitty: config/kitty
     # Karabiner
     ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
+    # Fish
+    ~/.config/fish: config/fish
+    # Starship
+    ~/.config/starship.toml: config/starship/config.toml
     # ZSH
-    ~/.zshrc: zsh/zshrc
-    ~/.zsh/:
-      glob: true
-      path: zsh/*
-      exclude: [zsh/zshrc]
-
-- shell:
-    - [git submodule update --init --recursive, Installing submodule]
+    ~/.zshrc: config/zsh/.zshrc
+    # Neofetch
+    ~/.config/neofetch: config/neofetch
+    # bat
+    ~/.config/bat/config: config/bat/config
+    # htop
+    ~/.config/htop/htoprc: config/htop/htoprc
+    # ssh
+    ~/.config/.ssh/config.dotfiles: config/ssh/config.dotfiles
+    # yabai
+    #~/.config/yabai/yabairc: config/yabai/yabairc
+    # skhd
+    #~/.config/skhd/skhdrc: config/skhd/skhdrc
+    # spotifyd
+    ~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
+    # Tmux
+    ~/.tmux.conf: config/tmux/tmux.conf
+    # NVIM
+    # ~/.config/nvim/:
+    #  path: config/nvim/*
+    # Doom Emacs
+    # ~/.config/doom/config.org: config/doom/config.org
+    # ~/.config/doom/config.el: config/doom/config.el
+    # ~/.config/doom/init.el: config/doom/init.el
+    # ~/.config/doom/packages.el: config/doom/packages.el
+    # ~/.config/doom/custom.el: config/doom/custom.el
+    # ~/.config/doom/doom-emacs-dash.png: config/doom/doom-emacs-dash.png
+    # ~/.config/doom/eshell/:
+    #   path: config/doom/eshell/*

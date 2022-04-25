@@ -1,0 +1,80 @@
+[user]
+  name = Jace Babin
+  email = jbabin91@gmail.com
+  logallrefupdates = true
+	signingKey = ""
+[core]
+  attributesfile = ~/.gitattributes
+  excludesfile = ~/.gitignore
+  ignorecase = false
+  pager = delta
+[color]
+  ui = true
+[delta]
+  navigate = true
+[alias]
+  cbr = symbolic-ref --short HEAD
+	changed = show --pretty=\"format:\" --name-only
+	co = checkout
+	commend = commit --amend --no-edit
+	count = shortlog -sn
+	fm = fetch-merge
+  g = grep --break --heading --line-number
+	gi = grep --break --heading --line-number -i
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lt = log --tags --decorate --simplify-by-decoration --oneline
+  please = push --force-with-lease
+  stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
+[interactive]
+  diffFilter = delta --color-only
+[diff]
+  colorMoved = default
+[diff "plist"]
+  textconv = osadecompile
+[diff "scpt"]
+  textconv = osadecompile
+  binary = true
+[merge]
+  conflictstyle = diff3
+[mergetool]
+  prompt = false
+[grep]
+  extendRegexp = true
+  patternType = perl
+  lineNumber = true
+[push]
+  default = simple
+  followTags = true
+[pull]
+  rebase = true
+[rebase]
+  autosquash = true
+  autostash = true
+  instructionFormat = %d %s (%cr) <%an>
+  preserve-merges = true
+[rerere]
+  enable = true
+[status]
+  showUntackedFiles = all
+[apply]
+	whitespace = nowarn
+[help]
+	autocorrect = 1
+[submodule]
+	fetchJobs = 4
+[commit]
+	template = ~/.dotfiles/config/git/template.txt
+	gpgSign = false
+[log]
+	showSignature = false
+[init]
+    defaultBranch = main
+[gpg]
+	program = gpg
+[tag]
+	forceSignAnnotated = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

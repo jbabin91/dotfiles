@@ -1,0 +1,215 @@
+{
+  "cSpell.userWords": [
+    "Babin",
+    "Babin's",
+    "Bools",
+    "Brewfile",
+    "CGOM",
+    "Combobox",
+    "Jace",
+    "NVIM",
+    "ODUID",
+    "Plex",
+    "Prefs",
+    "Prepress",
+    "alacritty",
+    "camelcase",
+    "datatable",
+    "datepicker",
+    "dotbot",
+    "dotfile",
+    "dotfiles",
+    "editorconfig",
+    "esnext",
+    "fastify",
+    "financials",
+    "formik",
+    "hushlogin",
+    "karabiner",
+    "nestjs",
+    "nord",
+    "peasy",
+    "pgdata",
+    "postgres",
+    "postgresql",
+    "semibold",
+    "stripejs",
+    "submodule",
+    "submodules",
+    "switchy",
+    "symlink",
+    "tabindex",
+    "tailwindcss",
+    "toastify",
+    "todos",
+    "trendsic",
+    "zipcode"
+  ],
+  "codestats.apikey": "SFMyNTY.YW1KaFltbHVPVEU9IyNPRGM1TlE9PQ.yjscXKzKaHgVaTLBkNClxycPcmm7yiDPZPAJKyC10gQ",
+  "codestats.username": "jbabin91",
+  "css.validate": false,
+
+  "dart.openDevTools": "flutter",
+  "dart.previewFlutterUiGuides": true,
+  "docker.showStartPage": false,
+
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.fontFamily": "'Victor Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.renderControlCharacters": false,
+  "editor.renderIndentGuides": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+  "editor.tabSize": 2,
+  "editor.semanticHighlighting.enabled": false,
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "eslint.packageManager": "yarn",
+  "eslint.validate": [
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.openEditors.visible": 0,
+  "extensions.autoCheckUpdates": true,
+
+  "files.associations": {
+    "*.js": "javascriptreact"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true,
+    "**/.vscode": true
+  },
+  "formattingToggle.affects": ["formatOnSave"],
+
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "gitlens.advanced.messages": {
+    "suppressLineUncommittedWarning": true
+  },
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.showWhatsNewAfterUpgrades": false,
+  "gitlens.statusBar.alignment": "left",
+  "go.useLanguageServer": true,
+
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  "liveServer.settings.donotShowInfoMsg": true,
+
+  "material-icon-theme.folders.color": "#26a69a",
+  "material-icon-theme.folders.theme": "specific",
+  "material-icon-theme.hidesExplorerArrows": true,
+  "material-icon-theme.showUpdateMessage": false,
+  "materialTheme.accent": "Cyan",
+
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "all",
+
+  "search.exclude": {
+    ".git": true,
+    ".vscode": true,
+    ".yarn": true,
+    "build": true,
+    "dist": true,
+    "node_modules": true,
+    "types": true,
+    ".pnp.cjs": true,
+    ".pnp.js": true,
+    ".pnp.mjs": true,
+    "package-lock.json": true,
+    "yarn.lock": true
+  },
+
+  "scss.validate": false,
+
+  "security.workspace.trust.enabled": false,
+
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
+  "terminal.integrated.defaultProfile.osx": "fish",
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    }
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.surveys.enabled": false,
+
+  "vetur.validation.template": false,
+  "workbench.activityBar.visible": true,
+  "workbench.colorTheme": "Tokyo Night Storm",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.settings.editor": "json",
+  "workbench.sideBar.location": "right",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.iconTheme": "material-icon-theme",
+
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[csharp]": {
+    "editor.tabSize": 4
+  },
+  "redhat.telemetry.enabled": false
+}

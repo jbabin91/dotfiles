@@ -1,0 +1,531 @@
+:DOC-CONFIG:
+# Tangle by default to config.el, which is the most common case
+#+property: header-args:emacs-lisp :tangle config.el
+#+property: header-args :mkdirp yes :comments no
+#+startup: fold
+:END:
+
+#+title: Doom Emacs configuration
+#+author: Jace Babin
+#+email: jbabin91@gmail.com
+
+* Table of Contents :TOC:noexport:
+- [[#about-this-config][About This Config]]
+- [[#configel][Config.el]]
+  - [[#personal-info][Personal Info]]
+  - [[#doom-theme][DOOM THEME]]
+  - [[#fonts][FONTS]]
+  - [[#line-settings][LINE SETTINGS]]
+  - [[#org-mode][ORG MODE]]
+  - [[#automatically-tangle-on-save][Automatically "Tangle" on Save]]
+- [[#doom-configurations][Doom Configurations]]
+  - [[#modules][Modules]]
+  - [[#structure][Structure]]
+  - [[#applications-inside-emacs][Applications inside Emacs]]
+  - [[#default-keybindings][Default Keybindings]]
+- [[#packages][Packages]]
+  - [[#installation-instructions][Installation Instructions]]
+- [[#inspiration][Inspiration]]
+
+* About This Config
+This is my personal Doom Emacs config. Doom Emacs is a distribution of Emacs that us the "evil" keybindings (Vim keybindings) and includes a number of nice extensions and a bit of configuration out of the box.
+
+* Config.el
+#+begin_src emacs-lisp
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+end_src
+
+** Personal Info
+#+begin_src emacs-lisp
+(setq user-full-name "Jace Babin"
+      user-mail-address "jbabin91@gmail.com")
+#+end_src
+
+** DOOM THEME
+Setting the theme to doom-one.  To try out new themes, I set a keybinding for counsel-load-theme with 'SPC h t'.
+
+#+begin_src emacs-lisp
+(require 'doom-themes)
+#+end_src
+
+#+BEGIN_SRC emacs-lisp
+(setq doom-theme 'doom-moonlight)
+(map! :leader
+      :desc "Load new theme" "h t" #'counsel-load-theme)
+#+END_SRC
+
+Enable custom neotree theme (all-the-icons must be installed!)
+#+begin_src emacs-lisp
+(doom-themes-neotree-config)
+#+end_src
+
+or for treemacs users
+#+begin_src emacs-lisp
+(setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+(doom-themes-treemacs-config)
+#+end_src
+
+Corrects (and improves) org-mode's native fontification.
+#+begin_src emacs-lisp
+(doom-themes-org-config)
+#+end_src
+
+** FONTS
+Settings related to fonts within Doom Emacs:
++ 'doom-font' -- standard monospace font that is used for most things in Emacs.
++ 'doom-variable-pitch-font' -- variable font which is useful in some Emacs plugins.
++ 'doom-big-font' -- used in doom-big-font-mode; useful for presentations.
++ 'font-lock-comment-face' -- for comments.
++ 'font-lock-keyword-face' -- for keywords with special significance like 'setq' in elisp.
++ 'global-prettify-symbols-mode' -- change certain keywords to symbols, such as lambda!
+
+#+BEGIN_SRC emacs-lisp
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12)
+      doom-variable-pitch-font (font-spec :family "Ubuntu Nerd Font" :size 12)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24))
+(after! doom-themes
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t))
+(custom-set-faces!
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-keyword-face :slant italic))
+#+END_SRC
+
+** LINE SETTINGS
+I set comment-line to 'SPC TAB TAB' which is a rather comfortable keybinding for me on my ZSA Moonlander keyboard.  The standard Emacs keybinding for comment-line is 'C-x C-;'.  The other keybindings are for commands that toggle on/off various line-related settings.  Doom Emacs uses 'SPC t' for "toggle" commands, so I choose 'SPC t' plus 'key' for those bindings.
+
+| COMMAND                  | DESCRIPTION                               | KEYBINDING  |
+|--------------------------+-------------------------------------------+-------------|
+| comment-line             | /Comment or uncomment lines/                | SPC TAB TAB |
+| hl-line-mode             | /Toggle line highlighting in current frame/ | SPC t h     |
+| global-hl-line-mode      | /Toggle line highlighting globally/         | SPC t H     |
+| doom/toggle-line-numbers | /Toggle line numbers/                       | SPC t l     |
+| toggle-truncate-lines    | /Toggle truncate lines/                     | SPC t t     |
+
+#+BEGIN_SRC emacs-lisp
+(setq display-line-numbers-type t)
+(map! :leader
+      :desc "Comment or uncomment lines" "TAB TAB" #'comment-line
+      (:prefix ("t" . "toggle")
+       :desc "Toggle line numbers" "l" #'doom/toggle-line-numbers
+       :desc "Toggle line highlight in frame" "h" #'hl-line-mode
+       :desc "Toggle line highlight globally" "H" #'global-hl-line-mode
+       :desc "Toggle truncate lines" "t" #'toggle-truncate-lines))
+#+END_SRC
+
+** ORG MODE
+Note that I wrapped most of this in (after! org).  Without this, my settings might be evaluated too early, which will result in my settings being overwritten by Doom's defaults.  I have also enabled org-journal by adding (+journal) to the org section of my Doom Emacs init.el.
+
+Turn off spell checker
+#+begin_src emacs-lisp
+(remove-hook 'text-mode #'spell-fu-mode nil)
+#+end_src
+
+#+begin_src emacs-lisp
+(defun my/org-mode/load-prettify-symbols () "Prettify org mode keywords"
+  (interactive)
+  (setq prettify-symbols-alist
+    (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
+          '(("#+begin_src" . ?)
+            ("#+end_src" . ?)
+            ("#+begin_example" . ?)
+            ("#+end_example" . ?)
+            ("#+DATE:" . ?⏱)
+            ("#+AUTHOR:" . ?✏)
+            ("[ ]" .  ?☐)
+            ("[X]" . ?☑ )
+            ("[-]" . ?❍ )
+            ("lambda" . ?λ)
+            ("#+header:" . ?)
+            ("#+name:" . ?﮸)
+            ("#+results:" . ?)
+            ("#+call:" . ?)
+            (":properties:" . ?)
+            (":logbook:" . ?))))
+  (prettify-symbols-mode 1))
+#+end_src
+
+#+BEGIN_SRC emacs-lisp
+(map! :leader
+      :desc "Org babel tangle" "m B" #'org-babel-tangle)
+(after! org
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (setq org-directory "~/Org/"
+        org-agenda-files '("~/Org/agenda.org")
+        org-default-notes-file (expand-file-name "notes.org" org-directory)
+        org-ellipsis " ▼ "
+        org-log-done 'time
+        org-journal-dir "~/Org/journal/"
+        org-journal-date-format "%B %d, %Y (%A) "
+        org-journal-file-format "%Y-%m-%d.org"
+        org-hide-emphasis-markers t
+        ;; ex. of org-link-abbrev-alist in action
+        ;; [[arch-wiki:Name_of_Page][Description]]
+        org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
+          '(("google" . "http://www.google.com/search?q=")
+            ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
+            ("ddg" . "https://duckduckgo.com/?q=")
+            ("wiki" . "https://en.wikipedia.org/wiki/"))
+        org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
+          '((sequence
+             "TODO(t)"           ; A task that is ready to be tackled
+             "BLOG(b)"           ; Blog writing assignments
+             "GYM(g)"            ; Things to accomplish at the gym
+             "PROJ(p)"           ; A project that contains other tasks
+             "VIDEO(v)"          ; Video assignments
+             "WAIT(w)"           ; Something is holding up this task
+             "|"                 ; The pipe necessary to separate "active" states and "inactive" states
+             "DONE(d)"           ; Task has been completed
+             "CANCELLED(c)" )))) ; Task has been cancelled
+#+END_SRC
+
+Setting the font sizes for each header level in Org mode.
+#+begin_src emacs-lisp
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.0))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+)
+#+end_src
+
+** Automatically "Tangle" on Save
+Since we don't want to disable org-confirm-babel-evaluate all of the time, do it around the after-save-hook:
+#+begin_src emacs-lisp
+(defun org-babel-tangle-config ()
+  (when (string-equal (buffer-file-name)
+                      (expand-file-name "~/.config/doom/config.org"))
+    (let ((org-config-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config
+                                              'run-at-end 'only-in-org-mode)))
+#+end_src
+
+* Doom Configurations
+** Modules
+NOTE: Press ~K~ on a module to view its documentation, and ~gd~ to browse its directory.
+#+begin_src emacs-lisp :tangle "init.el"
+;;; init.el -*- lexical-binding: t; -*-
+#+end_src
+
+** Structure
+~init.el~ broken down to a more sane version for easier access and to become more comprehensive:
+
+*** Doom Input
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :input
+       ;;chinese
+       ;;japanese
+       ;;layout                                 ; auie,ctsrnm is the superior home row
+       )
+#+end_src
+
+*** Doom Completion
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :completion
+       company                                  ; the ultimate code completion backend
+       ;;helm                                   ; the *other* search engine for love and life
+       ;;ido                                    ; the other *other* search engine...
+       (ivy +fonts                              ; a search engine for love and life
+            +childframe)
+       )
+#+end_src
+
+*** Doom UI
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :ui
+       ;;deft                                   ; notational velocity for Emacs
+       doom                                     ; what makes DOOM look the way it does
+       doom-dashboard                           ; a nifty splash screen for Emacs
+       doom-quit                                ; DOOM quit-message prompts when you quit Emacs
+       (emoji +unicode)                         ; 🙂
+       ;;fill-column                            ; a `fill-column' indicator
+       hl-todo                                  ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+       ;;hydra
+       ;;indent-guides                          ; highlighted indent columns
+       (ligatures +extras)                      ; ligatures and symbols to make your code pretty again
+       ;;minimap                                ; show a map of the code on the side
+       modeline                                 ; snazzy, Atom-inspired modeline, plus API
+       ;;nav-flash                              ; blink cursor line after big motions
+       neotree                                  ; a project drawer, like NERDTree for vim
+       ophints                                  ; highlight the region an operation acts on
+       (popup +defaults)                        ; tame sudden yet inevitable temporary windows
+       ;;tabs                                   ; a tab bar for Emacs
+       ;;treemacs                               ; a project drawer, like neotree but cooler
+       ;;unicode                                ; extended unicode support for various languages
+       vc-gutter                                ; vcs diff in the fringe
+       vi-tilde-fringe                          ; fringe tildes to mark beyond EOB
+       ;;window-select                          ; visually switch windows
+       workspaces                               ; tab emulation, persistence & separate workspaces
+       zen                                      ; distraction-free coding or writing
+       )
+#+end_src
+
+*** Doom Editor
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :editor
+       (evil +everywhere)                       ; come to the dark side, we have cookies
+       file-templates                           ; auto-snippets for empty files
+       fold                                     ; (nigh) universal code folding
+       ;;(format +onsave)                       ; automated prettiness
+       ;;god                                    ; run Emacs commands without modifier keys
+       ;;lispy                                  ; vim for lisp, for people who don't like vim
+       ;;multiple-cursors                       ; editing in many places at once
+       ;;objed                                  ; text object editing for the innocent
+       ;;parinfer                               ; turn lisp into python, sort of
+       ;;rotate-text                            ; cycle region at point between text candidates
+       snippets                                 ; my elves. They type so I don't have to
+       ;;word-wrap                              ; soft wrapping with language-aware indent
+       )
+#+end_src
+
+*** Doom Emacs
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :emacs
+       (dired +icons)                           ; making dired pretty [functional]
+       electric                                 ; smarter, keyword-based electric-indent
+       (ibuffer +icons)                         ; interactive buffer management
+       undo                                     ; persistent, smarter undo for your inevitable mistakes
+       vc                                       ; version-control and Emacs, sitting in a tree
+       )
+#+end_src
+
+*** Doom Term
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :term
+       eshell                                   ; the elisp shell that works everywhere
+       ;;shell                                  ; simple shell REPL for Emacs
+       ;;term                                   ; basic terminal emulator for Emacs
+       vterm                                    ; the best terminal emulation in Emacs
+       )
+#+end_src
+
+*** Doom Checkers
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :checkers
+       syntax                                   ; Tasing you for every semicolon you forget.
+       (spell +aspell)                          ; Tasing you for mispelling on the fly.
+       ;;grammar                                ; tasing grammar mistake every you make
+       )
+#+end_src
+
+*** Doom Tools
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :tools
+       ;;ansible
+       (debugger +lsp)                          ; FIXME stepping through code, to help you add bugs
+       ;;direnv
+       ;;docker
+       ;;editorconfig                           ; let someone else argue about tabs vs spaces
+       ;;ein                                    ; tame Jupyter notebooks with emacs
+       (eval +overlay)                          ; run code, run (also, repls)
+       ;;gist                                   ; interacting with github gists
+       lookup                                   ; navigate your code and its documentation
+       lsp
+       (magit +forge)                           ; a git porcelain for Emacs
+       ;;make                                   ; run make tasks from Emacs
+       ;;pass                                   ; password manager for nerds
+       ;;pdf                                    ; pdf enhancements
+       ;;prodigy                                ; FIXME managing external services & code builders
+       ;;rgb                                    ; creating color strings
+       ;;taskrunner                             ; taskrunner for all your projects
+       ;;terraform                              ; infrastructure as code
+       ;;tmux                                   ; an API for interacting with tmux
+       ;;upload                                 ; map local to remote projects via ssh/ftp
+       )
+#+end_src
+
+*** Doom OS
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :os
+       (:if IS-MAC macos)                       ; improve compatibility with macOS
+       ;;tty                                    ; improve the terminal Emacs experience
+       )
+#+end_src
+
+*** Doom LANG
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :lang
+       ;;agda                                   ; types of types of types...
+       ;;cc                                     ; C/C++/Obj-C madness.
+       ;;clojurs                                ; java with a lisp
+       ;;common-lisp                            ; If you've seen one lisp, you've seen them all.
+       ;;coq                                    ; Proofs-as-programs.
+       ;;crystal                                ; ruby at the speed of c
+       ;;csharp                                 ; unity, .NET, and mono shenanigans
+       ;;data                                   ; Config/data formats.
+       ;;(dart +flutter)                        ; Paint ui and not much else.
+       ;;elixir                                 ; erlang done right
+       ;;elm                                    ; care for a cup of TEA?
+       emacs-lisp                               ; Drown in parentheses.
+       ;;erlang                                 ; An elegant language for a more civilized age.
+       ;;ess                                    ; Emacs speaks statistics.
+       ;;faust                                  ; dsp, but you get to keep your soul
+       ;;fsharp                                 ; ML stands for Microsoft's Language
+       ;;gdscript                               ; the language you waited for
+       ;;(go +lsp)                              ; The hipster dialect.
+       (haskell +dante)                         ; a language that's lazier than I am
+       ;;hy                                     ; readability of scheme w/ speed of python
+       ;;idris                                  ; a language you can depend on
+       json                                     ; At least it ain't XML.
+       ;;(java +meghanada)                      ; The poster child for carpal tunnel syndrome.
+       (javascript +lsp)                        ; All(hope(abandon(ye(who(enter(here)))))).
+       ;;(julia +lsp)                           ; A better, faster MATLAB.
+       ;;kotlin                                 ; A better, slicker Java(Script).
+       latex                                    ; writing papers in Emacs has never been so fun
+       ;;factor
+       ;;ledger                                 ; An accounting system in Emacs.
+       lua                                      ; One-based indices? one-based indices.
+       markdown                                 ; writing docs for people to ignore
+       ;;nim                                    ; python + lisp at the speed of c
+       ;;nix                                    ; I hereby declare "nix geht mehr!"
+       ;;ocaml                                  ; an objective camel
+       (org +org-bullets
+            +present)                           ; Org-mode presentations.
+       ;;php                                    ; perl's insecure younger brother
+       ;;perl                                   ; write code no one else can comprehend
+       ;;plantuml                               ; diagrams for confusing people more
+       ;;purescript                             ; javascript, but functional
+       (python +lsp)                            ; Python + LSP support.
+       ;;qt                                     ; The 'cutest' gui framework ever
+       ;;racket                                 ; a DSL for DSLs
+       ;;raku                                   ; the artist formerly known as perl6
+       ;;rest                                   ; Emacs as a REST client
+       ;;rst                                    ; ReST in peace
+       ;;(ruby +rails)                          ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       (rust +lsp)                              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;;scala                                  ; Java, but good
+       ;;scheme                                 ; A fully conniving family of lisps
+       sh                                       ; she shells {ba,z,fi}sh shells on the C xor
+       ;;solidity                               ; Do you need a blockchain? No.
+       ;;swift                                  ; Who asked for emoji variables?
+       ;;terra                                  ; Earth and Moon in alignment for performance.
+       web                                      ; the tubes
+       yaml                                     ; JSON, but readable.
+       ;;(zig +lsp)                             ; C, but simpler.
+       )
+#+end_src
+
+** Applications inside Emacs
+*** Doom E-Mail
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :email
+       ;;(mu4e +gmail)
+       ;;smtpmail
+       ;;notmuch
+       ;;(wanderlust +gmail)
+       )
+#+end_src
+
+#+RESULTS:
+
+*** Doom Applications
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :app
+       ;;calendar
+       ;;emms                                     ; Emacs Multimedia System.
+       ;;everywhere                             ; *Leave* Emacs!? You must be joking.
+       ;;irc                                    ; How neckbeards socialize
+       rss                                      ; Emacs as an RSS reader
+       ;;twitter                                ; Twitter client https://twitter.com/vnought
+       )
+#+end_src
+
+** Default Keybindings
+*** Doom Config
+#+begin_src emacs-lisp :tangle "init.el"
+(doom! :config
+       literate
+       (default +bindings +smartparens))
+#+end_src
+
+* Packages
+Empty due to lack of external packages not included in doom-emacs...
+Searching for packages...
+
+According to default ~package.el~, this file should not be byte-compiled!
+#+begin_src emacs-lisp :tangle "packages.el"
+;; -*- no-byte-compile: t; -*-
+;;; $DOOMDIR/packages.el
+(package! flycheck-aspell)
+(package! async)
+(package! calfw)
+(package! calfw-org)
+(package! dashboard)
+(package! dired-open)
+(package! dmenu)
+(package! elfeed-goodies)
+(package! elpher)
+(package! emojify)
+(package! evil-tutor)
+(package! exwm)
+(package! hyperbole)
+(package! ivy-posframe)
+(package! mastodon)
+(package! ob-typescript)
+(package! org-bullets)
+(package! ox-gemini)
+(package! peep-dired)
+(package! password-store)
+(package! prettier-js)
+(package! rainbow-mode)
+(package! resize-window)
+(package! tldr)
+(package! wc-mode)
+#+end_src
+
+#+RESULTS:
+| wc-mode | :modules | ((:private . config) (:private . modules)) |
+
+** Installation Instructions
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no
+:END:
+
+This is where you install packages, by declaring them with the ~package!~ macro, then running ~doom refresh~ on the command line. You'll need to restart Emacs for your changes to take effect! Or at least, run ~M-x doom/reload~.
+
+*Warning*: Don't disable core packages listed in ~~/.emacs.d/core/packages.el~. Doom requires these, and disabling them may have terrible side effects.
+
+*** Packages in MELPA/ELPA/Emacsmirror
+To install ~some-package~ from MELPA, ELPA or Emacsmirror:
+#+begin_src emacs-lisp
+(package! some-package)
+#+end_src
+
+*** Packages from git repositories
+To install a package directly from a particular repo, you'll need to specify a ~:recipe~. You'll find documentation on what ~:recipe~ accepts [[https://github.com/raxod502/straight.el#the-recipe-format][here]]:
+#+begin_src emacs-lisp
+(package! another-package
+  :recipe (:host github :repo "username/repo"))
+#+end_src
+
+If the package you are trying to install does not contain a ~PACKAGENAME.el~ file, or is located in a subdirectory of the repo, you'll need to specify ~:files~ in the ~:recipe~:
+#+begin_src emacs-lisp
+(package! this-package
+  :recipe (:host github :repo "username/repo"
+           :files ("some-file.el" "src/lisp/*.el")))
+#+end_src
+
+*** Disabling built-in packages
+If you'd like to disable a package included with Doom, for whatever reason, you can do so here with the ~:disable~ property:
+#+begin_src emacs-lisp
+(package! builtin-package :disable t)
+#+end_src
+
+You can override the recipe of a built in package without having to specify all the properties for ~:recipe~. These will inherit the rest of its recipe from Doom or MELPA/ELPA/Emacsmirror:
+#+begin_src emacs-lisp
+(package! builtin-package :recipe (:nonrecursive t))
+(package! builtin-package-2 :recipe (:repo "myfork/package"))
+#+end_src
+
+Specify a ~:branch~ to install a package from a particular branch or tag. This is required for some packages whose default branch isn't 'master' (which our package manager can't deal with; see [[https://github.com/raxod502/straight.el/issues/279][raxod502/straight.el#279]])
+#+begin_src emacs-lisp
+(package! builtin-package :recipe (:branch "develop"))
+#+end_src
+
+* Inspiration
+- [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][Zzamboni]]
+- [[https://config.daviwil.com/emacs][David Wilson]]
+- [[https://github.com/tecosaur][Tecosaur]]
