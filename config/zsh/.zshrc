@@ -25,6 +25,7 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$ANDROID_HOME/cmdline-tools/tools/bin/:$PATH
 export PATH=$ANDROID_HOME/emulator/:$PATH
 export PATH=$ANDROID_HOME/platform-tools/:$PATH
+export PATH="/usr/local/sbin:$PATH"
 
 jdk() {
   version=$1
@@ -177,3 +178,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 eval "$(zoxide init zsh)"
 
 eval "$(starship init zsh)"
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+export PNPM_HOME="/Users/jacebabin/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"

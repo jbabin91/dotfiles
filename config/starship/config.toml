@@ -1,29 +1,93 @@
-# Don't print a new line at the start of the prompt
-add_newline = false
+add_newline = true
 
-# Make prompt a single line instead of two lines
-[line_break]
+format = """\
+[╭──](8) $time[](8)$all$fill[╰─](8)\
+$character"""
+# switch to this format for very verbose prompt (versions of languages, package versions, etc.)
+# format = "$character $all"
+
+[character]
+success_symbol = "[▶](bold 6)"
+error_symbol = "[▶](bold red)"
+
+[fill]
+symbol = "-"
+style = "bold black"
+disabled = true
+
+[time]
+time_format = "%R"
+format = "[$time]($style) "
+style = "247"
 disabled = false
 
-[git_branch]
-format = "[$symbol$branch]($style) "
+[directory]
+truncation_length = 2
+truncate_to_repo = true
+truncation_symbol = "…/"
+home_symbol = " ~"
+format = "[$path]($style)[](bg:black fg:8) "
+style = "fg:14 bg:8"
 
-[git_state]
-format = '[\($state( $progress_current of $progress_total)\)]($style)'
+[git_branch]
+#symbol = "\u23fb "
+format = "[$symbol$branch]($style) "
+style = "6"
 
 [git_status]
-format = "$all_status$ahead_behind "
-style = "bright-white"
-conflicted = "⚔️"
-ahead = "🏎️ 💨×${count}"
-behind = "🐢×${count}"
-diverged = "🔱 🏎️ 💨×${ahead_count} 🐢×${behind_count}"
-untracked = "🛤️×${count}"
-stashed = "📦"
-modified = "📝×${count}"
-staged = "🗃️×${count}"
-renamed = "📛×${count}"
-deleted = "🗑️×${count}"
+format = '[$all_status$ahead_behind]($style) '
+style = "6"
+conflicted = "🏳"
+up_to_date = " "
+untracked = " "
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+stashed = " "
+modified = " "
+staged = '[++\($count\)](#bf5700)'
+renamed = "襁 "
+deleted = " "
+
+# [git_branch]
+# ignore_branches = ["dotfiles"]
+# [git_status]
+# format = '( [$conflicted](fg:red)[$untracked](fg:green)[$renamed](fg:yellow)[$modified](fg:yellow)[$deleted](fg:red)[$ahead_behind ]($style))'
+# style = 'blue'
+# conflicted = "≄ "
+# untracked = " $count "
+# modified = " $count "
+# renamed = " $count "
+# deleted = " $count "
+# [cmd_duration]
+# format = "for [$duration]($style) "
+
+# Don't print a new line at the start of the prompt
+# add_newline = false
+
+# Make prompt a single line instead of two lines
+# [line_break]
+# disabled = false
+
+# [git_branch]
+# format = "[$symbol$branch]($style) "
+
+# [git_state]
+# format = '[\($state( $progress_current of $progress_total)\)]($style)'
+
+# [git_status]
+# format = "$all_status$ahead_behind "
+# style = "bright-white"
+# conflicted = "⚔️"
+# ahead = "🏎️ 💨 ×${count}"
+# behind = "🐢 ×${count}"
+# diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
+# untracked = "🛤️×${count}"
+# stashed = "📦"
+# modified = "📝 ×${count}"
+# staged = "🗃️ ×${count}"
+# renamed = "📛 ×${count}"
+# deleted = "🗑️ ×${count}"
 
 # Disable the package module, hiding it from the prompt completely
 [package]
@@ -34,5 +98,8 @@ disabled = true
 disabled = true
 [azure]
 disabled = true
+format = "on [$symbol($subscription)]($style) "
+symbol = "ﴃ "
+style = "blue bold"
 [gcloud]
 disabled = true
