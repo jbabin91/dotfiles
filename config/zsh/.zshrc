@@ -75,7 +75,7 @@ alias l="exa -al --color=always --group-directories-first --git --icons"
 alias ls="exa -al --color=always --group-directories-first --git --icons" # my preferred listing
 alias la="exa -a --color=always --group-directories-first --git --icons"  # all files and dirs
 alias ll="exa -l --color=always --group-directories-first --git --icons"  # long format
-alias lt="exa -aT --color=always --group-directories-first --git --icons" # tree listing
+alias t="exa -aT --color=always --group-directories-first --git --icons" # tree listing
 alias l.='exa -a | egrep "^\."'
 
 # Colorize grep output (good for log files)

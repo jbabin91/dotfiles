@@ -1,105 +1,180 @@
-add_newline = true
-
-format = """\
-[╭──](8) $time[](8)$all$fill[╰─](8)\
+format = """
+$username\
+$kubernetes\
+$directory\
+${custom.git_host}\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$red\
+$ruby\
+$rust\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$custom\
+$cmd_duration\
+$lua\
+$line_break\
+$jobs\
 $character"""
-# switch to this format for very verbose prompt (versions of languages, package versions, etc.)
-# format = "$character $all"
+
+scan_timeout = 10
+
+add_newline = false
+
+[battery]
+disabled = true
 
 [character]
-success_symbol = "[▶](bold 6)"
-error_symbol = "[▶](bold red)"
+success_symbol = "[](blue)"
+error_symbol = "[](bright-red)"
 
-[fill]
-symbol = "-"
-style = "bold black"
+[cmd_duration]
 disabled = true
-
-[time]
-time_format = "%R"
-format = "[$time]($style) "
-style = "247"
-disabled = false
+show_notifications = true
+min_time_to_notify = 90_000
 
 [directory]
-truncation_length = 2
+truncation_length = 1
 truncate_to_repo = true
-truncation_symbol = "…/"
-home_symbol = " ~"
-format = "[$path]($style)[](bg:black fg:8) "
-style = "fg:14 bg:8"
+format = "[](blue) [$path]($style)[$read_only]($read_only_style) "
+read_only = " "
+truncation_symbol = ""
+fish_style_pwd_dir_length = 0
 
 [git_branch]
-#symbol = "\u23fb "
-format = "[$symbol$branch]($style) "
-style = "6"
+format = ":[$symbol$branch]($style)"
+symbol = " "
 
 [git_status]
-format = '[$all_status$ahead_behind]($style) '
-style = "6"
-conflicted = "🏳"
-up_to_date = " "
-untracked = " "
-ahead = "⇡${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-behind = "⇣${count}"
-stashed = " "
-modified = " "
-staged = '[++\($count\)](#bf5700)'
-renamed = "襁 "
-deleted = " "
+format = '(:[$all_status$ahead_behind]($style)) '
+conflicted = '\[ [$count](bright-white bold)\]'
+ahead = '\[[﯁ ](bright-blue)[$count](bright-white bold)\]'
+behind = '\[[﮾ ](white)[$count](bright-white bold)\]'
+diverged = '\[[ ](purple)|[ ﯁ ](bright-blue)[$ahead_count](bright-white bold)[ ﮾ ](white)[$behind_count](bright-white)\]'
+untracked = '\[ [$count](bright-white bold)\]'
+stashed = '\[[](yellow) [$count](bright-white bold)\]'
+modified = '\[[ ](bright-yellow)[$count](bright-white bold)\]'
+staged = '\[[ ](bright-green)[$count](bright-white bold)\]'
+renamed = '\[[ ](bright-cyan) [$count](bright-white bold)\]'
+deleted = '\[ [$count](bright-white bold)\]'
 
-# [git_branch]
-# ignore_branches = ["dotfiles"]
-# [git_status]
-# format = '( [$conflicted](fg:red)[$untracked](fg:green)[$renamed](fg:yellow)[$modified](fg:yellow)[$deleted](fg:red)[$ahead_behind ]($style))'
-# style = 'blue'
-# conflicted = "≄ "
-# untracked = " $count "
-# modified = " $count "
-# renamed = " $count "
-# deleted = " $count "
-# [cmd_duration]
-# format = "for [$duration]($style) "
+[python]
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 
-# Don't print a new line at the start of the prompt
-# add_newline = false
+[custom.git_host]
+command = """
+URL=$(command git ls-remote --get-url 2> /dev/null)
+if [[ "$URL" =~ "github" ]]; then
+    ICON=" "
+elif [[ "$URL" =~ "gitlab" ]]; then
+    ICON=" "
+elif [[ "$URL" =~ "bitbucket" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "kernel" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "archlinux" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "gnu" ]];then
+    ICON=" "
+elif [[ "$URL" =~ "git" ]];then
+    ICON=" "
+else
+    ICON=" "
+    URL="localhost"
+fi
+for PATTERN in "https" "http" "git" "://" "@"; do
+    [[ "$URL" == "$PATTERN"* ]] && URL="${URL##$PATTERN}"
+done
+for PATTERN in "/" ".git"; do
+    [[ "$URL" == *"$PATTERN" ]] && URL="${URL%%$PATTERN}"
+done
+printf "%s%s" "$ICON" "$URL"
+"""
+directories = [".git"]
+when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
+shell = ["bash","--norc","--noprofile"]
+style = "bright-yellow bold"
+format = "at [$output]($style)"
 
-# Make prompt a single line instead of two lines
-# [line_break]
-# disabled = false
-
-# [git_branch]
-# format = "[$symbol$branch]($style) "
-
-# [git_state]
-# format = '[\($state( $progress_current of $progress_total)\)]($style)'
-
-# [git_status]
-# format = "$all_status$ahead_behind "
-# style = "bright-white"
-# conflicted = "⚔️"
-# ahead = "🏎️ 💨 ×${count}"
-# behind = "🐢 ×${count}"
-# diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
-# untracked = "🛤️×${count}"
-# stashed = "📦"
-# modified = "📝 ×${count}"
-# staged = "🗃️ ×${count}"
-# renamed = "📛 ×${count}"
-# deleted = "🗑️ ×${count}"
-
-# Disable the package module, hiding it from the prompt completely
-[package]
+[hostname]
 disabled = true
-[lua]
-disabled = true
+
 [aws]
+format = "[$symbol$region ]($style)"
 disabled = true
 [azure]
+format = "[$symbol($subscription )]($style)"
 disabled = true
-format = "on [$symbol($subscription)]($style) "
-symbol = "ﴃ "
-style = "blue bold"
+[c]
+format = "[$symbol($version(-$name) )]($style)"
+[cmake]
+format = "[$symbol($version )]($style)"
+[conda]
+format = "[$symbol$environment ]($style)"
+[dart]
+format = "[$symbol($version )]($style)"
+[docker_context]
+format = "[🐋 $context ](blue bold)"
+[dotnet]
+format = "[$symbol($version )(🎯 $tfm )]($style)"
+[elixir]
+format = "[$symbol($version (OTP $otp_version) )]($style)"
+[elm]
+format = "[$symbol($version )]($style)"
+[golang]
+format = "[$symbol($version )]($style)"
 [gcloud]
+format = "[$symbol$account(@$domain)(($region)) ]($style)"
 disabled = true
+[haskell]
+format = "[$symbol($version )]($style)"
+[helm]
+format = "[$symbol($version )]($style)"
+[java]
+format = "[${symbol}(${version} )]($style)"
+[julia]
+format = "[$symbol($version )]($style)"
+[kotlin]
+format = "[$symbol($version )]($style)"
+[kubernetes]
+format = "[$symbol$context(($namespace)) ]($style)"
+[lua]
+format = "[$symbol($version )]($style)"
+[nodejs]
+format = "[$symbol($version )]($style)"
+[package]
+format = "[$symbol$version ]($style)"
