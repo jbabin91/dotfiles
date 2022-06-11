@@ -11,7 +11,17 @@
 [color]
   ui = true
 [delta]
-  navigate = true
+  features = decorations
+[delta "interactive"]
+  keep-plus-minus-markers = false
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
 [alias]
   cbr = symbolic-ref --short HEAD
 	changed = show --pretty=\"format:\" --name-only
@@ -25,19 +35,6 @@
 	lt = log --tags --decorate --simplify-by-decoration --oneline
   please = push --force-with-lease
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
-[interactive]
-  diffFilter = delta --color-only
-[diff]
-  colorMoved = default
-[diff "plist"]
-  textconv = osadecompile
-[diff "scpt"]
-  textconv = osadecompile
-  binary = true
-[merge]
-  conflictstyle = diff3
-[mergetool]
-  prompt = false
 [grep]
   extendRegexp = true
   patternType = perl
