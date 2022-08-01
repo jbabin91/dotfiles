@@ -1,49 +1,95 @@
 [user]
-  name = Jace Babin
-  email = jbabin91@gmail.com
-  logallrefupdates = true
-	signingKey = ""
+  name = "Jace Babin"
+  email = "jbabin91@gmail.com"
+#[include]
+#  path = ~/.gitconfig_personal
+[includeIf "gitdir:~/.code/Work/"]
+  path = ~/.gitconfig_work
+[url "wgh:tandemdiabetes"]
+  insteadOf = git@github.com:tandemdiabetes
 [core]
   attributesfile = ~/.gitattributes
-  excludesfile = ~/.gitignore
+  autocrlf = input
+  editor = nvim
+	excludesfile = /Users/jacebabin/.gitignore
   ignorecase = false
-  pager = delta
+	pager = less -x2
 [color]
   ui = true
-[delta]
-  features = decorations
-[delta "interactive"]
-  keep-plus-minus-markers = false
-[delta "decorations"]
-  commit-decoration-style = blue ol
-  commit-style = raw
-  file-style = omit
-  hunk-header-decoration-style = blue box
-  hunk-header-file-style = red
-  hunk-header-line-number-style = "#067a00"
-  hunk-header-style = file line-number syntax
 [alias]
-  cbr = symbolic-ref --short HEAD
-	changed = show --pretty=\"format:\" --name-only
-	co = checkout
-	commend = commit --amend --no-edit
-	count = shortlog -sn
-	fm = fetch-merge
+  # http://gitready.com/intermediate/2009/02/12/easily-fetch-upstream-changes.html
+  pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/main"
+  # update submodules
+  subup = !"git pull --recurse-submodules && git submodule update"
+  # delete branches that have already been merged into the current branch
+  rmmerged = !"git branch --merged | grep -v '*' | grep -v \"main\" | xargs -n 1 git branch -d && git remote prune origin"
+  count = shortlog -sn
+  changedfiles = !sh -c 'git diff --name-only HEAD $(git merge-base HEAD main)' -
+  change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f "
+  track = !"git fetch origin && git branch $1 origin/$1 && git switch $1"
+
+  #  Mostly from http://www.metacircus.com/hacking/2011/02/18/play-git-like-a-violin.html
+  # I like using the interactive mode to make complex commits
+  a = add --all
+  ai = add --interactive
+
+  # All the aliases relate to commits. Note that
+  # they are grouped by common prefixes, so I don't
+  # confuse what I want done by accident.
+  c = commit
+  # commit with a message
+  cm = commit -m
+  cma = commit -a -m
+  # amending the previous commit
+  ca = commit --amend
+  caa = commit -a --amend -C HEAD
+
+  deleted = log --diff-filter=D --summary
+
+  # reset
+  ## soft resets
+  r = reset
+  r1 = reset HEAD^
+  r2 = reset HEAD^^
+  ## hard resets
+  rh = reset --hard
+  rh1 = reset HEAD^ --hard
+  rh1 = reset HEAD^^ --hard
+
+  # shortcuts for commands
+  b = branch
+  co = checkout
+  d = diff
+  f = fetch
+  l = log
+  l1 = log --oneline
+  lg = log --graph --oneline --decorate --date=relative --all
+  m = merge
+  mt = mergetool
+  p = pull
+  rp = git remote prune origin
+  s = status -sb
+  st = status
+  sw = switch
+  conflicts = diff --name-only --diff-filter=U
+
+  changed = show --pretty=\"format:\" --name-only
+  fm = fetch-merge
   g = grep --break --heading --line-number
-	gi = grep --break --heading --line-number -i
+  gi = grep --break --heading --line-number -i
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	lt = log --tags --decorate --simplify-by-decoration --oneline
-  please = push --force-with-lease
+  lt = log --tags --decorate --simplify-by-decoration --oneline
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
 [grep]
   extendRegexp = true
   patternType = perl
-  lineNumber = true
+	lineNumber = true
 [push]
   default = simple
   followTags = true
 [pull]
-  rebase = true
+	rebase = true
+	ff = only
 [rebase]
   autosquash = true
   autostash = true
@@ -51,27 +97,50 @@
   preserve-merges = true
 [rerere]
   enable = true
+  autoupdate = true
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[difftool]
+  prompt = false
+  trustExitCode = true
+[hub]
+  protocol = ssh
+[interactive]
+  diffFilter = delta --color-only
+[init]
+  defaultBranch = main
+[branch]
+  sort = -committerdate # sort branches by last commit descending
+[delta]
+  features = line-numbers decorations
+[help]
+  autocorrect = 10
+[diff "rspec"]
+  xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario)[ \t].*)$"
 [status]
   showUntackedFiles = all
 [apply]
-	whitespace = nowarn
-[help]
-	autocorrect = 1
+  whitespace = nowarn
 [submodule]
-	fetchJobs = 4
+  fetchJobs = 4
 [commit]
 	template = ~/.dotfiles/general/git/template.txt
-	gpgSign = false
 [log]
-	showSignature = false
-[init]
-    defaultBranch = main
+  showSignature = false
 [gpg]
-	program = gpg
+  program = gpg
 [tag]
-	forceSignAnnotated = false
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  forceSignAnnotated = false
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/local/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/usr/local/bin/gh auth git-credential
+[fetch]
+	prune = true
+[merge]
+	ff = false

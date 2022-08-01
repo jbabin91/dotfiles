@@ -1,2 +1,14 @@
-*.plist diff=plist
-*.scpt diff=scpt
+*.css      diff=css
+*.ex       diff=elixir
+*.exs      diff=elixir
+*.html     diff=html
+*.gemspec  diff=ruby
+*.go       diff=golang
+*.md       diff=markdown
+*.plist    diff=plist
+*.py       diff=python
+*.rake     diff=ruby
+*.rb       diff=ruby
+*.rspec    diff=rust
+*.scpt     diff=scpt
+*._spec.rb diff=rspec

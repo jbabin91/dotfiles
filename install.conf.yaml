@@ -24,6 +24,7 @@
     # Git Config
     ~/.gitattributes: general/git/.gitattributes
     ~/.gitconfig: general/git/.gitconfig
+    ~/.gitconfig_personal: general/git/.gitconfig_personal
     ~/.gitignore: general/git/.gitignore
     # Kitty
     ~/.config/kitty: config/kitty
@@ -35,6 +36,9 @@
     ~/.config/starship.toml: config/starship/config.toml
     # ZSH
     ~/.zshrc: config/zsh/.zshrc
+    ~/.config/zsh/aliases.sh: config/zsh/aliases.sh
+    ~/.config/zsh/path.sh: config/zsh/path.sh
+    ~/.config/zsh/plugins.sh: config/zsh/plugins.sh
     # Neofetch
     ~/.config/neofetch: config/neofetch
     # bat

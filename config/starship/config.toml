@@ -82,8 +82,8 @@ symbol = " "
 [git_status]
 format = '(:[$all_status$ahead_behind]($style)) '
 conflicted = '\[ [$count](bright-white bold)\]'
-ahead = '\[[﯁ ](bright-blue)[$count](bright-white bold)\]'
-behind = '\[[﮾ ](white)[$count](bright-white bold)\]'
+ahead = '\[[ ](bright-blue)[$count](bright-white bold)\]'
+behind = '\[[ ](white)[$count](bright-white bold)\]'
 diverged = '\[[ ](purple)|[ ﯁ ](bright-blue)[$ahead_count](bright-white bold)[ ﮾ ](white)[$behind_count](bright-white)\]'
 untracked = '\[ [$count](bright-white bold)\]'
 stashed = '\[[](yellow) [$count](bright-white bold)\]'
