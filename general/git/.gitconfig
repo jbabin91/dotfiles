@@ -23,6 +23,7 @@
   subup = !"git pull --recurse-submodules && git submodule update"
   # delete branches that have already been merged into the current branch
   rmmerged = !"git branch --merged | grep -v '*' | grep -v \"main\" | xargs -n 1 git branch -d && git remote prune origin"
+  devrmmerged = !"git branch --merged | grep -v '*' | grep -v \"develop\" | xargs -n 1 git branch -d && git remote prune origin"
   count = shortlog -sn
   changedfiles = !sh -c 'git diff --name-only HEAD $(git merge-base HEAD main)' -
   change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f "
@@ -144,3 +145,6 @@
 	prune = true
 [merge]
 	ff = false
+  tool = code-insiders
+[mergetool "code-insiders"]
+  cmd = code-insiders --wait --merge $REMOTE $LOCAL $BASE $MERGED
