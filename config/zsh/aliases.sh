@@ -13,6 +13,7 @@ alias .5="cd ../../../../.."
 alias vim="nvim"
 alias v="nvim"
 alias e="code"
+alias ie="code-insiders"
 alias em="/usr/bin/emacs -nw"
 alias emacs="emacsclient -c -a 'emacs'"
 alias doomsync="~/.emacs.d/bin/doom sync"
@@ -34,7 +35,7 @@ alias l="exa -al --color=always --group-directories-first --git --icons"
 alias ls="exa -al --color=always --group-directories-first --git --icons" # my preferred listing
 alias la="exa -a --color=always --group-directories-first --git --icons"  # all files and dirs
 alias ll="exa -l --color=always --group-directories-first --git --icons"  # long format
-alias t="exa -aT --color=always --group-directories-first --git --icons" # tree listing
+alias t="exa -aT --color=always --group-directories-first --git --icons"  # tree listing
 alias l.='exa -a | egrep "^\."'
 
 # Colorize grep output (good for log files)
@@ -45,7 +46,7 @@ alias fgrep='fgrep --color=auto'
 # General UNIX
 alias c="clear"
 alias cp="cp -iv"
-alias df="df -h"                          # human-readable sizes
+alias df="df -h" # human-readable sizes
 alias du="du -d 1 -h"
 alias duf="du -sh *"
 alias mkdir="mkdir -pv"
@@ -58,7 +59,7 @@ alias rm="rm -iv"
 alias srm="srm -iv"
 
 # adding flags
-alias free='free -m'                      # show sizes in MB
+alias free='free -m' # show sizes in MB
 alias lynx='lynx -cfg=~/.lynx/lynx.cfg -lss=~/.lynx/lynx.lss -vikeys'
 alias vifm='./.config/vifm/scripts/vifmrun'
 alias ncmpcpp='ncmpcpp ncmpcpp_directory=$HOME/.config/ncmpcpp/'
@@ -118,9 +119,12 @@ alias .nvim="cd ~/.dotfiles/config/nvim && nvim ."
 alias .zsh="cd ~/.dotfiles/config/zsh && nvim .zshrc"
 
 # Git/Work directories
-alias .g="cd ~/.code/github/jbabin91"
-alias .w="cd ~/.code/work"
+alias .g="z jbabin91"
+alias .w="z tandem"
 
 # Minikube
 alias kubectl="minikube kubectl --"
 
+# node
+alias pn="pnpm"
+alias px="pnpx"

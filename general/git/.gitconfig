@@ -1,12 +1,9 @@
-[user]
-  name = "Jace Babin"
-  email = "jbabin91@gmail.com"
-#[include]
-#  path = ~/.gitconfig_personal
+[includeIf "gitdir:~/.code/github/"]
+  path = ~/.gitconfig_personal
 [includeIf "gitdir:~/.code/Work/"]
   path = ~/.gitconfig_work
-[url "wgh:tandemdiabetes"]
-  insteadOf = git@github.com:tandemdiabetes
+# [url "wgh:tandemdiabetes"]
+#   insteadOf = git@github.com:tandemdiabetes
 [core]
   attributesfile = ~/.gitattributes
   autocrlf = input
@@ -45,8 +42,6 @@
   ca = commit --amend
   caa = commit -a --amend -C HEAD
 
-  deleted = log --diff-filter=D --summary
-
   # reset
   ## soft resets
   r = reset
@@ -62,9 +57,6 @@
   co = checkout
   d = diff
   f = fetch
-  l = log
-  l1 = log --oneline
-  lg = log --graph --oneline --decorate --date=relative --all
   m = merge
   mt = mergetool
   p = pull
@@ -78,16 +70,46 @@
   fm = fetch-merge
   g = grep --break --heading --line-number
   gi = grep --break --heading --line-number -i
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  lt = log --tags --decorate --simplify-by-decoration --oneline
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
+
+	# Log
+  l = log
+	graph = log --graph --oneline
+	log-yesterday = log --since=yesterday.midnight --oneline
+  l1 = log --oneline
+  lp = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lg = log --graph --oneline --decorate --date=relative --all
+  lt = log --tags --decorate --simplify-by-decoration --oneline
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  deleted = log --diff-filter=D --summary
+  logs = log --show-signature
+
+	# File changes
+	## gen-ignore <lang>: Outputs a .gitignore file for `lang` from gitignore.io to stdout.
+	gen-ignore = "!_gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; _gi"
+	## ignore/hard-ignore: See https://stackoverflow.com/a/13631525
+	ignore = update-index --assume-unchanged
+	unignore = update-index --no-assume-unchanged
+	hard-ignore = update-index --skip-worktree
+	hard-unignore = update-index --no-skip-worktree
+	## ls-ignored: Lists files marked with assume-unchanged.
+	ls-ignored = !git ls-files -v | grep '^[[:lower:]]' | cut -c 3-
+	## ls-hard-ignored: Lists files marked with skip-worktree.
+	ls-hard-ignored = !git ls-files -v | grep -i '^S' | cut -c 3-
+	word-diff = diff --word-diff
+	char-diff = diff --word-diff --word-diff-regex='([^[:alnum:]]|[^[:space:]])'
+	## drop [stash_args...]: Like `reset HEAD`, but changes are recoverable from the stash reflog. Forwards arguments to `stash push`.
+	drop = "!_drop() { git stash push \"$@\" && git stash drop; }; _drop"
+	stat = status --short --branch
+
 [grep]
   extendRegexp = true
   patternType = perl
 	lineNumber = true
 [push]
-  default = simple
+  default = current
   followTags = true
+	autoSetupRemote = true
 [pull]
 	rebase = true
 	ff = only
@@ -131,16 +153,14 @@
 	template = ~/.dotfiles/general/git/template.txt
 [log]
   showSignature = false
-[gpg]
-  program = gpg
 [tag]
   forceSignAnnotated = false
 [credential "https://github.com"]
-	helper =
-	helper = !/usr/local/bin/gh auth git-credential
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper =
-	helper = !/usr/local/bin/gh auth git-credential
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [fetch]
 	prune = true
 [merge]
@@ -148,3 +168,8 @@
   tool = code-insiders
 [mergetool "code-insiders"]
   cmd = code-insiders --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[gpg "ssh"]
+	allowedSignersFile = /Users/jacebabin/.config/git/allowed_signers
+[user]
+	email = jbabin91@gmail.com
+	name = Jace Babin

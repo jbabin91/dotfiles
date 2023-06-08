@@ -76,11 +76,11 @@ truncation_symbol = ""
 fish_style_pwd_dir_length = 0
 
 [git_branch]
-format = ":[$symbol$branch]($style)"
+format = " [$symbol$branch]($style)"
 symbol = " "
 
 [git_status]
-format = '(:[$all_status$ahead_behind]($style)) '
+format = ' ([$all_status$ahead_behind]($style)) '
 conflicted = '\[ [$count](bright-white bold)\]'
 ahead = '\[[ ](bright-blue)[$count](bright-white bold)\]'
 behind = '\[[ ](white)[$count](bright-white bold)\]'
@@ -93,7 +93,7 @@ renamed = '\[[ ](bright-cyan) [$count](bright-white bold)\]'
 deleted = '\[ [$count](bright-white bold)\]'
 
 [python]
-format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 
 [custom.git_host]
 command = """
@@ -128,7 +128,7 @@ directories = [".git"]
 when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
 shell = ["bash","--norc","--noprofile"]
 style = "bright-yellow bold"
-format = "at [$output]($style)"
+format = "[$output]($style)"
 
 [hostname]
 disabled = true
