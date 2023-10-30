@@ -1,3 +1,5 @@
+"$schema" = "https://starship.rc/config-schema.json"
+
 format = """
 $username\
 $kubernetes\
@@ -70,7 +72,7 @@ min_time_to_notify = 90_000
 [directory]
 truncation_length = 1
 truncate_to_repo = true
-format = "[](blue) [$path]($style)[$read_only]($read_only_style) "
+format = "[](blue) [$path]($style)[$read_only]($read_only_style)"
 read_only = " "
 truncation_symbol = ""
 fish_style_pwd_dir_length = 0
@@ -80,17 +82,17 @@ format = " [$symbol$branch]($style)"
 symbol = " "
 
 [git_status]
-format = ' ([$all_status$ahead_behind]($style)) '
-conflicted = '\[ [$count](bright-white bold)\]'
-ahead = '\[[ ](bright-blue)[$count](bright-white bold)\]'
-behind = '\[[ ](white)[$count](bright-white bold)\]'
-diverged = '\[[ ](purple)|[ ﯁ ](bright-blue)[$ahead_count](bright-white bold)[ ﮾ ](white)[$behind_count](bright-white)\]'
-untracked = '\[ [$count](bright-white bold)\]'
-stashed = '\[[](yellow) [$count](bright-white bold)\]'
-modified = '\[[ ](bright-yellow)[$count](bright-white bold)\]'
-staged = '\[[ ](bright-green)[$count](bright-white bold)\]'
-renamed = '\[[ ](bright-cyan) [$count](bright-white bold)\]'
-deleted = '\[ [$count](bright-white bold)\]'
+format = '([$all_status$ahead_behind]($style))'
+conflicted = ' \[ [$count](bright-white bold)\]'
+ahead = ' \[[ ](bright-blue)[$count](bright-white bold)\]'
+behind = ' \[[ ](white)[$count](bright-white bold)\]'
+diverged = ' \[[ ](purple)|[ ﯁ ](bright-blue)[$ahead_count](bright-white bold)[ ﮾ ](white)[$behind_count](bright-white)\]'
+untracked = ' \[ [$count](bright-white bold)\]'
+stashed = ' \[[](yellow)[$count](bright-white bold)\]'
+modified = ' \[[ ](bright-yellow)[$count](bright-white bold)\]'
+staged = ' \[[ ](bright-green)[$count](bright-white bold)\]'
+renamed = ' \[[ ](bright-cyan)[$count](bright-white bold)\]'
+deleted = ' \[ [$count](bright-white bold)\]'
 
 [python]
 format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
@@ -126,55 +128,57 @@ printf "%s%s" "$ICON" "$URL"
 """
 directories = [".git"]
 when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
-shell = ["bash","--norc","--noprofile"]
+shell = ["bash", "--norc", "--noprofile"]
 style = "bright-yellow bold"
-format = "[$output]($style)"
+format = " [$output]($style)"
 
 [hostname]
 disabled = true
 
 [aws]
-format = "[$symbol$region ]($style)"
+format = " [$symbol$region]($style)"
 disabled = true
 [azure]
-format = "[$symbol($subscription )]($style)"
+format = " [$symbol($subscription)]($style)"
 disabled = true
 [c]
-format = "[$symbol($version(-$name) )]($style)"
+format = " [$symbol($version(-$name))]($style)"
 [cmake]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [conda]
-format = "[$symbol$environment ]($style)"
+format = " [$symbol$environment]($style)"
 [dart]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [docker_context]
-format = "[🐋 $context ](blue bold)"
+format = " [🐋 $context](blue bold)"
 [dotnet]
-format = "[$symbol($version )(🎯 $tfm )]($style)"
+format = " [$symbol($version)(🎯 $tfm )]($style)"
 [elixir]
-format = "[$symbol($version (OTP $otp_version) )]($style)"
+format = " [$symbol($version (OTP $otp_version))]($style)"
 [elm]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [golang]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [gcloud]
-format = "[$symbol$account(@$domain)(($region)) ]($style)"
+format = " [$symbol$account(@$domain)(($region))]($style)"
 disabled = true
 [haskell]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [helm]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [java]
-format = "[${symbol}(${version} )]($style)"
+format = " [$symbol($version)]($style)"
 [julia]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [kotlin]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [kubernetes]
-format = "[$symbol$context(($namespace)) ]($style)"
+format = " [$symbol$context(($namespace))]($style)"
 [lua]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [nodejs]
-format = "[$symbol($version )]($style)"
+format = " [$symbol($version)]($style)"
 [package]
-format = "[$symbol$version ]($style)"
+format = " [$symbol($version)]($style)"
+[rust]
+format = " [$symbol($version)]($style)"

@@ -1,7 +1,0 @@
-[user]
-  name = Jace Babin
-  email = jbabin91@gmail.com
-[github]
-  user = "jbabin91"
-[core]
-  sshCommand = "ssh -i ~/.ssh/github"

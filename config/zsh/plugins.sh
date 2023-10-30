@@ -2,6 +2,7 @@ plugins=(
   catimg
   colored-man-pages
   docker
+  docker-compose
   extract
   gem
   gitfast

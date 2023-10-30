@@ -1,16 +1,19 @@
 [includeIf "gitdir:~/.code/github/"]
   path = ~/.gitconfig_personal
-[includeIf "gitdir:~/.code/Work/"]
-  path = ~/.gitconfig_work
-# [url "wgh:tandemdiabetes"]
-#   insteadOf = git@github.com:tandemdiabetes
+[user]
+	name = Jace Babin
+	email = jbabin91@gmail.com
+  signingkey = ~/.ssh/github.pub
 [core]
+  sshCommand = "ssh -i ~/.ssh/github"
   attributesfile = ~/.gitattributes
   autocrlf = input
   editor = nvim
-	excludesfile = /Users/jacebabin/.gitignore
+	excludesfile = ~/.gitignore
   ignorecase = false
 	pager = less -x2
+[github]
+  user = "jbabin91"
 [color]
   ui = true
 [alias]
@@ -101,7 +104,6 @@
 	## drop [stash_args...]: Like `reset HEAD`, but changes are recoverable from the stash reflog. Forwards arguments to `stash push`.
 	drop = "!_drop() { git stash push \"$@\" && git stash drop; }; _drop"
 	stat = status --short --branch
-
 [grep]
   extendRegexp = true
   patternType = perl
@@ -117,7 +119,7 @@
   autosquash = true
   autostash = true
   instructionFormat = %d %s (%cr) <%an>
-  preserve-merges = true
+  rebase-merges = true
 [rerere]
   enable = true
   autoupdate = true
@@ -151,15 +153,17 @@
   fetchJobs = 4
 [commit]
 	template = ~/.dotfiles/general/git/template.txt
+  gpgSign = true
+[gpg]
+  format = ssh
 [log]
   showSignature = false
 [tag]
   forceSignAnnotated = false
+  gpgsign = true
 [credential "https://github.com"]
-	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [fetch]
 	prune = true
@@ -168,8 +172,3 @@
   tool = code-insiders
 [mergetool "code-insiders"]
   cmd = code-insiders --wait --merge $REMOTE $LOCAL $BASE $MERGED
-[gpg "ssh"]
-	allowedSignersFile = /Users/jacebabin/.config/git/allowed_signers
-[user]
-	email = jbabin91@gmail.com
-	name = Jace Babin

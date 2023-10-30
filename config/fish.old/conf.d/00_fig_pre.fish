@@ -1,1 +1,0 @@
-/Users/jacebabin/.fig/shell/pre.fish

@@ -24,7 +24,6 @@
     # Git Config
     ~/.gitattributes: general/git/.gitattributes
     ~/.gitconfig: general/git/.gitconfig
-    ~/.gitconfig_personal: general/git/.gitconfig_personal
     ~/.gitignore: general/git/.gitignore
     # Kitty
     ~/.config/kitty: config/kitty
@@ -46,8 +45,6 @@
     ~/.config/bat/config: config/bat/config
     # htop
     ~/.config/htop/htoprc: config/htop/htoprc
-    # ssh
-    ~/.config/.ssh/config.dotfiles: config/ssh/config.dotfiles
     # yabai
     #~/.config/yabai/yabairc: config/yabai/yabairc
     # skhd
@@ -59,12 +56,3 @@
     # NVIM
     # ~/.config/nvim/:
     #  path: config/nvim/*
-    # Doom Emacs
-    # ~/.config/doom/config.org: config/doom/config.org
-    # ~/.config/doom/config.el: config/doom/config.el
-    # ~/.config/doom/init.el: config/doom/init.el
-    # ~/.config/doom/packages.el: config/doom/packages.el
-    # ~/.config/doom/custom.el: config/doom/custom.el
-    # ~/.config/doom/doom-emacs-dash.png: config/doom/doom-emacs-dash.png
-    # ~/.config/doom/eshell/:
-    #   path: config/doom/eshell/*
