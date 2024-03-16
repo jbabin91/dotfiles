@@ -37,8 +37,6 @@
     ~/.zshrc: config/zsh/.zshrc
     ~/.config/zsh/aliases.sh: config/zsh/aliases.sh
     ~/.config/zsh/path.sh: config/zsh/path.sh
-    ~/.config/zsh/plugins.sh: config/zsh/plugins.sh
-    ~/.config/zsh/nvim-switcher.sh: config/zsh/nvim-switcher.sh
     # Neofetch
     ~/.config/neofetch: config/neofetch
     # bat
