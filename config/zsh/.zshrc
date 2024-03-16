@@ -1,6 +1,6 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# Start configuration added by Zim install {{{
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
+## Start configuration added by Zim install {{{
 #
 # User configuration sourced by interactive shells
 #
@@ -135,7 +135,7 @@ export EDITOR=nvim
 
 # Paths
 source ~/.config/zsh/path.sh
-# source ~/.config/zsh/plugins.sh
+
 # Aliases
 source ~/.config/zsh/aliases.sh
 
@@ -182,5 +182,11 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# proto
+export PROTO_HOME="$HOME/.proto"
+export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH"
+
+PATH=~/.console-ninja/.bin:$PATH
+
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"

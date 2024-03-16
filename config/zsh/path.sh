@@ -13,14 +13,13 @@ if [ -d "$HOME/.scripts" ]; then
   PATH="$HOME/.scripts:$PATH"
 fi
 
+# Java Home
+# export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home"
+
 # Android Studio
-export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
-export ANDROID_HOME=$ANDROID_SDK_ROOT
-export PATH=$ANDROID_HOME/emulator:$PATH
-export PATH=$ANDROID_HOME/platform-tools:$PATH
-export PATH=$ANDROID_HOME/platforms:$PATH
-export PATH=$ANDROID_HOME/tools/bin:$PATH
-export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+# export ANDROID_HOME=$HOME/Library/Android/sdk
+# export PATH=$PATH:$ANDROID_HOME/emulator
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # PNPM
 export PNPM_HOME="/Users/jacebabin/Library/pnpm"
@@ -32,4 +31,3 @@ export PATH="$PNPM_HOME:$PATH"
 # Bun
 export BUN_INSTALL="/Users/jacebabin/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
