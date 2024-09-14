@@ -1,5 +1,5 @@
-# CodeWhisperer pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
+# Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 ## Start configuration added by Zim install {{{
 #
 # User configuration sourced by interactive shells
@@ -139,9 +139,6 @@ source ~/.config/zsh/path.sh
 # Aliases
 source ~/.config/zsh/aliases.sh
 
-# Sources
-source ~/.config/zsh/nvim-switcher.sh
-
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"                                       # This loads nvm
@@ -161,6 +158,9 @@ eval "$(fnm env --use-on-cd)"
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# fzf
+eval "$(fzf --zsh)"
 
 # tabtab source for packages
 # uninstall by removing these lines
@@ -188,5 +188,5 @@ export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH"
 
 PATH=~/.console-ninja/.bin:$PATH
 
-# CodeWhisperer post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
+# Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

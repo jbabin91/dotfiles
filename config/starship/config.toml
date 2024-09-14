@@ -1,184 +1,137 @@
-"$schema" = "https://starship.rc/config-schema.json"
+## ░█▀▀░▀█▀░█▀█░█▀▄░█▀▀░█░█░▀█▀░█▀█
+## ░▀▀█░░█░░█▀█░█▀▄░▀▀█░█▀█░░█░░█▀▀
+## ░▀▀▀░░▀░░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░░
+## CROSS-SHELL PROMPT
+##
+## rxyhn's starship configuration
+## The minimal, blazing-fast, and infinitely customizable prompt for any shell!
+"$schema" = 'https://starship.rs/config-schema.json'
+palette = "catppuccin_mocha"
 
-format = """
-$username\
-$kubernetes\
-$directory\
-${custom.git_host}\
-$git_branch\
-$git_commit\
-$git_state\
-$git_status\
-$hg_branch\
-$docker_context\
-$package\
-$cmake\
-$dart\
-$deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$golang\
-$helm\
-$java\
-$julia\
-$kotlin\
-$nim\
-$nodejs\
-$ocaml\
-$perl\
-$php\
-$purescript\
-$python\
-$red\
-$ruby\
-$rust\
-$swift\
-$terraform\
-$vlang\
-$vagrant\
-$zig\
-$nix_shell\
-$conda\
-$aws\
-$gcloud\
-$openstack\
-$env_var\
-$crystal\
-$custom\
-$cmd_duration\
-$lua\
-$line_break\
-$jobs\
-$character"""
+# Inserts a blank line between shell prompts
+add_newline = true
+command_timeout = 1500
 
-scan_timeout = 10
-add_newline = false
-command_timeout = 10000
-
-[battery]
-disabled = true
-
-[character]
-success_symbol = "[](blue)"
-error_symbol = "[](bright-red)"
-
-[cmd_duration]
-disabled = true
-show_notifications = true
-min_time_to_notify = 90_000
+# Replace the '>' symbol in the prompt with '→'
+# [character] # The name of the module we are configuring is 'character'
+# success_symbol = "[→](bold green)" # The 'success_symbol' segment is being set to '→' with the color 'bold green'
+# error_symbol = "[❌](bold red)"     # The 'success_symbol' segment is being set to '→' with the color 'bold green'
 
 [directory]
 truncation_length = 1
-truncate_to_repo = true
-format = "[](blue) [$path]($style)[$read_only]($read_only_style)"
-read_only = " "
-truncation_symbol = ""
-fish_style_pwd_dir_length = 0
+truncate_to_repo = false
+
+[cmd_duration]
+format = '[$duration]($style)'
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
 
 [git_branch]
-format = " [$symbol$branch]($style)"
-symbol = " "
+format = '[$symbol$branch(:$remote_branch)]($style) '
 
 [git_status]
 format = '([$all_status$ahead_behind]($style))'
-conflicted = ' \[ [$count](bright-white bold)\]'
-ahead = ' \[[ ](bright-blue)[$count](bright-white bold)\]'
-behind = ' \[[ ](white)[$count](bright-white bold)\]'
-diverged = ' \[[ ](purple)|[ ﯁ ](bright-blue)[$ahead_count](bright-white bold)[ ﮾ ](white)[$behind_count](bright-white)\]'
-untracked = ' \[ [$count](bright-white bold)\]'
-stashed = ' \[[ ](yellow)[$count](bright-white bold)\]'
-modified = ' \[[ ](bright-yellow)[$count](bright-white bold)\]'
-staged = ' \[[ ](bright-green)[$count](bright-white bold)\]'
-renamed = ' \[[ ](bright-cyan)[$count](bright-white bold)\]'
-deleted = ' \[ [$count](bright-white bold)\]'
-
-[python]
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-
-[custom.git_host]
-command = """
-URL=$(command git ls-remote --get-url 2> /dev/null)
-if [[ "$URL" =~ "github" ]]; then
-    ICON=" "
-elif [[ "$URL" =~ "gitlab" ]]; then
-    ICON=" "
-elif [[ "$URL" =~ "bitbucket" ]];then
-    ICON=" "
-elif [[ "$URL" =~ "kernel" ]];then
-    ICON=" "
-elif [[ "$URL" =~ "archlinux" ]];then
-    ICON=" "
-elif [[ "$URL" =~ "gnu" ]];then
-    ICON=" "
-elif [[ "$URL" =~ "git" ]];then
-    ICON=" "
-else
-    ICON=" "
-    URL="localhost"
-fi
-for PATTERN in "https" "http" "git" "://" "@"; do
-    [[ "$URL" == "$PATTERN"* ]] && URL="${URL##$PATTERN}"
-done
-for PATTERN in "/" ".git"; do
-    [[ "$URL" == *"$PATTERN" ]] && URL="${URL%%$PATTERN}"
-done
-printf "%s%s" "$ICON" "$URL"
-"""
-directories = [".git"]
-when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
-shell = ["bash", "--norc", "--noprofile"]
-style = "bright-yellow bold"
-format = " [$output]($style)"
-
-[hostname]
-disabled = true
+conflicted = '🏳'
+ahead = '🏎💨'
+behind = '😰'
+diverged = '😵'
+up_to_date = '✓'
+untracked = '🤷'
+stashed = '📦'
+modified = '📝'
+staged = '[++\($count\)](green)'
+renamed = ' 👅 '
+deleted = ' 🗑 '
 
 [aws]
-format = " [$symbol$region]($style)"
 disabled = true
 [azure]
-format = " [$symbol($subscription)]($style)"
 disabled = true
+[buf]
+format = ' [$symbol($version )]($style)'
+[bun]
+format = ' [$symbol($version )]($style)'
 [c]
-format = " [$symbol($version(-$name))]($style)"
-[cmake]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version(-$name) )]($style)'
 [conda]
-format = " [$symbol$environment]($style)"
+format = ' [$symbol$environment](dimmed green)'
+[crystal]
+format = ' [$symbol($version )]($style)'
+[daml]
+format = ' [D $version](bold bright-green)'
 [dart]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
+[deno]
+format = ' [$symbol($version )]($style)'
 [docker_context]
-format = " [🐋 $context](blue bold)"
+format = ' [$symbol$context]($style)'
 [dotnet]
-format = " [$symbol($version)(🎯 $tfm )]($style)"
+format = ' [$symbol($version )(🎯 $tfm )]($style)'
 [elixir]
-format = " [$symbol($version (OTP $otp_version))]($style)"
+format = ' [$symbol($version \(OTP $otp_version\) )]($style)'
 [elm]
-format = " [$symbol($version)]($style)"
-[golang]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
+[erlang]
+format = ' [$symbol($version )]($style)'
+[fennel]
+format = ' [$symbol($version )]($style)'
 [gcloud]
-format = " [$symbol$account(@$domain)(($region))]($style)"
 disabled = true
+[golang]
+format = ' [$symbol($version )]($style)'
+[guix_shell]
+format = ' [$symbol]($style)'
+[gradle]
+format = ' [$symbol($version )]($style)'
 [haskell]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
+[haxe]
+format = ' [$symbol($version )]($style)'
 [helm]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
 [java]
-format = " [$symbol($version)]($style)"
+format = ' [${symbol}(${version} )]($style)'
 [julia]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
 [kotlin]
-format = " [$symbol($version)]($style)"
-[kubernetes]
-format = " [$symbol$context(($namespace))]($style)"
+format = ' [$symbol($version )]($style)'
 [lua]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
 [nodejs]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
 [package]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol$version]($style)'
+[python]
+format = ' [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+[ruby]
+format = ' [$symbol($version )]($style)'
 [rust]
-format = " [$symbol($version)]($style)"
+format = ' [$symbol($version )]($style)'
+[zig]
+format = ' [$symbol($version )]($style)'

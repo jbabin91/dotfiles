@@ -19,6 +19,8 @@
     ~/.hushlogin: general/.hushlogin
     ~/Brewfile: general/Brewfile
     ~/Brewfile.lock.json: general/Brewfile.lock.json
+    ~/.cspell.json: general/.cspell.json
+    ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
     # Alacritty Config
     ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
     # Git Config

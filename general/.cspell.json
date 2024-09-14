@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "dictionaryDefinitions": [
+    {
+      "name": "personal-words",
+      "path": "./.cspell/personal-words.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["personal-words"],
+  "ignorePaths": ["node_modules", "package-lock.json", "pnpm-lock.yaml", "/personal-words.txt"]
+}

@@ -2,6 +2,8 @@
 # root privileges
 alias doas="doas --"
 
+[[ "$TERM" == "xterm-kitty" ]] && alias ssh="TERM=xterm-256color ssh"
+
 # navigation
 alias ..="cd .."
 alias ...="cd ../.."
@@ -12,7 +14,7 @@ alias .5="cd ../../../../.."
 # vim and emacs
 alias vim="nvim"
 alias v="nvim"
-alias e="code"
+alias e="code --profile Personal"
 alias ie="code-insiders"
 alias em="/usr/bin/emacs -nw"
 alias emacs="emacsclient -c -a 'emacs'"
@@ -94,6 +96,7 @@ alias addup="git add -u"
 alias addall="git add ."
 alias branch="git branch"
 alias checkout="git checkout"
+alias switch="git switch"
 # alias clone="git clone"
 # alias fetch="git fetch"
 # alias pull="git pull origin"
