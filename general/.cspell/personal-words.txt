@@ -77,6 +77,7 @@ cssmodule
 cssnanorc
 csstype
 ctsx
+Customizer
 daisyui
 datatable
 datepicker
@@ -86,6 +87,7 @@ dbaeumer
 degit
 demoapp
 devcontainers
+devgrove
 devkit
 donot
 donotreply
@@ -115,6 +117,7 @@ formkit
 freelist
 fullname
 garneau
+geoip
 gettingstarted
 gifs
 gifsicle
@@ -250,6 +253,7 @@ pankod
 parens
 peasy
 pgdata
+PGLITE
 pico
 picocss
 pinia
@@ -289,6 +293,7 @@ replit
 resendactivationemail
 resx
 returntype
+rgba
 riccardoforina
 roboto
 rotta
@@ -358,6 +363,7 @@ trpc
 tsbuildinfo
 tsconfigs
 tsdoc
+tseslint
 tslim
 tsnd
 tsup

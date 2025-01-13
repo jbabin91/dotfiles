@@ -21,12 +21,15 @@
     ~/Brewfile.lock.json: general/Brewfile.lock.json
     ~/.cspell.json: general/.cspell.json
     ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
+    ~/.cspell/misc.txt: general/.cspell/misc.txt
     # Alacritty Config
     ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
     # Git Config
     ~/.gitattributes: general/git/.gitattributes
     ~/.gitconfig: general/git/.gitconfig
     ~/.gitignore: general/git/.gitignore
+    # Ghostty
+    ~/.config/ghostty: config/ghostty
     # Kitty
     ~/.config/kitty: config/kitty
     # Karabiner

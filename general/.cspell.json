@@ -6,8 +6,19 @@
       "name": "personal-words",
       "path": "./.cspell/personal-words.txt",
       "addWords": true
+    },
+    {
+      "name": "misc-words",
+      "path": "./.cspell/misc.txt",
+      "addWords": true
     }
   ],
-  "dictionaries": ["personal-words"],
-  "ignorePaths": ["node_modules", "package-lock.json", "pnpm-lock.yaml", "/personal-words.txt"]
+  "dictionaries": ["personal-words", "misc-words"],
+  "ignorePaths": [
+    "node_modules",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "/personal-words.txt",
+    "/misc.txt"
+  ]
 }
