@@ -1,9 +1,30 @@
-font-family = "MonoLisa Variant"
-font-size = 11.0
-theme = "catppuccin-mocha"
+# General Configs
+adjust-underline-position = 8
+adjust-underline-thickness = 2
+auto-update = "download"
+auto-update-channel = "stable"
+clipboard-trim-trailing-spaces = true
+copy-on-select = true
+cursor-invert-fg-bg = true
+custom-shader-animation = "always"
+keybind = "global:super+ctrl+.=toggle_quick_terminal"
+mouse-hide-while-typing = "true"
+window-decoration = false
+window-padding-balance = true
 window-padding-x = 18
 window-padding-y = 16
-font-thicken = true
+
+# Macos Configs
+macos-icon = "custom-style"
+macos-icon-frame = "aluminum"
+macos-icon-ghost-color = "86e1fc"
+macos-icon-screen-color = "222436"
+macos-option-as-alt = "true"
 macos-titlebar-style = hidden
-background-opacity = 0.85
-background-blur-radius = 70
+
+# Config files
+config-file = font/monolisa
+config-file = theme/catppuccin-mocha
+config-file = opacity/85%
+
+# vim: ft=config

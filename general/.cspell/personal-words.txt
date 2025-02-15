@@ -92,6 +92,7 @@ devkit
 donot
 donotreply
 dotbot
+DOTENV
 dotfile
 dotnettools
 elit
@@ -107,6 +108,7 @@ fastify
 figmagic
 financials
 fjwt
+flaskenv
 flexbugs
 flydotio
 fontsource
@@ -240,6 +242,7 @@ nuxtjs
 nvim
 oduid
 oled
+ollama
 onboarded
 ondevice
 onwarn
@@ -276,6 +279,7 @@ preinstall
 prepress
 progressbar
 promisable
+psql
 pssh
 pushonly
 quickpick
@@ -296,6 +300,7 @@ returntype
 rgba
 riccardoforina
 roboto
+rocicorp
 rotta
 rspack
 rustfmt
@@ -389,10 +394,13 @@ usehooks
 uuidv
 valibot
 vaul
+vercel
 verificationtoken
 vike
 vinxi
 visuellverstehen
+VITE
+vitest
 vono
 vonojs
 vsicons
