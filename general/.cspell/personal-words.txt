@@ -1,6 +1,8 @@
 actix
 actrc
 adipiscing
+affordance
+affordances
 ahmadnassri
 alacritty
 alpinejs
@@ -70,6 +72,8 @@ codepaths
 combobox
 commitish
 commitlintrc
+Consolas
+contentful
 contentlayer
 corepack
 csharpextensions
@@ -93,8 +97,10 @@ donot
 donotreply
 dotbot
 DOTENV
+dotenvx
 dotfile
 dotnettools
+elif
 elit
 elon
 elysia
@@ -107,6 +113,7 @@ falso
 fastify
 figmagic
 financials
+Fira
 fjwt
 flaskenv
 flexbugs
@@ -152,6 +159,7 @@ iife
 ilike
 imado
 immer
+inclusivity
 infobox
 inplace
 insertable
@@ -228,6 +236,7 @@ nextjs
 ngneat
 nocheck
 nocompatible
+nomic
 nonconstructor
 nonnullable
 nonoctal
@@ -241,6 +250,7 @@ nuxt
 nuxtjs
 nvim
 oduid
+oklch
 oled
 ollama
 onboarded
@@ -254,6 +264,7 @@ packagejson
 pandacss
 pankod
 parens
+partialize
 peasy
 pgdata
 PGLITE
@@ -282,7 +293,10 @@ promisable
 psql
 pssh
 pushonly
+pytest
+Qdrant
 quickpick
+Qwen
 qwik
 randomcolor
 ratelimit
@@ -302,12 +316,14 @@ riccardoforina
 roboto
 rocicorp
 rotta
+rsbuild
 rspack
 rustfmt
 scheidell
 scminput
 scrollarea
 searchbar
+Segoe
 sergeysova
 setstate
 shadcn
@@ -371,6 +387,7 @@ tsdoc
 tseslint
 tslim
 tsnd
+tsrouter
 tsup
 turborepo
 turso
@@ -407,6 +424,7 @@ vsicons
 vuetify
 waku
 wallabyjs
+WCAG
 webdev
 whatson
 whoopsies
