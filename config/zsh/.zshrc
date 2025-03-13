@@ -200,6 +200,6 @@ compinit
 # End of Docker CLI completions
 
 
-PATH=~/.console-ninja/.bin:$PATH
+
 # Added by Windsurf
 export PATH="/Users/jacebabin/.codeium/windsurf/bin:$PATH"

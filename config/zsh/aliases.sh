@@ -14,8 +14,17 @@ alias .5="cd ../../../../.."
 # vim and emacs
 alias vim="nvim"
 alias v="nvim"
-alias e="code --profile Personal"
-alias ie="code-insiders"
+# alias e="code --profile Personal"
+function e() {
+  open "$1" -a \"Visual Studio Code\"
+}
+function ce() {
+  open "$1" -a Cursor
+}
+# alias ie="code-insiders"
+function ie() {
+  open "$1" -a \"Visual Studio Code Insider\"
+}
 alias em="/usr/bin/emacs -nw"
 alias emacs="emacsclient -c -a 'emacs'"
 alias doomsync="~/.emacs.d/bin/doom sync"
@@ -53,14 +62,14 @@ alias du="du -d 1 -h"
 alias duf="du -sh *"
 alias mkdir="mkdir -pv"
 alias mv="mv -iv"
-alias path="echo -e ${PATH//:/\\n}"
+alias path='echo -e ${PATH//:/\\n}'
 alias pi="ping -Anc 5 1.1.1.1"
 alias reload!='exec "$SHELL" -l'
 alias zr="source ~/.zshrc"
 alias rm="rm -iv"
 alias srm="srm -iv"
 
-# adding flags
+# adding flag
 alias free='free -m' # show sizes in MB
 alias lynx='lynx -cfg=~/.lynx/lynx.cfg -lss=~/.lynx/lynx.lss -vikeys'
 alias vifm='./.config/vifm/scripts/vifmrun'
@@ -109,9 +118,9 @@ alias lg="lazygit"
 
 # switch between shells
 # I do not recommend switching default SHELL from bash.
-alias tobash="chsh -s $(which bash) && echo 'Now log out.'"
-alias tozsh="chsh -s /bin/zsh && echo 'Now log out.'"
-alias tofish="chsh -s $(which fish) && echo 'Now log out.'"
+alias tobash='chsh -s $(which bash) && echo "Now log out."'
+alias tozsh='chsh -s /bin/zsh && echo "Now log out."'
+alias tofish='chsh -s $(which fish) && echo "Now log out."'
 
 # dotfiles
 alias edit="e ~/.dotfiles"

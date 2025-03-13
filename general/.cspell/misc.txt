@@ -14,7 +14,9 @@ njsproj
 ntvs
 oddvfag
 ooik
+orioledb
 specstory
+TOTP
 tscq
 Ucwn
 Wbkqmj

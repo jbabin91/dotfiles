@@ -140,6 +140,7 @@ grnd
 gsap
 habittra
 harnessio
+hcaptcha
 healthcheck
 heex
 hideable
@@ -159,6 +160,7 @@ iife
 ilike
 imado
 immer
+inbucket
 inclusivity
 infobox
 inplace
@@ -279,6 +281,7 @@ plusplus
 pmmmwh
 pngquant
 pnpx
+pooler
 postalcode
 postcssrc
 postgenerate
@@ -432,6 +435,7 @@ wikilink
 wikilinks
 windi
 woohoo
+workos
 yabai
 yabairc
 zipcode
