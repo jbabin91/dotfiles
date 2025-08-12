@@ -1,15 +1,16 @@
 [user]
-	name = Jace Babin
-	email = jbabin91@gmail.com
-  signingkey = ~/.ssh/github.pub
+  name = Jace Babin
+  email = jbabin91@gmail.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKd1et5BYyO5xSoQb+bG3GU6o5xMswS1anJRGetnY/mF
 [core]
-  sshCommand = "ssh -i ~/.ssh/github"
   attributesfile = ~/.gitattributes
   autocrlf = input
   editor = nvim
-	excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
   ignorecase = false
-	pager = less -x2
+  pager = delta
+  fsmonitor = true
+  untrackedCache = true
 [github]
   user = "jbabin91"
 [color]
@@ -19,15 +20,26 @@
   pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/main"
   # update submodules
   subup = !"git pull --recurse-submodules && git submodule update"
-  # delete branches that have already been merged into the current branch
-  rmmerged = !"git branch --merged | grep -v '*' | grep -v \"main\" | xargs -n 1 git branch -d && git remote prune origin"
-  devrmmerged = !"git branch --merged | grep -v '*' | grep -v \"develop\" | xargs -n 1 git branch -d && git remote prune origin"
-  count = shortlog -sn
+    count = shortlog -sn
   changedfiles = !sh -c 'git diff --name-only HEAD $(git merge-base HEAD main)' -
   change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f "
   track = !"git fetch origin && git branch $1 origin/$1 && git switch $1"
 
-  #  Mostly from http://www.metacircus.com/hacking/2011/02/18/play-git-like-a-violin.html
+  # delete branches that have already been merged into the current branch
+  rmmerged = !"git branch --merged | grep -v '*' | grep -v \"main\" | xargs -n 1 git branch -d && git remote prune origin"
+  devrmmerged = !"git branch --merged | grep -v '*' | grep -v \"develop\" | xargs -n 1 git branch -d && git remote prune origin"
+
+  # Cleanup Merged branches
+  cleanup = "!f() { \
+      echo '🧹 Starting cleanup...'; \
+      git fetch -p; \
+      echo '⬇️  Fetched and pruned'; \
+      echo '🔍 Deleting merged branches:'; \
+      git delete-merged-branches; \
+      echo '🔍 Deleting squashed branches:'; \
+      git delete-squashed-branches; \
+      echo '✅ Cleanup complete!'; \
+  }; f"
   # I like using the interactive mode to make complex commits
   a = add --all
   ai = add --interactive
@@ -73,10 +85,10 @@
   gi = grep --break --heading --line-number -i
   stash-popf = !sh -c 'git stash show -p | git apply && git stash drop'
 
-	# Log
+  # Log
   l = log
-	graph = log --graph --oneline
-	log-yesterday = log --since=yesterday.midnight --oneline
+  graph = log --graph --oneline
+  log-yesterday = log --since=yesterday.midnight --oneline
   l1 = log --oneline
   lp = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lg = log --graph --oneline --decorate --date=relative --all
@@ -85,39 +97,40 @@
   deleted = log --diff-filter=D --summary
   logs = log --show-signature
 
-	# File changes
-	## gen-ignore <lang>: Outputs a .gitignore file for `lang` from gitignore.io to stdout.
-	gen-ignore = "!_gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; _gi"
-	## ignore/hard-ignore: See https://stackoverflow.com/a/13631525
-	ignore = update-index --assume-unchanged
-	unignore = update-index --no-assume-unchanged
-	hard-ignore = update-index --skip-worktree
-	hard-unignore = update-index --no-skip-worktree
-	## ls-ignored: Lists files marked with assume-unchanged.
-	ls-ignored = !git ls-files -v | grep '^[[:lower:]]' | cut -c 3-
-	## ls-hard-ignored: Lists files marked with skip-worktree.
-	ls-hard-ignored = !git ls-files -v | grep -i '^S' | cut -c 3-
-	word-diff = diff --word-diff
-	char-diff = diff --word-diff --word-diff-regex='([^[:alnum:]]|[^[:space:]])'
-	## drop [stash_args...]: Like `reset HEAD`, but changes are recoverable from the stash reflog. Forwards arguments to `stash push`.
-	drop = "!_drop() { git stash push \"$@\" && git stash drop; }; _drop"
-	stat = status --short --branch
+  # File changes
+  ## gen-ignore <lang>: Outputs a .gitignore file for `lang` from gitignore.io to stdout.
+  gen-ignore = "!_gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; _gi"
+  ## ignore/hard-ignore: See https://stackoverflow.com/a/13631525
+  ignore = update-index --assume-unchanged
+  unignore = update-index --no-assume-unchanged
+  hard-ignore = update-index --skip-worktree
+  hard-unignore = update-index --no-skip-worktree
+  ## ls-ignored: Lists files marked with assume-unchanged.
+  ls-ignored = !git ls-files -v | grep '^[[:lower:]]' | cut -c 3-
+  ## ls-hard-ignored: Lists files marked with skip-worktree.
+  ls-hard-ignored = !git ls-files -v | grep -i '^S' | cut -c 3-
+  word-diff = diff --word-diff
+  char-diff = diff --word-diff --word-diff-regex='([^[:alnum:]]|[^[:space:]])'
+  ## drop [stash_args...]: Like `reset HEAD`, but changes are recoverable from the stash reflog. Forwards arguments to `stash push`.
+  drop = "!_drop() { git stash push \"$@\" && git stash drop; }; _drop"
+  stat = status --short --branch
 [grep]
   extendRegexp = true
   patternType = perl
-	lineNumber = true
+  lineNumber = true
 [push]
-  default = current
+  default = simple # options: nothing, current, upsteam, simple, and matching
+  autoSetupRemote = true
   followTags = true
-	autoSetupRemote = true
 [pull]
-	rebase = true
-	ff = only
+  rebase = true
+  ff = only
 [rebase]
   autosquash = true
   autostash = true
   instructionFormat = %d %s (%cr) <%an>
   rebase-merges = true
+  updateRefs = true
 [rerere]
   enable = true
   autoupdate = true
@@ -137,10 +150,17 @@
   defaultBranch = main
 [branch]
   sort = -committerdate # sort branches by last commit descending
+[column]
+  ui = auto
 [delta]
   features = line-numbers decorations
 [help]
-  autocorrect = 10
+  autocorrect = prompt
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 [diff "rspec"]
   xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario)[ \t].*)$"
 [status]
@@ -150,7 +170,8 @@
 [submodule]
   fetchJobs = 4
 [commit]
-	template = ~/.dotfiles/general/git/template.txt
+  verbose = true
+  template = ~/.dotfiles/general/git/template.txt
   gpgSign = true
 [gpg]
   format = ssh
@@ -161,14 +182,16 @@
 [tag]
   forceSignAnnotated = false
   gpgsign = true
+  sort = version:refname
 [credential "https://github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
+  helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
+  helper = !/opt/homebrew/bin/gh auth git-credential
 [fetch]
-	prune = true
+  prune = true
+  pruneTags = true
+  all = true
 [merge]
-	ff = false
+  ff = false
   tool = code-insiders
-[mergetool "code-insiders"]
-  cmd = code-insiders --wait --merge $REMOTE $LOCAL $BASE $MERGED
+  conflictstyle = zdiff3

@@ -1,5 +1,6 @@
-# Q pre block. Keep at the top of this file.
+# Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+# Q pre block. Keep at the top of this file.
 ## Start configuration added by Zim install {{{
 #
 # User configuration sourced by interactive shells
@@ -133,16 +134,13 @@ unset key
 export LC_ALL="en_US.UTF-8"
 export EDITOR=nvim
 
+export GPG_TTY=$(tty)
+
 # Paths
 source ~/.config/zsh/path.sh
 
 # Aliases
 source ~/.config/zsh/aliases.sh
-
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"                                       # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
 # iTerm integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -162,25 +160,8 @@ eval "$(direnv hook zsh)"
 # fzf
 eval "$(fzf --zsh)"
 
-# tabtab source for packages
-# uninstall by removing these lines
-# [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
-
-# FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export GPG_TTY=$(tty)
-
 # bun completions
 [ -s "/Users/jacebabin/.bun/_bun" ] && source "/Users/jacebabin/.bun/_bun"
-
-# pnpm
-export PNPM_HOME="/Users/jacebabin/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -191,15 +172,14 @@ eval "$(pyenv init - zsh)"
 export PROTO_HOME="$HOME/.proto"
 export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH"
 
-# Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/jacebabin/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
-
-
 # Added by Windsurf
 export PATH="/Users/jacebabin/.codeium/windsurf/bin:$PATH"
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

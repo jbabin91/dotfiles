@@ -57,11 +57,11 @@ format = '[$symbol$branch(:$remote_branch)]($style) '
 
 [git_status]
 format = '([$all_status$ahead_behind]($style))'
-conflicted = '🏳'
+conflicted = '🏳 '
 ahead = '🏎💨'
 behind = '😰'
 diverged = '😵'
-up_to_date = '✓'
+up_to_date = '✓ '
 untracked = '🤷'
 stashed = '📦'
 modified = '📝'

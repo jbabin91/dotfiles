@@ -27,4 +27,5 @@ config-file = font/monolisa
 config-file = theme/catppuccin-mocha
 config-file = opacity/85%
 
+keybind = shift+enter=text:\n
 # vim: ft=config

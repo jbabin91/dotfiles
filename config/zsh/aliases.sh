@@ -16,14 +16,14 @@ alias vim="nvim"
 alias v="nvim"
 # alias e="code --profile Personal"
 function e() {
-  open "$1" -a \"Visual Studio Code\"
+  open "$1" -a Visual\ Studio\ Code
 }
-function ce() {
+function ec() {
   open "$1" -a Cursor
 }
 # alias ie="code-insiders"
-function ie() {
-  open "$1" -a \"Visual Studio Code Insider\"
+function ei() {
+  open "$1" -a Visual\ Studio\ Code\ -\ Insiders
 }
 alias em="/usr/bin/emacs -nw"
 alias emacs="emacsclient -c -a 'emacs'"
@@ -93,7 +93,7 @@ alias ga="git add"
 alias gaa="git add -A"
 alias gc="git commit -s"
 alias gcm="git commit -s -m"
-alias gcz="git cz"
+alias gcz="NODE_OPTIONS='--experimental-transform-types --disable-warning ExperimentalWarning' git cz"
 alias gcam="git commit -s -a -m"
 alias glg="git log --graph --decorate --oneline --abbrev-commit"
 alias glga="glg --all"

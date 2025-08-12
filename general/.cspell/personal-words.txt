@@ -1,8 +1,10 @@
+achievability
 actix
 actrc
 adipiscing
 affordance
 affordances
+agentic
 ahmadnassri
 alacritty
 alpinejs
@@ -12,6 +14,7 @@ antfu
 anya
 apikey
 apiv
+apos
 appsettings
 arianna
 asax
@@ -36,6 +39,7 @@ babin
 babin's
 badeball
 bahmutov
+bezier
 biomejs
 birthdate
 blitzjs
@@ -86,6 +90,7 @@ daisyui
 datatable
 datepicker
 datetime
+daveyplate
 davinci
 dbaeumer
 degit
@@ -93,6 +98,7 @@ demoapp
 devcontainers
 devgrove
 devkit
+Dodds
 donot
 donotreply
 dotbot
@@ -109,6 +115,8 @@ embla
 envalid
 envrc
 esbenp
+esbuild
+falsey
 falso
 fastify
 figmagic
@@ -123,6 +131,7 @@ forgotpassword
 formdata
 formik
 formkit
+Français
 freelist
 fullname
 garneau
@@ -149,6 +158,7 @@ hono
 honojs
 honox
 hrefs
+HSTS
 htmlnanorc
 htmx
 htoprc
@@ -163,12 +173,14 @@ immer
 inbucket
 inclusivity
 infobox
+inlang
 inplace
 insertable
 intelli
 intellij
 iodigital
 isbot
+isready
 itty
 jace
 jbabin
@@ -198,6 +210,7 @@ libsql
 lighthouserc
 linebreak
 lintstaged
+lintstagedrc
 listd
 lngs
 loglevel
@@ -262,6 +275,8 @@ openai
 opensource
 optipng
 outdir
+oxlint
+oxlintrc
 packagejson
 pandacss
 pankod
@@ -275,6 +290,7 @@ picocss
 pinia
 pinnable
 pino
+Pkgs
 plainline
 planetscale
 plusplus
@@ -320,8 +336,10 @@ roboto
 rocicorp
 rotta
 rsbuild
+rslib
 rspack
 rustfmt
+Satoshi
 scheidell
 scminput
 scrollarea
@@ -366,6 +384,7 @@ tabler
 tailwindconfig
 tamasfe
 tandemdiabetes
+tauri
 tconnect
 terserrc
 testid
@@ -388,6 +407,7 @@ tsbuildinfo
 tsconfigs
 tsdoc
 tseslint
+tsgo
 tslim
 tsnd
 tsrouter
@@ -404,8 +424,11 @@ undici
 unflag
 unflagged
 unfonts
+uninvoked
 unocss
 unplugin
+unrs
+unsanitized
 unstorage
 upsert
 upstash
@@ -435,7 +458,9 @@ wikilink
 wikilinks
 windi
 woohoo
+workerd
 workos
+xnotes
 yabai
 yabairc
 zipcode
