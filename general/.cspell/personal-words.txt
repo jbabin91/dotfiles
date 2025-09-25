@@ -179,6 +179,7 @@ insertable
 intelli
 intellij
 iodigital
+Isagenix
 isbot
 isready
 itty

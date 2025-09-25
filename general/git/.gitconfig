@@ -129,8 +129,8 @@
   autosquash = true
   autostash = true
   instructionFormat = %d %s (%cr) <%an>
-  rebase-merges = true
-  updateRefs = true
+	rebase-merges = true
+	updaterefs = true
 [rerere]
   enable = true
   autoupdate = true

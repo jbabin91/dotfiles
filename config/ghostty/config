@@ -15,16 +15,14 @@ window-padding-x = 18
 window-padding-y = 16
 
 # Macos Configs
-macos-icon = "custom-style"
-macos-icon-frame = "aluminum"
-macos-icon-ghost-color = "86e1fc"
-macos-icon-screen-color = "222436"
 macos-option-as-alt = "true"
 macos-titlebar-style = hidden
 
+# Theme
+theme = Catppuccin Mocha
+
 # Config files
 config-file = font/monolisa
-config-file = theme/catppuccin-mocha
 config-file = opacity/85%
 
 keybind = shift+enter=text:\n

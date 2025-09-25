@@ -181,5 +181,9 @@ compinit
 # Added by Windsurf
 export PATH="/Users/jacebabin/.codeium/windsurf/bin:$PATH"
 
+# Task Master aliases added on 8/11/2025
+alias tm='task-master'
+alias taskmaster='task-master'
+
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

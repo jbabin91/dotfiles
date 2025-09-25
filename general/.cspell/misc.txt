@@ -10,6 +10,7 @@ Cipheriv
 CRDT
 dbname
 Decipheriv
+deprioritize
 Dfzl
 didn
 Español
@@ -34,7 +35,10 @@ ooik
 orioledb
 Paginatable
 PKCE
+prds
+pycache
 Registrator
+Reprioritized
 sbdocs
 specstory
 srgb
@@ -42,6 +46,8 @@ Swapi
 testem
 TOTP
 tscq
+tsquery
+tsvector
 Ucwn
 vuejs
 Wbkqmj

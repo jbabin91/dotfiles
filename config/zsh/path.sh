@@ -31,3 +31,5 @@ export PATH="$PNPM_HOME:$PATH"
 # Bun
 export BUN_INSTALL="/Users/jacebabin/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="/usr/local/sbin:$PATH"
