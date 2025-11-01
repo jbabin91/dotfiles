@@ -34,6 +34,10 @@
     ~/.config/kitty: config/kitty
     # Karabiner
     ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
+    # kanata (keyboard remapper for built-in keyboard)
+    ~/.config/kanata: config/kanata
+    # kanata-tray (GUI for kanata)
+    ~/.config/kanata-tray: config/kanata-tray
     # Fish
     ~/.config/fish: config/fish
     # Starship

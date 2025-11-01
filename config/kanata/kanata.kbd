@@ -1,0 +1,75 @@
+;; =============================================================================
+;; kanata configuration for MacBook Built-in Keyboard
+;; =============================================================================
+;; This config only applies to the built-in keyboard.
+;; Your Keychron and ZSA keyboards will work normally with their own firmware.
+
+(defcfg
+  ;; Only apply to built-in MacBook keyboard
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+  )
+
+  ;; Process unmapped keys (pass through keys not in defsrc)
+  process-unmapped-keys yes
+
+  ;; Danger mode: allow kanata to run with elevated privileges
+  danger-enable-cmd yes
+)
+
+;; Define the keys we want to remap
+;; Only listing the keys we're modifying - all others pass through
+(defsrc
+  caps
+  lsft rsft
+  h j k l  ;; For nav layer
+)
+
+;; Base layer - default behavior
+(deflayer base
+  @cap    ;; Caps Lock → Escape/Control/Nav layer
+  @lsp    ;; Left Shift → Space Cadet (
+  @rsp    ;; Right Shift → Space Cadet )
+  h j k l ;; Normal in base layer
+)
+
+;; Navigation layer (activated when holding Caps Lock)
+(deflayer nav
+  _       ;; Caps Lock itself (transparent)
+  _ _     ;; Shifts remain normal
+  left down up rght  ;; HJKL → Arrow keys
+)
+
+;; =============================================================================
+;; Aliases - Define special behaviors
+;; =============================================================================
+
+(defalias
+  ;; Caps Lock: Multi-function key
+  ;; - Tap alone → Escape
+  ;; - Hold with other keys → Control
+  ;; - Hold and press HJKL → Arrow navigation (nav layer)
+  cap (tap-hold 200 200 esc (layer-toggle nav))
+
+  ;; Space Cadet: Left Shift
+  ;; - Tap alone → ( (left parenthesis)
+  ;; - Hold with other keys → Left Shift
+  lsp (tap-hold 200 200 S-9 lsft)
+
+  ;; Space Cadet: Right Shift
+  ;; - Tap alone → ) (right parenthesis)
+  ;; - Hold with other keys → Right Shift
+  rsp (tap-hold 200 200 S-0 rsft)
+)
+
+;; =============================================================================
+;; Notes:
+;; =============================================================================
+;; - Only affects built-in keyboard (Keychron/ZSA keyboards unaffected)
+;; - All unmapped keys pass through normally
+;; - Timing: 200ms tap-hold threshold (adjust if needed)
+;;
+;; To customize:
+;; - Add more keys to nav layer (e.g., UIOP for Page Up/Down/Home/End)
+;; - Create additional layers for symbols, numbers, etc.
+;; - Adjust timing (first 200 = hold threshold, second 200 = timeout)
