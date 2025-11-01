@@ -130,7 +130,7 @@
   autostash = true
   instructionFormat = %d %s (%cr) <%an>
 	rebase-merges = true
-	updaterefs = true
+	updaterefs = false
 [rerere]
   enable = true
   autoupdate = true

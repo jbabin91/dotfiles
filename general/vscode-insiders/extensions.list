@@ -1,9 +1,7 @@
 aaron-bond.better-comments
 amazonwebservices.codewhisperer-for-command-line-companion
-amodio.toggle-excluded-files
 arktypeio.arkdark
 astro-build.astro-vscode
-beardedbear.beardedicons
 bierner.comment-tagged-templates
 bierner.github-markdown-preview
 bierner.markdown-checkbox
@@ -15,7 +13,6 @@ bierner.markdown-yaml-preamble
 biomejs.biome
 bradlc.vscode-tailwindcss
 catppuccin.catppuccin-vsc
-catppuccin.catppuccin-vsc-icons
 davidanson.vscode-markdownlint
 dbaeumer.vscode-eslint
 docker.docker
@@ -23,7 +20,6 @@ dotenv.dotenv-vscode
 dracula-theme.theme-dracula
 eamodio.gitlens
 editorconfig.editorconfig
-enkia.tokyo-night
 esbenp.prettier-vscode
 formulahendry.auto-rename-tag
 github.copilot
@@ -35,8 +31,10 @@ jgclark.vscode-todo-highlight
 kamikillerto.vscode-colorize
 lokalise.i18n-ally
 mgmcdermott.vscode-language-babel
+mhutchie.git-graph
 miguelsolorio.fluent-icons
 ms-azuretools.vscode-containers
+ms-azuretools.vscode-docker
 ms-playwright.playwright
 ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
@@ -45,10 +43,11 @@ ms-vscode-remote.remote-wsl
 ms-vscode-remote.vscode-remote-extensionpack
 ms-vscode.remote-explorer
 ms-vscode.remote-server
+oderwat.indent-rainbow
 orta.vscode-twoslash-queries
 pkief.material-icon-theme
+pnp.polacode
 prisma.prisma
-qufiwefefwoyn.kanagawa
 redhat.vscode-yaml
 richie5um2.vscode-sort-json
 rubbersheep.gi
@@ -57,14 +56,13 @@ shd101wyy.markdown-preview-enhanced
 streetsidesoftware.code-spell-checker
 svelte.svelte-vscode
 tamasfe.even-better-toml
-typescriptteam.native-preview
 ultram4rine.vscode-choosealicense
 unifiedjs.vscode-mdx
 usernamehw.errorlens
 vincaslt.highlight-matching-tag
-visualstudioexptteam.vscodeintellicode
 vitest.explorer
 vue.volar
 wakatime.vscode-wakatime
 yoavbls.pretty-ts-errors
+yzane.markdown-pdf
 yzhang.markdown-all-in-one

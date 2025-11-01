@@ -41,7 +41,11 @@
     # ZSH
     ~/.zshrc: config/zsh/.zshrc
     ~/.config/zsh/aliases.sh: config/zsh/aliases.sh
-    ~/.config/zsh/path.sh: config/zsh/path.sh
+    ~/.config/zsh/env.sh: config/zsh/env.sh
+    ~/.config/zsh/completions.sh: config/zsh/completions.sh
+    ~/.config/zsh/tools.sh: config/zsh/tools.sh
+    # Sheldon (plugin manager)
+    ~/.config/sheldon: config/sheldon
     # Neofetch
     ~/.config/neofetch: config/neofetch
     # bat

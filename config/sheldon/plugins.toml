@@ -1,0 +1,105 @@
+# =============================================================================
+# Sheldon Plugin Configuration
+# =============================================================================
+# Shell plugin manager using Sheldon (https://sheldon.cli.rs/)
+# Run `sheldon lock` to update plugins and create lock file
+
+shell = "zsh"
+
+# -----------------------------------------------------------------------------
+# Templates for Deferred Loading
+# -----------------------------------------------------------------------------
+
+[templates]
+defer = """
+{% for file in files %}
+zsh-defer source "{{ file }}"
+{% endfor %}
+"""
+
+# -----------------------------------------------------------------------------
+# Zim Framework Modules (Core Functionality)
+# -----------------------------------------------------------------------------
+
+[plugins.zim-environment]
+github = "zimfw/environment"
+
+[plugins.zim-git]
+github = "zimfw/git"
+
+[plugins.zim-input]
+github = "zimfw/input"
+
+[plugins.zim-termtitle]
+github = "zimfw/termtitle"
+
+[plugins.zim-utility]
+github = "zimfw/utility"
+
+# -----------------------------------------------------------------------------
+# Prompt Components
+# -----------------------------------------------------------------------------
+
+[plugins.zim-duration-info]
+github = "zimfw/duration-info"
+
+[plugins.zim-git-info]
+github = "zimfw/git-info"
+
+[plugins.zim-asciiship]
+github = "zimfw/asciiship"
+
+# -----------------------------------------------------------------------------
+# Completions
+# -----------------------------------------------------------------------------
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zim-completion]
+github = "zimfw/completion"
+
+# -----------------------------------------------------------------------------
+# External Tool Integrations (Loaded Immediately)
+# -----------------------------------------------------------------------------
+
+[plugins.starship]
+inline = 'eval "$(starship init zsh)"'
+
+[plugins.zoxide]
+inline = 'eval "$(zoxide init zsh)"'
+
+[plugins.direnv]
+inline = 'eval "$(direnv hook zsh)"'
+
+# -----------------------------------------------------------------------------
+# External Tool Integrations (Background Loading via zsh-defer)
+# -----------------------------------------------------------------------------
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.mise]
+inline = 'zsh-defer eval "$(mise activate zsh)"'
+
+[plugins.pyenv]
+inline = 'zsh-defer eval "$(pyenv init - zsh)"'
+
+[plugins.fnm]
+inline = 'zsh-defer eval "$(fnm env --use-on-cd)"'
+
+[plugins.fzf]
+inline = 'zsh-defer eval "$(fzf --zsh)"'
+
+# -----------------------------------------------------------------------------
+# Syntax Highlighting & Autosuggestions (Must be loaded last)
+# -----------------------------------------------------------------------------
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"

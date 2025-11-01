@@ -1,0 +1,11 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "ctrl+alt+v",
+    "command": "editor.emmet.action.balanceIn"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "editor.emmet.action.balanceOut"
+  }
+]

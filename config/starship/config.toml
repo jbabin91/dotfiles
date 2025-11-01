@@ -1,13 +1,11 @@
-## ░█▀▀░▀█▀░█▀█░█▀▄░█▀▀░█░█░▀█▀░█▀█
-## ░▀▀█░░█░░█▀█░█▀▄░▀▀█░█▀█░░█░░█▀▀
-## ░▀▀▀░░▀░░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░░
-## CROSS-SHELL PROMPT
-##
-## rxyhn's starship configuration
-## The minimal, blazing-fast, and infinitely customizable prompt for any shell!
-"$schema" = 'https://starship.rs/config-schema.json'
+# #░█▀▀░▀█▀░█▀█░█▀▄░█▀▀░█░█░▀█▀░█▀█
+# # ░▀▀█░░█░░█▀█░█▀▄░▀▀█░█▀█░░█░░█▀▀
+# # ░▀▀▀░░▀░░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░░
+# # CROSS-SHELL PROMPT
+# #
+# # The minimal, blazing-fast, and infinitely customizable prompt for any shell!
+"$schema" = "https://starship.rs/config-schema.json"
 palette = "catppuccin_mocha"
-
 # Inserts a blank line between shell prompts
 add_newline = true
 command_timeout = 1500
@@ -22,7 +20,7 @@ truncation_length = 1
 truncate_to_repo = false
 
 [cmd_duration]
-format = '[$duration]($style)'
+format = "[$duration]($style)"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
@@ -53,85 +51,118 @@ mantle = "#181825"
 crust = "#11111b"
 
 [git_branch]
-format = '[$symbol$branch(:$remote_branch)]($style) '
+format = "[$symbol$branch(:$remote_branch)]($style) "
 
 [git_status]
-format = '([$all_status$ahead_behind]($style))'
-conflicted = '🏳 '
-ahead = '🏎💨'
-behind = '😰'
-diverged = '😵'
-up_to_date = '✓ '
-untracked = '🤷'
-stashed = '📦'
-modified = '📝'
+format = "([$all_status$ahead_behind]($style))"
+conflicted = "⚔️"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+up_to_date = "✨"
+untracked = "🤷"
+stashed = "💾"
+modified = "📝"
 staged = '[++\($count\)](green)'
-renamed = ' 👅 '
-deleted = ' 🗑 '
+renamed = "🔄"
+deleted = "🚫"
 
 [aws]
 disabled = true
+
 [azure]
 disabled = true
+
 [buf]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [bun]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [c]
-format = ' [$symbol($version(-$name) )]($style)'
+format = " [$symbol($version(-$name) )]($style)"
+
 [conda]
-format = ' [$symbol$environment](dimmed green)'
+format = " [$symbol$environment](dimmed green)"
+
 [crystal]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [daml]
-format = ' [D $version](bold bright-green)'
+format = " [D $version](bold bright-green)"
+
 [dart]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [deno]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [docker_context]
-format = ' [$symbol$context]($style)'
+format = " [$symbol$context]($style)"
+
 [dotnet]
-format = ' [$symbol($version )(🎯 $tfm )]($style)'
+format = " [$symbol($version )(🎯 $tfm )]($style)"
+
 [elixir]
 format = ' [$symbol($version \(OTP $otp_version\) )]($style)'
+
 [elm]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [erlang]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [fennel]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [gcloud]
 disabled = true
+
 [golang]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [guix_shell]
-format = ' [$symbol]($style)'
+format = " [$symbol]($style)"
+
 [gradle]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [haskell]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [haxe]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [helm]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [java]
-format = ' [${symbol}(${version} )]($style)'
+format = " [${symbol}(${version} )]($style)"
+
 [julia]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [kotlin]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [lua]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [nodejs]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [package]
-format = ' [$symbol$version]($style)'
+format = " [$symbol$version]($style)"
+
 [python]
 format = ' [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
 [ruby]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [rust]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
 [zig]
-format = ' [$symbol($version )]($style)'
+format = " [$symbol($version )]($style)"
+
