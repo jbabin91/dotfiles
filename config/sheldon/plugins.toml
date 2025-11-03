@@ -76,12 +76,6 @@ inline = 'eval "$(direnv hook zsh)"'
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 
-[plugins.mise]
-inline = 'zsh-defer eval "$(mise activate zsh)"'
-
-[plugins.pyenv]
-inline = 'zsh-defer eval "$(pyenv init - zsh)"'
-
 [plugins.fzf]
 inline = 'zsh-defer eval "$(fzf --zsh)"'
 

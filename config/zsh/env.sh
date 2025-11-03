@@ -5,9 +5,6 @@
 # This file is ONLY sourced by interactive shells (via .zshrc)
 # For ALL shells (including git hooks), use .zshenv instead
 
-# Locale
-export LC_ALL="en_US.UTF-8"
-
 # -----------------------------------------------------------------------------
 # ZSH Plugin Configuration (must be set BEFORE Sheldon loads plugins)
 # -----------------------------------------------------------------------------
@@ -30,19 +27,6 @@ if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   # Ensure proper TERM value for best compatibility
   export TERM="${TERM:-xterm-ghostty}"
 fi
-
-# -----------------------------------------------------------------------------
-# Version Managers (Interactive Only)
-# -----------------------------------------------------------------------------
-# These are only for interactive shells because they're activated via Sheldon
-
-# pyenv (Python version manager)
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-
-# proto (Multi-language version manager)
-export PROTO_HOME="$HOME/.proto"
-export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH"
 
 # -----------------------------------------------------------------------------
 # Tool Configuration

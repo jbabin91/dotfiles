@@ -9,5 +9,5 @@
 # Docker CLI completions
 fpath=(/Users/jacebabin/.docker/completions $fpath)
 
-# bun completions
-[ -s "/Users/jacebabin/.bun/_bun" ] && source "/Users/jacebabin/.bun/_bun"
+# bun completions - add to fpath instead of sourcing
+[ -d "/Users/jacebabin/.bun" ] && fpath=(/Users/jacebabin/.bun $fpath)

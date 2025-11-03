@@ -42,7 +42,8 @@ unset key
 # -----------------------------------------------------------------------------
 # iTerm Integration
 # -----------------------------------------------------------------------------
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# Only load iTerm2 integration when actually running in iTerm2
+[[ "$TERM_PROGRAM" == "iTerm.app" ]] && test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # -----------------------------------------------------------------------------
 # Amazon Q (required at bottom)

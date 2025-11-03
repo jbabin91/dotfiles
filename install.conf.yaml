@@ -43,6 +43,7 @@
     # Starship
     ~/.config/starship.toml: config/starship/config.toml
     # ZSH
+    ~/.zshenv: config/zsh/.zshenv
     ~/.zshrc: config/zsh/.zshrc
     ~/.config/zsh/aliases.sh: config/zsh/aliases.sh
     ~/.config/zsh/env.sh: config/zsh/env.sh
@@ -50,6 +51,8 @@
     ~/.config/zsh/tools.sh: config/zsh/tools.sh
     # Sheldon (plugin manager)
     ~/.config/sheldon: config/sheldon
+    # mise (tool version manager)
+    ~/.config/mise: config/mise
     # Neofetch
     ~/.config/neofetch: config/neofetch
     # bat

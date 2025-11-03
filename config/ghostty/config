@@ -1,29 +1,69 @@
-# General Configs
+# =============================================================================
+# General Configuration
+# =============================================================================
 adjust-underline-position = 8
 adjust-underline-thickness = 2
 auto-update = "download"
 auto-update-channel = "stable"
 clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = false
+clipboard-paste-bracketed-safe = false
 copy-on-select = true
 cursor-invert-fg-bg = true
-custom-shader-animation = "always"
-keybind = "global:super+ctrl+.=toggle_quick_terminal"
-mouse-hide-while-typing = "true"
+custom-shader-animation = false
+mouse-hide-while-typing = true
 window-decoration = auto
 window-padding-balance = true
 window-padding-x = 18
 window-padding-y = 16
+confirm-close-surface = false
+link-url = true
+scrollback-limit = 75000
 
-# Macos Configs
-macos-option-as-alt = "true"
+# =============================================================================
+# Shell Integration
+# =============================================================================
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# =============================================================================
+# macOS Configuration
+# =============================================================================
+macos-option-as-alt = true
 macos-titlebar-style = hidden
+macos-non-native-fullscreen = false
+macos-titlebar-proxy-icon = visible
+quick-terminal-animation-duration = 0
 
+# =============================================================================
 # Theme
-theme = Catppuccin Mocha
+# =============================================================================
+theme = Catppuccin Macchiato
 
-# Config files
+# =============================================================================
+# Config Files
+# =============================================================================
 config-file = font/monolisa
 config-file = opacity/85%
 
-keybind = shift+enter=text:\n
+# =============================================================================
+# Keybindings
+# =============================================================================
+keybind = global:super+ctrl+.=toggle_quick_terminal
+
+# Tab management
+keybind = super+t=new_tab
+keybind = super+w=close_surface
+
+# Font size
+keybind = super+equal=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
+keybind = super+zero=reset_font_size
+
+# Clear screen
+keybind = super+k=clear_screen
+
+# Text input
+keybind = shift+enter=text:\x0a
+
 # vim: ft=config
