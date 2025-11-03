@@ -1,25 +1,46 @@
-export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# =============================================================================
+# Environment (Sourced by ALL shells)
+# =============================================================================
+# This file is sourced by ALL shells (interactive, non-interactive, git hooks)
+# CRITICAL: Only put things here that are needed everywhere
+
+# Homebrew - CRITICAL for accessing fnm, zoxide, etc.
+# Git hooks need this to find these binaries
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+
+# Cargo (Rust)
+. "$HOME/.cargo/env"
+
+# -----------------------------------------------------------------------------
+# Core Environment Variables (needed everywhere)
+# -----------------------------------------------------------------------------
+
+# Editor (git commit messages, command-line editing)
+export EDITOR=nvim
+
+# GPG (git commit signing)
+export GPG_TTY=$(tty)
+
+# ripgrep (configuration file location)
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
-# Support zoxide in Vim command mode, which isn't an interactive shell bu
-# default. It's okay if `zoxide` isn't found. Outside of Vim, starting a new
-# shell, it may not be on the PATH yet.
-if ["$(command -v zoxide)"]; then
-  eval "$(zoxide init zsh)"
-fi
+# -----------------------------------------------------------------------------
+# Development Tools (CRITICAL for git hooks)
+# -----------------------------------------------------------------------------
 
-# fco - checkout git branch/tag
-fco() {
-  local tags branches target
-  tags=$(
-    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
-  branches=$(
-    git branch --all | grep -v HEAD             |
-    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
-    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-  target=$(
-    (echo "$tags"; echo "$branches") |
-    fzf-tmux -- --no-hscroll --ansi +m -d "\t" -n 2) || return
-  git checkout "$(echo "$target" | awk '{print $2}')"
-}
+# fnm (Fast Node Manager) - CRITICAL for git hooks
+# All lefthook commands use pnpm, which needs node from fnm
+export PATH="$HOME/.local/share/fnm:$PATH"
+eval "$(fnm env --use-on-cd)"
+
+# pnpm - CRITICAL for git hooks
+# All lefthook commands use pnpm (prettier, eslint, tsc-files, commitlint)
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# zoxide - Smart cd replacement (needed for Claude Code and scripts)
+# Loaded here so `z` command works immediately without shell snapshots
+eval "$(zoxide init zsh)"

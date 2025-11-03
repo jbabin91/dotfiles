@@ -175,3 +175,7 @@ supabase
 sequentialthinking
 agentgateway
 metamcp
+zmodload
+kcuu
+kcud
+vicmd

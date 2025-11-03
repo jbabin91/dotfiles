@@ -66,9 +66,6 @@ github = "zimfw/completion"
 [plugins.starship]
 inline = 'eval "$(starship init zsh)"'
 
-[plugins.zoxide]
-inline = 'eval "$(zoxide init zsh)"'
-
 [plugins.direnv]
 inline = 'eval "$(direnv hook zsh)"'
 
@@ -84,9 +81,6 @@ inline = 'zsh-defer eval "$(mise activate zsh)"'
 
 [plugins.pyenv]
 inline = 'zsh-defer eval "$(pyenv init - zsh)"'
-
-[plugins.fnm]
-inline = 'zsh-defer eval "$(fnm env --use-on-cd)"'
 
 [plugins.fzf]
 inline = 'zsh-defer eval "$(fzf --zsh)"'

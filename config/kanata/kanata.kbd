@@ -53,13 +53,15 @@
 
   ;; Space Cadet: Left Shift
   ;; - Tap alone → ( (left parenthesis)
-  ;; - Hold with other keys → Left Shift
-  lsp (tap-hold 200 200 S-9 lsft)
+  ;; - Press with another key → Immediate Left Shift
+  ;; - tap-hold-press activates shift immediately when another key is pressed
+  lsp (tap-hold-press 200 200 S-9 lsft)
 
   ;; Space Cadet: Right Shift
   ;; - Tap alone → ) (right parenthesis)
-  ;; - Hold with other keys → Right Shift
-  rsp (tap-hold 200 200 S-0 rsft)
+  ;; - Press with another key → Immediate Right Shift
+  ;; - tap-hold-press activates shift immediately when another key is pressed
+  rsp (tap-hold-press 200 200 S-0 rsft)
 )
 
 ;; =============================================================================
