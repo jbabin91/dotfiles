@@ -64,6 +64,7 @@ brew "mas"
 brew "mise"
 brew "mtr"
 brew "neovim"
+brew "ni"
 brew "ollama", restart_service: :changed
 brew "peco"
 brew "pkgconf"
