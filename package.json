@@ -1,23 +1,24 @@
 {
   "name": "dotfiles",
   "version": "1.0.0",
-  "description": "Personal dotfiles managed with Dotbot",
   "private": true,
-  "scripts": {
-    "format": "prettier --write '**/*.{json,yml,yaml,md}'",
-    "format:check": "prettier --check '**/*.{json,yml,yaml,md}'",
-    "lint:shell": "shellcheck config/**/*.sh",
-    "lint": "pnpm run format:check && pnpm run lint:shell",
-    "prepare": "lefthook install"
-  },
+  "description": "Personal dotfiles managed with Dotbot",
   "keywords": [
     "dotfiles"
   ],
-  "author": "Jace Babin <jbabin91@gmail.com>",
   "license": "MIT",
-  "packageManager": "pnpm@10.20.0",
+  "author": "Jace Babin <jbabin91@gmail.com>",
+  "scripts": {
+    "format": "prettier --write '**/*.{json,yml,yaml,md}'",
+    "format:check": "prettier --check '**/*.{json,yml,yaml,md}'",
+    "lint": "pnpm run format:check && pnpm run lint:shell",
+    "lint:shell": "shellcheck config/**/*.sh",
+    "prepare": "lefthook install"
+  },
   "devDependencies": {
     "lefthook": "latest",
-    "prettier": "latest"
-  }
+    "prettier": "latest",
+    "prettier-plugin-packagejson": "^2.5.19"
+  },
+  "packageManager": "pnpm@10.20.0"
 }
