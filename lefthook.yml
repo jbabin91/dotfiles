@@ -1,0 +1,22 @@
+# Lefthook configuration for dotfiles
+# Docs: https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  parallel: true
+  commands:
+    # Format JSON, YAML, and Markdown files
+    prettier:
+      glob: "*.{json,yml,yaml,md}"
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+
+    # Lint shell scripts
+    shellcheck:
+      glob: "*.sh"
+      run: shellcheck {staged_files}
+
+commit-msg:
+  commands:
+    # Ensure commit message follows conventional commits (optional)
+    # commitlint:
+    #   run: pnpm exec commitlint --edit {1}

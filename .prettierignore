@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+
+# Git
+.git/
+
+# Dotbot
+dotbot/
+
+# Lock files
+*.lock
+*.lock.json
+
+# Config files that shouldn't be formatted
+.zshrc
+.zshenv
+*.sh
+
+# Brewfile (has custom format)
+Brewfile
+Brewfile.lock.json

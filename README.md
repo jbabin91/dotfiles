@@ -6,7 +6,7 @@ Jace Babin's dotfiles, managed with [`dotbot`](https://github.com/anishathalye/d
 
 Run this command in the dotfiles directory and it will symlink the files in the folder and install the dotfiles settings
 
-``` zsh
+```zsh
 ./install
 ```
 

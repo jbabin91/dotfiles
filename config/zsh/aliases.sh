@@ -143,7 +143,7 @@ function y() {
 		local cwd
 		cwd="$(cat -- "$tmp")"
 		if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-			builtin cd -- "$cwd"
+			builtin cd -- "$cwd" || return
 		fi
 	fi
 	\rm -f -- "$tmp"
