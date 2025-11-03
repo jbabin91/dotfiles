@@ -1,3 +1,17 @@
+# macOS
 .DS_Store
+
+# Git
 .git
 dot_git
+
+# Node
+node_modules/
+
+# Editor
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.log
