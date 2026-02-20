@@ -4,7 +4,7 @@
 adjust-underline-position = 8
 adjust-underline-thickness = 2
 auto-update = "download"
-auto-update-channel = "stable"
+auto-update-channel = "tip"
 clipboard-trim-trailing-spaces = true
 clipboard-paste-protection = false
 clipboard-paste-bracketed-safe = false

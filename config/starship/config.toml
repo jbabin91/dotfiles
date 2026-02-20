@@ -51,6 +51,7 @@ mantle = "#181825"
 crust = "#11111b"
 
 [git_branch]
+ignore_bare_repo = true
 format = "[$symbol$branch(:$remote_branch)]($style) "
 
 [git_status]

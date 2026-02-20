@@ -195,3 +195,5 @@
   ff = false
   tool = code-insiders
   conflictstyle = zdiff3
+[gitbutler]
+  aiModelProvider = openai

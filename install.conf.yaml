@@ -45,12 +45,7 @@
     # ZSH
     ~/.zshenv: config/zsh/.zshenv
     ~/.zshrc: config/zsh/.zshrc
-    ~/.config/zsh/aliases.sh: config/zsh/aliases.sh
-    ~/.config/zsh/env.sh: config/zsh/env.sh
-    ~/.config/zsh/completions.sh: config/zsh/completions.sh
-    ~/.config/zsh/tools.sh: config/zsh/tools.sh
-    # Sheldon (plugin manager)
-    ~/.config/sheldon: config/sheldon
+    ~/.config/zsh/.zsh_plugins.txt: config/zsh/.zsh_plugins.txt
     # mise (tool version manager)
     ~/.config/mise: config/mise
     # Neofetch

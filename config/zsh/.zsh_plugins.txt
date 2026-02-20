@@ -1,0 +1,17 @@
+# Zim Framework Modules
+zimfw/environment
+zimfw/git
+zimfw/input
+zimfw/termtitle
+zimfw/utility
+
+# Completions (fpath only, don't source)
+zsh-users/zsh-completions kind:fpath
+
+# Deferred loading support
+romkatv/zsh-defer kind:defer
+
+# Syntax & Enhancement (must be last)
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-autosuggestions
