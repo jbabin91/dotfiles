@@ -8,6 +8,7 @@
   ],
   "license": "MIT",
   "author": "Jace Babin <jbabin91@gmail.com>",
+  "type": "module",
   "scripts": {
     "format": "prettier --write '**/*.{json,yml,yaml,md}'",
     "format:check": "prettier --check '**/*.{json,yml,yaml,md}'",
