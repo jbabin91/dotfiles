@@ -204,13 +204,11 @@ alias lg="lazygit"
 # switch between shells
 alias tobash='chsh -s $(which bash) && echo "Now log out."'
 alias tozsh='chsh -s /bin/zsh && echo "Now log out."'
-alias tofish='chsh -s $(which fish) && echo "Now log out."'
 
 # dotfiles
 alias edit="e ~/.dotfiles"
 alias .f="cd ~/.dotfiles"
 alias .dot="cd ~/.dotfiles && nvim ."
-alias .fish="cd ~/.dotfiles/config/fish && nvim config.fish"
 alias .kitty="cd ~/.dotfiles/config/kitty && nvim kitty.conf"
 alias .nvim="cd ~/.dotfiles/config/nvim && nvim ."
 alias .zsh="cd ~/.dotfiles/config/zsh && nvim .zshrc"
