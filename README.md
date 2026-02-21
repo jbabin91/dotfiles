@@ -1,26 +1,30 @@
 # github.com/jbabin91/dotfiles
 
-Jace Babin's dotfiles, managed with [`dotbot`](https://github.com/anishathalye/dotfiles_template).
+Jace Babin's dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot) via
+[uv](https://github.com/astral-sh/uv).
 
 ## Features
 
-- 🐚 **Zsh** - Shell configuration with Sheldon plugin manager
-- 🎨 **Starship** - Fast, customizable prompt
-- 🦀 **Rust Tools** - hk, taplo, and other Rust-based CLI tools via mise
-- 🐍 **Python** - Modern Python management with uv (auto-switching versions)
-- 🔧 **mise** - Multi-language tool version manager (replaces pyenv, nvm-like)
-- 💻 **.NET** - .NET 9 SDK via mise
-- 📦 **pnpm** - Fast, efficient package manager
-- 🪝 **Lefthook** - Git hooks for linting and formatting
-- ✨ **Prettier** - Auto-formatting for JSON, YAML, Markdown
-- 🔍 **Shellcheck** - Shell script linting
+- **Zsh** with [Antidote](https://getantidote.github.io/) plugin manager
+- **[Starship](https://starship.rs/)** prompt
+- **[Ghostty](https://ghostty.org/)** terminal (with [Kitty](https://sw.kovidgoyal.net/kitty/) as an alternative)
+- **[mise](https://mise.jdx.dev/)** for tool version management (uv, .NET)
+- **[Karabiner-Elements](https://karabiner-elements.pqrs.org/)** keyboard customization
+- **[Homebrew](https://brew.sh/)** package management via Brewfile
+- **[Lefthook](https://github.com/evilmartians/lefthook)** git hooks with Prettier, Shellcheck, and markdownlint
+- **[fastfetch](https://github.com/fastfetch-cli/fastfetch)** system information
+- **[tmux](https://github.com/tmux/tmux)** terminal multiplexer
+- **[Neovim](https://neovim.io/)** with [LazyVim](https://www.lazyvim.org/)
+- **[bat](https://github.com/sharkdp/bat)** syntax-highlighted file viewer
+- **[btop](https://github.com/aristocratos/btop)** system monitor
 
 ## Installation
 
 ### Prerequisites
 
-- macOS (tested on macOS)
-- Homebrew
+- macOS
+- [Homebrew](https://brew.sh/)
+- [uv](https://github.com/astral-sh/uv) (`brew install uv`)
 
 ### Quick Start
 
@@ -31,27 +35,25 @@ git clone https://github.com/jbabin91/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ```
 
-2. Run the install script:
+2. Run the install script to symlink configuration files:
 
 ```bash
 ./install
 ```
 
-This will:
+3. Install Homebrew packages:
 
-- Symlink configuration files to their proper locations
-- Install Homebrew packages from Brewfile
-- Set up git hooks with lefthook
+```bash
+brew bundle --global
+```
 
-3. Install development dependencies:
+4. Install development dependencies:
 
 ```bash
 pnpm install
 ```
 
-### Post-Installation
-
-After installation, restart your shell or run:
+5. Restart your shell:
 
 ```bash
 exec zsh
@@ -59,65 +61,64 @@ exec zsh
 
 ## Configuration Structure
 
-### Shell Configuration
+```sh
+~/.dotfiles/
+├── config/
+│   ├── bat/            # bat syntax highlighter
+│   ├── fastfetch/      # System information display
+│   ├── ghostty/        # Ghostty terminal
+│   ├── btop/           # btop system monitor
+│   ├── karabiner/      # Keyboard customization (copy-synced)
+│   ├── kitty/          # Kitty terminal
+│   ├── mise/           # Tool version manager (uv, dotnet)
+│   ├── nvim/           # Neovim config (LazyVim)
+│   ├── starship/       # Starship prompt
+│   ├── tmux/           # Terminal multiplexer
+│   └── zsh/            # Zsh shell config + Antidote plugins
+├── general/
+│   ├── git/            # Git config, attributes, ignore
+│   ├── .cspell/        # Spell checking dictionaries
+│   └── Brewfile        # Homebrew packages, casks, VS Code extensions
+├── install.conf.yaml   # Dotbot symlink configuration
+├── lefthook.yml        # Git hooks
+├── prettier.config.js  # Code formatting
+└── .markdownlint-cli2.mjs  # Markdown linting
+```
 
-- `.zshenv` - Environment variables for ALL shells (git hooks, scripts, interactive)
-- `.zshrc` - Interactive shell configuration
-- `config/zsh/env.sh` - Interactive-only environment variables
-- `config/zsh/aliases.sh` - Shell aliases and functions
-- `config/zsh/completions.sh` - Shell completions
+### Karabiner
 
-### Tool Configuration
-
-- `config/mise/config.toml` - Global tool versions (uv, dotnet)
-- `config/sheldon/plugins.toml` - Zsh plugin management
-- `.prettierrc` - Prettier formatting rules
-- `.shellcheckrc` - Shellcheck linting rules
-- `lefthook.yml` - Git hooks configuration
+Karabiner-Elements replaces symlinks when it writes config, so it uses a
+bidirectional copy sync instead of a symlink. Running `./install` will sync
+the latest version in either direction.
 
 ## Version Management
 
-### Python (uv)
+All tool versions are managed through [mise](https://mise.jdx.dev/):
 
-This setup uses [uv](https://github.com/astral-sh/uv) for Python management with automatic
-version switching:
-
-- Global Python 3.13 (via `~/.config/uv/.python-version`)
-- Auto-switches based on `.python-version` or `pyproject.toml` in project directories
-- Works in git hooks and scripts
-
-### Node (fnm)
-
-Fast Node Manager with automatic version switching via `.node-version` files.
-
-### .NET (mise)
-
-.NET SDK managed globally via mise at version 9.0.306.
+- **Python** — [uv](https://github.com/astral-sh/uv) with automatic version switching
+- **Node.js** — [fnm](https://github.com/Schniz/fnm) with automatic version switching
+- **.NET** — SDK managed via mise
 
 ## Development
 
 ### Available Scripts
 
 ```bash
-pnpm run format        # Format all JSON/YAML/MD files
+pnpm run format        # Format JSON/YAML/MD files
 pnpm run format:check  # Check formatting
-pnpm run lint:shell    # Lint shell scripts
 pnpm run lint          # Run all linting
+pnpm run lint:shell    # Lint shell scripts
+pnpm run lint:md       # Lint markdown files
 ```
 
 ### Git Hooks
 
 Pre-commit hooks automatically:
 
-- Format JSON, YAML, and Markdown files with Prettier
+- Format files with Prettier
 - Lint shell scripts with Shellcheck
-- Auto-stage fixed files
-
-## Notes
-
-- Installation is intended for macOS and has not been tested on Linux or Windows
-- Shell configuration follows official zsh startup file best practices
-- Git hooks require pnpm dependencies to be installed
+- Lint markdown with markdownlint
+- Validate commit messages with commitlint (conventional commits)
 
 ## License
 
