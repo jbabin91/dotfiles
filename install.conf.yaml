@@ -11,7 +11,6 @@
       recursive: true
 
 - shell:
-    - [git submodule update --init --recursive, Installing/updating submodules]
     - [
         'src="config/karabiner/karabiner.json"; dest="$HOME/.config/karabiner/karabiner.json"; if [
         -f "$dest" ] && [ ! -L "$dest" ]; then cp "$dest" "$src" && echo "  karabiner: live →
@@ -29,8 +28,6 @@
     ~/.cspell.json: general/.cspell.json
     ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
     ~/.cspell/misc.txt: general/.cspell/misc.txt
-    # Alacritty Config
-    ~/.config/alacritty/alacritty.yml: config/alacritty/alacritty.yml
     # Git Config
     ~/.gitattributes: general/git/.gitattributes
     ~/.gitconfig: general/git/.gitconfig
@@ -40,8 +37,6 @@
     # Kitty
     ~/.config/kitty: config/kitty
     # Karabiner - managed via shell sync (app replaces symlinks)
-    # Fish
-    ~/.config/fish: config/fish
     # Starship
     ~/.config/starship.toml: config/starship/config.toml
     # ZSH
@@ -50,20 +45,13 @@
     ~/.config/zsh/.zsh_plugins.txt: config/zsh/.zsh_plugins.txt
     # mise (tool version manager)
     ~/.config/mise: config/mise
-    # Neofetch
-    ~/.config/neofetch: config/neofetch
+    # Fastfetch
+    ~/.config/fastfetch: config/fastfetch
     # bat
     ~/.config/bat/config: config/bat/config
-    # htop
-    ~/.config/htop/htoprc: config/htop/htoprc
-    # yabai
-    #~/.config/yabai/yabairc: config/yabai/yabairc
-    # skhd
-    #~/.config/skhd/skhdrc: config/skhd/skhdrc
-    # spotifyd
-    ~/.config/spotifyd/spotifyd.conf: config/spotifyd/spotifyd.conf
+    # btop
+    ~/.config/btop: config/btop
     # Tmux
     ~/.tmux.conf: config/tmux/tmux.conf
-    # NVIM
-    # ~/.config/nvim/:
-    #  path: config/nvim/*
+    # Neovim (LazyVim)
+    ~/.config/nvim: config/nvim
