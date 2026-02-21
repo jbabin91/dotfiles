@@ -9,12 +9,12 @@ build/
 # Git
 .git/
 
-# Dotbot
-dotbot/
-
 # Lock files
 *.lock
 *.lock.json
+
+# Neovim (managed by LazyVim)
+config/nvim/
 
 # Config files that shouldn't be formatted
 .zshrc

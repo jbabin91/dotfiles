@@ -33,13 +33,11 @@ export default {
     MD041: false,
     // MD046: Code block style
     MD046: {
-      style: "fenced",
+      style: 'fenced',
     },
     // MD060: Table column alignment
     MD060: false,
   },
-  // Ignore submodules and vendored files
-  ignores: ["dotbot/**"],
   // Use .gitignore patterns automatically
   gitignore: true,
 };
