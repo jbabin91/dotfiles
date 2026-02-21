@@ -11,15 +11,18 @@ pre-commit:
     # Lint shell scripts
     shellcheck:
       glob: "*.sh"
+      exclude: "dotbot/**"
       run: shellcheck {staged_files}
     # Lint Markdown files
     lint-md:
       glob: "*.md"
+      exclude: "dotbot/**"
       run: pnpm markdownlint-cli2 --fix {staged_files}
       stage_fixed: true
     # Format JSON, YAML, and Markdown files
     prettier:
       glob: "*.{ts,tsx,js,jsx,cjs,mjs,json,md,mdx}"
+      exclude: "dotbot/**"
       run: pnpm exec prettier -uwl {staged_files}
       stage_fixed: true
 
