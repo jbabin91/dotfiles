@@ -9,7 +9,8 @@ dot_git
 node_modules/
 
 # Editor
-.vscode/
+.vscode/*
+!.vscode/settings.json
 .idea/
 
 # Temporary files

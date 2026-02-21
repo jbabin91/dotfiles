@@ -11,14 +11,20 @@
   "scripts": {
     "format": "prettier --write '**/*.{json,yml,yaml,md}'",
     "format:check": "prettier --check '**/*.{json,yml,yaml,md}'",
-    "lint": "pnpm run format:check && pnpm run lint:shell",
+    "lint": "pnpm run format:check && pnpm run lint:shell && pnpm run lint:md",
+    "lint:md": "markdownlint-cli2 '**/*.md'",
+    "lint:md:fix": "markdownlint-cli2 --fix '**/*.md'",
     "lint:shell": "shellcheck config/**/*.sh",
     "prepare": "lefthook install"
   },
   "devDependencies": {
-    "lefthook": "latest",
-    "prettier": "latest",
-    "prettier-plugin-packagejson": "^2.5.19"
+    "@commitlint/config-conventional": "^20.4.2",
+    "commitlint": "^20.4.2",
+    "cz-git": "^1.12.0",
+    "lefthook": "^2.1.1",
+    "markdownlint-cli2": "^0.21.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-packagejson": "^3.0.0"
   },
-  "packageManager": "pnpm@10.20.0"
+  "packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a"
 }

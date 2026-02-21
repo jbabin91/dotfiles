@@ -1,22 +1,29 @@
+# lefthook.yml
 # Lefthook configuration for dotfiles
 # Docs: https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+output:
+  - failure # Only show failed steps
+  - execution_out # Show command output for failures
 
 pre-commit:
   parallel: true
   commands:
-    # Format JSON, YAML, and Markdown files
-    prettier:
-      glob: "*.{json,yml,yaml,md}"
-      run: pnpm exec prettier --write {staged_files}
-      stage_fixed: true
-
     # Lint shell scripts
     shellcheck:
       glob: "*.sh"
       run: shellcheck {staged_files}
+    # Lint Markdown files
+    lint-md:
+      glob: "*.md"
+      run: pnpm markdownlint-cli2 --fix {staged_files}
+      stage_fixed: true
+    # Format JSON, YAML, and Markdown files
+    prettier:
+      glob: "*.{ts,tsx,js,jsx,cjs,mjs,json,md,mdx}"
+      run: pnpm exec prettier -uwl {staged_files}
+      stage_fixed: true
 
 commit-msg:
   commands:
-    # Ensure commit message follows conventional commits (optional)
-    # commitlint:
-    #   run: pnpm exec commitlint --edit {1}
+    commitlint:
+      run: pnpm commitlint --edit "$1"

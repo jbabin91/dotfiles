@@ -12,6 +12,13 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing/updating submodules]
+    - [
+        'src="config/karabiner/karabiner.json"; dest="$HOME/.config/karabiner/karabiner.json"; if [
+        -f "$dest" ] && [ ! -L "$dest" ]; then cp "$dest" "$src" && echo "  karabiner: live →
+        dotfiles"; elif [ -f "$src" ]; then mkdir -p "$(dirname "$dest")" && cp "$src" "$dest" &&
+        echo "  karabiner: dotfiles → live (bootstrap)"; fi',
+        Syncing karabiner config,
+      ]
 
 - link:
     # General
@@ -32,12 +39,7 @@
     ~/.config/ghostty: config/ghostty
     # Kitty
     ~/.config/kitty: config/kitty
-    # Karabiner
-    ~/.config/karabiner/karabiner.json: config/karabiner/karabiner.json
-    # kanata (keyboard remapper for built-in keyboard)
-    ~/.config/kanata: config/kanata
-    # kanata-tray (GUI for kanata)
-    ~/.config/kanata-tray: config/kanata-tray
+    # Karabiner - managed via shell sync (app replaces symlinks)
     # Fish
     ~/.config/fish: config/fish
     # Starship

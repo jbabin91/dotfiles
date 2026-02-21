@@ -32,8 +32,9 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# mise shims - CRITICAL for git hooks and Claude Code hooks
-export PATH="$HOME/.local/share/mise/shims:$PATH"
+# mise - CRITICAL for git hooks and Claude Code hooks
+# --shims mode provides stable PATH for non-interactive shells while resolving project-level tools
+eval "$(mise activate zsh --shims)"
 
 # Cargo/Rust binaries
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -47,8 +48,11 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # -----------------------------------------------------------------------------
 # fnm env (CRITICAL for git hooks to find correct node/pnpm)
+# Interactive shells get fnm env --use-on-cd in .zshrc instead
 # -----------------------------------------------------------------------------
-eval "$(fnm env)"
+if [[ ! -o interactive ]]; then
+  eval "$(fnm env)"
+fi
 
 # -----------------------------------------------------------------------------
 # Android SDK
@@ -61,25 +65,4 @@ export PATH=$PATH:"$ANDROID_HOME/cmdline-tools/10.0/bin"
 # -----------------------------------------------------------------------------
 export LC_ALL="en_US.UTF-8"
 export EDITOR=nvim
-GPG_TTY=$(tty)
-export GPG_TTY
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
-
-# -----------------------------------------------------------------------------
-# Python Auto-Switching (like fnm env --use-on-cd)
-# -----------------------------------------------------------------------------
-python() {
-  if [[ -f .python-version ]] || [[ -f pyproject.toml ]]; then
-    uv run python "$@"
-  else
-    command python "$@"
-  fi
-}
-
-python3() {
-  if [[ -f .python-version ]] || [[ -f pyproject.toml ]]; then
-    uv run python "$@"
-  else
-    command python3 "$@"
-  fi
-}

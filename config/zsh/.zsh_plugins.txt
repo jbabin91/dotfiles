@@ -8,8 +8,14 @@ zimfw/utility
 # Completions (fpath only, don't source)
 zsh-users/zsh-completions kind:fpath
 
+# Eval caching (skip subshells on startup)
+mroth/evalcache
+
 # Deferred loading support
 romkatv/zsh-defer kind:defer
+
+# Safe rm (moves to trash instead of permanent delete)
+mattmc3/zsh-safe-rm
 
 # Syntax & Enhancement (must be last)
 zsh-users/zsh-syntax-highlighting

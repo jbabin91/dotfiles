@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    ".shellcheckrc": "shellscript",
+    ".zsh_plugins.txt": "shellscript",
+    "**/ghostty/config": "properties",
+    "**/bat/config": "properties",
+    "**/htop/htoprc": "shellscript",
+    "**/postgres/psqlrc": "shellscript",
+    "**/skhd/skhdrc": "shellscript",
+    "**/yabai/yabairc": "shellscript",
+    "**/tmux/*.conf": "shellscript"
+  }
+}

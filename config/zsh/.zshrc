@@ -17,9 +17,10 @@ export ZSH_HIGHLIGHT_MAXLENGTH=300
 # -----------------------------------------------------------------------------
 # Completion fpath (must be set BEFORE compinit)
 # -----------------------------------------------------------------------------
-fpath=("/Users/jacebabin/.oh-my-zsh/custom/completions" "${fpath[@]}")
-fpath=("/Users/jacebabin/.docker/completions" "${fpath[@]}")
-[ -d "/Users/jacebabin/.bun" ] && fpath=("/Users/jacebabin/.bun" "${fpath[@]}")
+fpath=("$HOME/.zfunc" "${fpath[@]}")
+fpath=("$HOME/.oh-my-zsh/custom/completions" "${fpath[@]}")
+fpath=("$HOME/.docker/completions" "${fpath[@]}")
+[ -d "$HOME/.bun" ] && fpath=("$HOME/.bun" "${fpath[@]}")
 
 # -----------------------------------------------------------------------------
 # Ghostty Terminal Handling
@@ -28,6 +29,12 @@ if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   export STARSHIP_CACHE="$HOME/.cache/starship"
   export TERM="${TERM:-xterm-ghostty}"
 fi
+
+# -----------------------------------------------------------------------------
+# bat as MANPAGER (colored man pages)
+# -----------------------------------------------------------------------------
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
 
 # -----------------------------------------------------------------------------
 # FZF Configuration
@@ -39,7 +46,11 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # Antidote Plugin Manager
 # -----------------------------------------------------------------------------
 source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
-antidote load ~/.config/zsh/.zsh_plugins.txt
+zsh_plugins=~/.config/zsh/.zsh_plugins
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+  antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
+fi
+source ${zsh_plugins}.zsh
 
 # -----------------------------------------------------------------------------
 # Cached compinit (rebuild once per 24h)
@@ -50,24 +61,37 @@ if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
+# Background-compile zcompdump for faster loading
+{
+  zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    zcompile "$zcompdump"
+  fi
+} &!
+
+# -----------------------------------------------------------------------------
+# GPG (git commit signing - needs a TTY)
+# -----------------------------------------------------------------------------
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # -----------------------------------------------------------------------------
 # Tool Inits: Starship, Direnv
 # -----------------------------------------------------------------------------
-eval "$(starship init zsh)"
-eval "$(direnv hook zsh)"
+_evalcache starship init zsh
+_evalcache direnv hook zsh
 
 # -----------------------------------------------------------------------------
 # Tool Inits (Deferred): FZF
 # -----------------------------------------------------------------------------
-zsh-defer eval "$(fzf --zsh)"
+zsh-defer -c 'eval "$(fzf --zsh)"'
 
 # -----------------------------------------------------------------------------
 # Dev Tool Managers: fnm, mise, zoxide
 # -----------------------------------------------------------------------------
-eval "$(fnm env --use-on-cd --version-file-strategy=recursive)"
-eval "$(mise activate zsh)"
-eval "$(zoxide init zsh)"
+_evalcache fnm env --use-on-cd --version-file-strategy=recursive
+_evalcache mise activate zsh
+_evalcache zoxide init zsh
 
 # -----------------------------------------------------------------------------
 # Aliases
@@ -108,7 +132,7 @@ alias doompurge="~/.emacs.d/bin/doom purge"
 alias bu="brew update"
 alias buu="brew upgrade"
 alias bc="brew cleanup"
-alias ud="brew update && brew upgrade && brew cleanup"
+alias ud="brew update && brew upgrade && brew cleanup && command rm -f ~/.zsh-evalcache/*.sh ~/.zsh-evalcache/*.zwc"
 
 # eza
 alias l="eza -al --color=always --group-directories-first --git --icons"
@@ -135,7 +159,6 @@ alias path='echo -e ${PATH//:/\\n}'
 alias pi="ping -Anc 5 1.1.1.1"
 alias reload!='exec "$SHELL" -l'
 alias zr='exec zsh'
-alias rm="rm -iv"
 alias srm="srm -iv"
 
 # adding flag
@@ -238,6 +261,25 @@ fco() {
 }
 
 # -----------------------------------------------------------------------------
+# Python Auto-Switching (use uv in project directories)
+# -----------------------------------------------------------------------------
+python() {
+  if [[ -f .python-version ]] || [[ -f pyproject.toml ]]; then
+    uv run python "$@"
+  else
+    command python "$@"
+  fi
+}
+
+python3() {
+  if [[ -f .python-version ]] || [[ -f pyproject.toml ]]; then
+    uv run python "$@"
+  else
+    command python3 "$@"
+  fi
+}
+
+# -----------------------------------------------------------------------------
 # History Substring Search Keybindings (must be after plugin load)
 # -----------------------------------------------------------------------------
 zmodload -F zsh/terminfo +p:terminfo
@@ -255,15 +297,10 @@ unset key
 # -----------------------------------------------------------------------------
 # Bun Completions
 # -----------------------------------------------------------------------------
-[ -s "/Users/jacebabin/.bun/_bun" ] && source "/Users/jacebabin/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Added by Antigravity
-export PATH="/Users/jacebabin/.antigravity/antigravity/bin:$PATH"
-
-# Mole completion
-if command -v mole &> /dev/null; then
-  eval "$(mole completion zsh)"
-fi
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
