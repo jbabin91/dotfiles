@@ -1,3 +1,11 @@
 [tools]
 uv = "latest"
 dotnet = "latest"
+node = "lts"
+rust = "stable"
+"npm:prettier" = "3.8.3"
+"npm:markdownlint-cli2" = "0.22.1"
+gitleaks = "8.30.1"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
