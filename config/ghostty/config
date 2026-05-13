@@ -44,7 +44,7 @@ theme = Catppuccin Macchiato
 # Config Files
 # =============================================================================
 config-file = font/monolisa
-config-file = opacity/85%
+config-file = opacity/95%
 
 # =============================================================================
 # Keybindings
