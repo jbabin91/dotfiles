@@ -51,7 +51,5 @@
     ~/.config/bat/config: config/bat/config
     # btop
     ~/.config/btop: config/btop
-    # Tmux
-    ~/.tmux.conf: config/tmux/tmux.conf
     # Neovim (LazyVim)
     ~/.config/nvim: config/nvim
