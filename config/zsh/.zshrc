@@ -1,6 +1,14 @@
 #!/usr/bin/env zsh
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+
+# VS Code shell integration (sourced manually; auto-injection is disabled for this config)
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  _vscode_shell_integration="/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
+  [[ -f "$_vscode_shell_integration" ]] && source "$_vscode_shell_integration"
+  unset _vscode_shell_integration
+fi
+
 # =============================================================================
 # Zsh Configuration (Antidote)
 # =============================================================================
@@ -12,6 +20,7 @@ export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion history)
 export ZSH_HIGHLIGHT_MAXLENGTH=300
 
 # -----------------------------------------------------------------------------
@@ -61,37 +70,38 @@ if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-# Background-compile zcompdump for faster loading
-{
-  zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
-  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
-    zcompile "$zcompdump"
-  fi
-} &!
 
 # -----------------------------------------------------------------------------
 # GPG (git commit signing - needs a TTY)
 # -----------------------------------------------------------------------------
-GPG_TTY=$(tty)
-export GPG_TTY
+# Skip GPG_TTY in VS Code terminals to avoid shell integration issues
+if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+  GPG_TTY=$(tty)
+  export GPG_TTY
+fi
 
 # -----------------------------------------------------------------------------
-# Tool Inits: Starship, Direnv
+# Tool Inits: Starship
+# Skip in VS Code to avoid timeout
 # -----------------------------------------------------------------------------
-_evalcache starship init zsh
-_evalcache direnv hook zsh
+if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+  eval "$(starship init zsh)"
+fi
 
 # -----------------------------------------------------------------------------
 # Tool Inits (Deferred): FZF
 # -----------------------------------------------------------------------------
-zsh-defer -c 'eval "$(fzf --zsh)"'
+if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+  zsh-defer -c 'eval "$(fzf --zsh)"'
+fi
 
 # -----------------------------------------------------------------------------
-# Dev Tool Managers: fnm, mise, zoxide
+# Dev Tool Managers: mise, zoxide
 # -----------------------------------------------------------------------------
-_evalcache fnm env --use-on-cd --version-file-strategy=recursive
-_evalcache mise activate zsh
-_evalcache zoxide init zsh
+if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+  eval "$(mise activate zsh)"
+  eval "$(zoxide init zsh)"
+fi
 
 # -----------------------------------------------------------------------------
 # Aliases
@@ -132,7 +142,7 @@ alias doompurge="~/.emacs.d/bin/doom purge"
 alias bu="brew update"
 alias buu="brew upgrade"
 alias bc="brew cleanup"
-alias ud="brew update && brew upgrade && brew cleanup && command rm -f ~/.zsh-evalcache/*.sh ~/.zsh-evalcache/*.zwc"
+alias ud="brew update && brew upgrade && brew cleanup"
 
 # eza
 alias l="eza -al --color=always --group-directories-first --git --icons"
@@ -223,20 +233,6 @@ alias kubectl="minikube kubectl --"
 alias pn="pnpm"
 alias px="pnpx"
 
-# Yazi - cd on quit
-function y() {
-  local tmp="/tmp/yazi-cwd-$$"
-  yazi "$@" --cwd-file="$tmp"
-  if [ -s "$tmp" ]; then
-    local cwd
-    cwd="$(cat -- "$tmp")"
-    if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-      builtin cd -- "$cwd" || return
-    fi
-  fi
-  \rm -f -- "$tmp"
-}
-
 # Git - checkout git branch/tag with fzf
 fco() {
   local tags branches target
@@ -253,7 +249,7 @@ fco() {
       echo "$tags"
       echo "$branches"
     ) |
-      fzf-tmux -- --no-hscroll --ansi +m -d "\t" -n 2
+      fzf --no-hscroll --ansi +m -d "\t" -n 2
   ) || return
   git checkout "$(echo "$target" | awk '{print $2}')"
 }
@@ -290,7 +286,9 @@ unset key
 # -----------------------------------------------------------------------------
 # iTerm2 Integration
 # -----------------------------------------------------------------------------
-[[ "$TERM_PROGRAM" == "iTerm.app" ]] && test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+fi
 
 # -----------------------------------------------------------------------------
 # Bun Completions
