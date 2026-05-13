@@ -13,7 +13,6 @@ Jace Babin's dotfiles, managed with [Dotbot](https://github.com/anishathalye/dot
 - **[Homebrew](https://brew.sh/)** package management via Brewfile
 - **[Lefthook](https://github.com/evilmartians/lefthook)** git hooks with Prettier, Shellcheck, and markdownlint
 - **[fastfetch](https://github.com/fastfetch-cli/fastfetch)** system information
-- **[tmux](https://github.com/tmux/tmux)** terminal multiplexer
 - **[Neovim](https://neovim.io/)** with [LazyVim](https://www.lazyvim.org/)
 - **[bat](https://github.com/sharkdp/bat)** syntax-highlighted file viewer
 - **[btop](https://github.com/aristocratos/btop)** system monitor
@@ -73,7 +72,6 @@ exec zsh
 │   ├── mise/           # Tool version manager (uv, dotnet)
 │   ├── nvim/           # Neovim config (LazyVim)
 │   ├── starship/       # Starship prompt
-│   ├── tmux/           # Terminal multiplexer
 │   └── zsh/            # Zsh shell config + Antidote plugins
 ├── general/
 │   ├── git/            # Git config, attributes, ignore
@@ -96,7 +94,7 @@ the latest version in either direction.
 All tool versions are managed through [mise](https://mise.jdx.dev/):
 
 - **Python** — [uv](https://github.com/astral-sh/uv) with automatic version switching
-- **Node.js** — [fnm](https://github.com/Schniz/fnm) with automatic version switching
+- **Node.js** — managed via mise; `.nvmrc` / `.node-version` auto-switching enabled via `idiomatic_version_file_enable_tools`
 - **.NET** — SDK managed via mise
 
 ## Development
