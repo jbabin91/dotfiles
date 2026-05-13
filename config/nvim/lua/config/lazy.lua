@@ -44,4 +44,6 @@ require("lazy").setup({
       },
     },
   },
+  -- No plugins use luarocks; skip hererocks bootstrap
+  rocks = { hererocks = false },
 })
