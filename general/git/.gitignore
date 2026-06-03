@@ -213,3 +213,6 @@ tags
 
 *.local
 *.local.*
+
+# /handoff skill output (transient inter-session doc)
+HANDOFF.md
