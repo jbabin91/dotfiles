@@ -9,7 +9,7 @@
   excludesfile = ~/.gitignore
   ignorecase = false
   pager = delta
-  fsmonitor = true
+  fsmonitor = false
   untrackedCache = true
 [github]
   user = "jbabin91"
