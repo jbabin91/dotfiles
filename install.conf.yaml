@@ -32,6 +32,7 @@
     ~/.gitattributes: general/git/.gitattributes
     ~/.gitconfig: general/git/.gitconfig
     ~/.gitignore: general/git/.gitignore
+    ~/.config/git/allowed_signers: general/git/allowed_signers
     # Ghostty
     ~/.config/ghostty: config/ghostty
     # Kitty
