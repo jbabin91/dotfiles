@@ -82,26 +82,19 @@ fi
 
 # -----------------------------------------------------------------------------
 # Tool Inits: Starship
-# Skip in VS Code to avoid timeout
 # -----------------------------------------------------------------------------
-if [[ "$TERM_PROGRAM" != "vscode" ]]; then
-  eval "$(starship init zsh)"
-fi
+eval "$(starship init zsh)"
 
 # -----------------------------------------------------------------------------
 # Tool Inits (Deferred): FZF
 # -----------------------------------------------------------------------------
-if [[ "$TERM_PROGRAM" != "vscode" ]]; then
-  zsh-defer -c 'eval "$(fzf --zsh)"'
-fi
+zsh-defer -c 'eval "$(fzf --zsh)"'
 
 # -----------------------------------------------------------------------------
 # Dev Tool Managers: mise, zoxide
 # -----------------------------------------------------------------------------
-if [[ "$TERM_PROGRAM" != "vscode" ]]; then
-  eval "$(mise activate zsh)"
-  eval "$(zoxide init zsh)"
-fi
+eval "$(mise activate zsh)"
+eval "$(zoxide init zsh)"
 
 # -----------------------------------------------------------------------------
 # Aliases
@@ -159,17 +152,17 @@ alias fgrep='fgrep --color=auto'
 
 # General UNIX
 alias c="clear"
-alias cp="cp -iv"
+alias cp="cp -v"
 alias df="df -h"
 alias du="du -d 1 -h"
 alias duf="du -sh *"
 alias mkdir="mkdir -pv"
-alias mv="mv -iv"
+alias mv="mv -v"
 alias path='echo -e ${PATH//:/\\n}'
-alias pi="ping -Anc 5 1.1.1.1"
+# alias pi="ping -Anc 5 1.1.1.1"
 alias reload!='exec "$SHELL" -l'
 alias zr='exec zsh'
-alias srm="srm -iv"
+alias srm="srm -v"
 
 # adding flag
 alias free='free -m'
