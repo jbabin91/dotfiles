@@ -2,6 +2,7 @@ ABAC
 ABCDEFGHJKMNPQRSTUVWXY
 ABGR
 ABRT
+Acro
 acsw
 acswrc
 addall
@@ -15,6 +16,7 @@ alexop
 alnum
 amannn
 amondnet
+anomalyco
 anstyle
 anthropics
 arewesixelyet
@@ -48,6 +50,7 @@ Brevo
 Brooooooklyn
 bspwm
 BYOK
+Casdoor
 CASS
 CBDT
 ccbar
@@ -60,6 +63,7 @@ ccometixline
 CCPA
 ccstatusline
 ccstripe
+CDPATH
 Cgreen
 changedfiles
 changeup
@@ -85,6 +89,7 @@ commoditizing
 compinit
 configur
 conflictstyle
+convo
 Coolify
 cowork
 cpersonal
@@ -95,6 +100,7 @@ ctlseqs
 cvvi
 cwork
 daml
+Daytona
 dbname
 Debouncer
 DECALN
@@ -111,6 +117,7 @@ DECSCUSR
 DECSTBM
 DECTCEM
 deprioritize
+Deprioritized
 desaturated
 devrmmerged
 Dfzl
@@ -174,10 +181,12 @@ gdlint
 gdtoolkit
 Gephi
 getbrevo
+GGUF
 ghostty
 ghuntley
 GIDP
 gitcl
+Gitea
 gitmoji
 gitui
 GLFW
@@ -188,6 +197,7 @@ GOCSPX
 Goey
 govet
 gpgsign
+Groq
 gsports
 Guake
 guix
@@ -209,6 +219,7 @@ IDOR
 IGGM
 ignorecase
 influencers
+inpainting
 inshellisense
 intentui
 intosh
@@ -230,6 +241,7 @@ Kiro
 kmeans
 Koality
 koalitygame
+Kokoro
 Konsole
 kovyrin
 lackeyjb
@@ -237,13 +249,16 @@ lazygit
 lazypath
 lazyvim
 leeguooooo
+Letta
 libadwaita
 libghostty
 Likert
 limt
 linearization
+llmfit
 llms
 llmstxt
+LOCOMO
 luarc
 Lxqs
 Mahomes
@@ -268,7 +283,9 @@ mocp
 modders
 modelcontextprotocol
 Modernizr
+msgpackr
 MSIX
+Msty
 mtag
 MXEZFM
 mygreen
@@ -287,6 +304,7 @@ NLSC
 Nombre
 nowarn
 nspanel
+ntfy
 ntvs
 oakoss
 obra
@@ -297,6 +315,7 @@ ooik
 OOTP
 Openpt
 openspec
+OPFS
 OPOY
 orama
 oreateai
@@ -304,6 +323,7 @@ orioledb
 OROY
 orpc
 ovidiueftimie
+OWUI
 oxfmt
 Paginatable
 pdfs
@@ -321,6 +341,7 @@ POTG
 pqrs
 prds
 prost
+proxieddb
 PRRT
 pscpu
 psgrep
@@ -342,19 +363,23 @@ refactorer
 reflog
 regen
 Registrator
+reimagining
 Reprioritized
 rerere
 resps
+retarget
 retryer
 reui
 rgrc
 Rhai
 RISP
 rkyv
+RLHF
 rmmerged
 rofi
 romkatv
 ROTY
+RRULE
 rubocop
 rumdl
 rusqlite
@@ -413,6 +438,7 @@ Syncer
 tahun
 taki
 taplo
+Tavily
 tcsetwinsize
 tcsh
 Termy
@@ -434,6 +460,7 @@ tozsh
 Transfonter
 Truzz
 tscq
+tsdav
 tsgolint
 tslog
 tsquery
@@ -477,6 +504,7 @@ vscdb
 vuejs
 wasmi
 Wbkqmj
+webui
 Weebly
 Weezer
 wesdfs
@@ -486,6 +514,7 @@ Wheatus
 whois
 whsec
 winit
+Witsy
 wofi
 worktree
 Xbnm
