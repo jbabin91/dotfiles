@@ -16,3 +16,7 @@ node_modules/
 # Temporary files
 *.tmp
 *.log
+
+# review-cycle (local review state)
+.claude/.review-mark
+.claude/.no-review-gate
