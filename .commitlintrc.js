@@ -20,6 +20,7 @@ export default defineConfig({
       'mise',
       'nvim',
       'bat',
+      'btop',
       'tmux',
       'fastfetch',
       'cspell',
