@@ -12,7 +12,8 @@
   fsmonitor = false
   untrackedCache = true
 [github]
-  user = "jbabin91"
+  user = jbabin91
+  account = jbabin91
 [color]
   ui = true
 [alias]
@@ -20,7 +21,7 @@
   pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/main"
   # update submodules
   subup = !"git pull --recurse-submodules && git submodule update"
-    count = shortlog -sn
+  count = shortlog -sn
   changedfiles = !sh -c 'git diff --name-only HEAD $(git merge-base HEAD main)' -
   change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f "
   track = !"git fetch origin && git branch $1 origin/$1 && git switch $1"
@@ -63,7 +64,7 @@
   ## hard resets
   rh = reset --hard
   rh1 = reset HEAD^ --hard
-  rh1 = reset HEAD^^ --hard
+  rh2 = reset HEAD^^ --hard
 
   # shortcuts for commands
   b = branch
@@ -119,7 +120,7 @@
   patternType = perl
   lineNumber = true
 [push]
-  default = simple # options: nothing, current, upsteam, simple, and matching
+  default = simple # options: nothing, current, upstream, simple, and matching
   autoSetupRemote = true
   followTags = true
 [pull]
@@ -129,10 +130,9 @@
   autosquash = true
   autostash = true
   instructionFormat = %d %s (%cr) <%an>
-	rebase-merges = true
-	updaterefs = false
+  updateRefs = true
 [rerere]
-  enable = true
+  enabled = true
   autoupdate = true
 [filter "lfs"]
   clean = git-lfs clean -- %f
@@ -142,8 +142,6 @@
 [difftool]
   prompt = false
   trustExitCode = true
-[hub]
-  protocol = ssh
 [interactive]
   diffFilter = delta --color-only
 [init]
@@ -164,7 +162,7 @@
 [diff "rspec"]
   xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario)[ \t].*)$"
 [status]
-  showUntackedFiles = all
+  showUntrackedFiles = all
 [apply]
   whitespace = nowarn
 [submodule]
@@ -198,3 +196,5 @@
   conflictstyle = zdiff3
 [gitbutler]
   aiModelProvider = openai
+[include]
+  path = ~/.config/git/local.config
