@@ -267,6 +267,23 @@ python3() {
 }
 
 # -----------------------------------------------------------------------------
+# GitHub CLI Account Auto-Switching (match git config github.account)
+# -----------------------------------------------------------------------------
+gh() {
+  local want active
+  want=$(command git config --get github.account 2>/dev/null)
+  if [[ -n $want ]]; then
+    active=$(awk '/^[^[:space:]]/{f=0} /^github\.com:/{f=1} f&&/^[[:space:]]+user:/{print $2; exit}' \
+      "${GH_CONFIG_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/gh}/hosts.yml" 2>/dev/null)
+    if [[ $want != "$active" ]]; then
+      command gh auth switch --user "$want" >/dev/null 2>&1 \
+        || print -u2 "gh: couldn't switch to account '$want' (using '${active:-default}')"
+    fi
+  fi
+  command gh "$@"
+}
+
+# -----------------------------------------------------------------------------
 # History Substring Search Keybindings (must be after plugin load)
 # -----------------------------------------------------------------------------
 zmodload -F zsh/terminfo +p:terminfo
@@ -288,8 +305,12 @@ fi
 # -----------------------------------------------------------------------------
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# Added by Antigravity
-export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/jacebabin/.lmstudio/bin"
+# End of LM Studio CLI section
+
+# opencode
+export PATH=/Users/jacebabin/.opencode/bin:$PATH
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
