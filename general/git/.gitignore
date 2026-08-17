@@ -216,3 +216,7 @@ tags
 
 # /handoff skill output (transient inter-session doc)
 HANDOFF.md
+
+# review-cycle skill state (local review sentinel, per-machine)
+.claude/.review-mark
+.claude/.no-review-gate
