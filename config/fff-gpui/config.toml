@@ -1,0 +1,46 @@
+# fff-gpui — https://github.com/th0jensen/fff-gpui
+#
+# Usually launched from Zed: `space f f` / `space f g` spawn the tasks in
+# ~/.config/zed/tasks.json, which pass EDITOR=zed inline. A live EDITOR or
+# VISUAL in the process always wins over `editor` below.
+
+# Fallback only, for the resident Homebrew service — it does not inherit
+# shell environment, so it cannot resolve `zed` on its own.
+editor = "/opt/homebrew/bin/zed"
+
+# Mirror Zed's fonts, sizes, and theme (Catppuccin Macchiato, MonoLisa
+# Variant) from ~/.config/zed/settings.json, including installed extension
+# themes. [font] and [theme] are deliberately left unset so Zed stays the
+# single source of truth — setting either here would override the sync.
+sync_zed_settings = true
+
+# Spelled out rather than the README's `hyper` shorthand — 0.1.6's binary has no
+# such token, only shift/control/alt/super. This is exactly what the Right
+# Command rule in ~/.config/karabiner/karabiner.json emits.
+# Nothing else claims it: Raycast is on cmd+space, Ghostty's quick terminal on
+# super+ctrl+., and it collides with no macOS system shortcut.
+# Requires `brew services start fff-gpui` to be running.
+global_keybind = "shift+control+alt+super+f"
+
+# Where the global keybind opens by default. Irrelevant when launching from
+# Zed, which passes `--open .` for the current project.
+#
+# The key is `base_path`, NOT `base_dir` as the README says — 0.1.6's serde
+# struct uses base_path, so `base_dir` is silently ignored. Absolute path,
+# since the tilde is not expanded either.
+base_path = "/Users/jacebabin/.code"
+
+# Plain directory names only — no glob support. Resolved from the opened scope.
+exclude_dirs = [
+  ".git",
+  ".next",
+  ".turbo",
+  "Library",
+  "dist",
+  "node_modules",
+  "target",
+]
+
+window_width = 960.0
+window_height = 520.0
+picker_pane_width = 430.0

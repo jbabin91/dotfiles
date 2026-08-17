@@ -1,0 +1,35 @@
+// Global tasks. See https://zed.dev/docs/tasks for documentation.
+//
+// Spawned from keymap.json via ["task::Spawn", { "task_name": "<label>" }].
+// Task names must match "label" exactly.
+[
+  // fff-gpui opens its own window, so the terminal tab stays hidden and unfocused.
+  // Requires: brew install fff-gpui
+  // https://github.com/th0jensen/fff-gpui#configuration
+  {
+    "allow_concurrent_runs": false,
+    "command": "EDITOR=zed fff-gpui --open .",
+    "hide": "always",
+    "label": "fff-gpui: Files",
+    "reveal": "never",
+    "reveal_target": "dock",
+    "save": "none",
+    "shell": "system",
+    "show_command": false,
+    "show_summary": false,
+    "use_new_terminal": false
+  },
+  {
+    "allow_concurrent_runs": false,
+    "command": "EDITOR=zed fff-gpui --open . --grep",
+    "hide": "always",
+    "label": "fff-gpui: Grep",
+    "reveal": "never",
+    "reveal_target": "dock",
+    "save": "none",
+    "shell": "system",
+    "show_command": false,
+    "show_summary": false,
+    "use_new_terminal": false
+  }
+]

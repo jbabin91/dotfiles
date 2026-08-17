@@ -1,0 +1,734 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  // Agent panel and AI assistant settings
+  // https://zed.dev/docs/ai/agent-settings
+  "agent": {
+    "dock": "left",
+    "favorite_models": [],
+    // Show multiple inline assist alternatives
+    // https://zed.dev/docs/ai/agent-settings#inline-alternatives
+    "inline_alternatives": [
+      {
+        "model": "free/minimax-m2.5-free",
+        "provider": "opencode"
+      },
+      {
+        "model": "free/big-pickle",
+        "provider": "opencode"
+      }
+    ],
+    "inline_assistant_model": {
+      "model": "free/big-pickle",
+      "provider": "opencode"
+    },
+    "model_parameters": [
+      {
+        "provider": "opencode",
+        // Lower temperature for code editing (more deterministic)
+        "temperature": 0.3
+      }
+    ],
+    // Notify when the agent finishes work while Zed is in background
+    // https://zed.dev/docs/ai/agent-settings#notify-when-agent-waiting
+    // Options: "primary_screen", "all_screens", "never"
+    "notify_when_agent_waiting": "primary_screen",
+    // Play a sound when the agent is done
+    // https://zed.dev/docs/ai/agent-settings#play-sound-when-agent-done
+    // Options: "never", "when_hidden", "always"
+    "play_sound_when_agent_done": "never",
+    // Agent profiles (like sidekick.nvim profiles)
+    // https://zed.dev/docs/ai/agent-settings#agent-profiles
+    "profiles": {
+      "debug": {
+        "default_model": {
+          "model": "free/minimax-m2.5-free",
+          "provider": "opencode"
+        },
+        "enable_all_context_servers": false,
+        "name": "Debug",
+        "tools": {
+          "copy_path": true,
+          "delete_path": false,
+          "diagnostics": true,
+          "edit_file": true,
+          "fetch": true,
+          "find_path": true,
+          "go_to_definition": true,
+          "grep": true,
+          "move_path": false,
+          "read_file": true,
+          "spawn_agent": true,
+          "terminal": true,
+          "write_file": false
+        }
+      },
+      "review": {
+        "default_model": {
+          "model": "free/minimax-m2.5-free",
+          "provider": "opencode"
+        },
+        "enable_all_context_servers": true,
+        "name": "Code Review",
+        "tools": {
+          "copy_path": true,
+          "delete_path": false,
+          "diagnostics": true,
+          "edit_file": false,
+          "fetch": true,
+          "find_path": true,
+          "go_to_definition": true,
+          "grep": true,
+          "move_path": false,
+          "read_file": true,
+          "spawn_agent": false,
+          "terminal": false,
+          "write_file": false
+        }
+      },
+      "write": {
+        "enable_all_context_servers": true,
+        "name": "Write Code",
+        "tools": {
+          "copy_path": true,
+          "delete_path": true,
+          "diagnostics": true,
+          "edit_file": true,
+          "fetch": true,
+          "find_path": true,
+          "go_to_definition": true,
+          "grep": true,
+          "move_path": true,
+          "read_file": true,
+          "spawn_agent": false,
+          "terminal": true,
+          "write_file": true
+        }
+      }
+    },
+    "sidebar_side": "left",
+    // Show inline diff review for agent edits in the active buffer
+    // https://zed.dev/docs/ai/agent-settings#single-file-review
+    "single_file_review": true,
+    // Tool permission defaults
+    // https://zed.dev/docs/ai/agent-settings#tool-permissions
+    "tool_permissions": {
+      "default": "confirm",
+      "tools": {
+        "fetch": {
+          "always_allow": [
+            {
+              "pattern": "^https://(api\\.)?github\\.com"
+            },
+            {
+              "pattern": "^https://raw\\.githubusercontent\\.com"
+            }
+          ]
+        },
+        "terminal": {
+          // Each pattern is end-anchored and forbids ; & | so a chained command
+          // can't ride in behind an allowed prefix ("ls; rm -rf ~" once matched).
+          "always_allow": [
+            {
+              "pattern": "^(cargo|npm|bun|pnpm|yarn|deno)\\s+(build|test|check|run|format|lint|fix)(\\s+[^;&|`$()]*)?$"
+            },
+            {
+              "pattern": "^git\\s+(add|commit|diff|log|status|push|pull|branch\\s+-[Dd])(\\s+[^;&|`$()]*)?$"
+            },
+            {
+              "pattern": "^(ls|cat|head|tail|wc|echo|pwd|which|type|file)(\\s+[^;&|`$()]*)?$"
+            }
+          ],
+          "always_deny": [
+            {
+              "pattern": "^(sudo|su|doas)\\s"
+            },
+            {
+              "pattern": "^rm\\s+-\\S*[rf]\\S*\\s+/"
+            }
+          ]
+        }
+      }
+    }
+  },
+  // Agent servers configuration (MCP servers)
+  // https://zed.dev/docs/remote-development#mcp
+  "agent_servers": {
+    "amp-acp": {
+      "type": "registry"
+    },
+    "claude-acp": {
+      "default_config_options": {
+        "fast": false
+      },
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
+    "factory-droid": {
+      "type": "registry"
+    },
+    "gemini": {
+      "type": "registry"
+    },
+    "github-copilot": {
+      "type": "registry"
+    },
+    "github-copilot-cli": {
+      "type": "registry"
+    },
+    "kilo": {
+      "type": "registry"
+    },
+    "opencode": {
+      "default_config_options": {
+        "effort": "max",
+        "mode": "plan",
+        "model": "opencode/mimo-v2.5-free"
+      },
+      "favorite_config_option_values": {
+        "model": ["opencode/deepseek-v4-flash-free", "opencode/mimo-v2.5-free"]
+      },
+      "type": "registry"
+    },
+    "pi-acp": {
+      "type": "registry"
+    }
+  },
+  // Extensions installed automatically on a fresh machine.
+  // Keeps the extension set reproducible from dotfiles alone.
+  // https://zed.dev/docs/extensions#auto-installing-extensions
+  "auto_install_extensions": {
+    "biome": true,
+    "catppuccin": true,
+    "catppuccin-icons": true,
+    "graphql": true,
+    "html": true,
+    "maple-theme": true,
+    "markdownlint": true,
+    "material-icon-theme": true,
+    "oxc": true,
+    "scss": true,
+    "svelte": true,
+    "toml": true,
+    "vue": true
+  },
+  // Show method signatures when inside parentheses
+  // https://zed.dev/docs/reference/all-settings#auto-signature-help
+  "auto_signature_help": false,
+  // Auto-save after delay (matches nvim's autowrite behavior)
+  // https://zed.dev/docs/reference/all-settings#autosave
+  // "autosave": {
+  // 	"after_delay": {
+  // 		"milliseconds": 1000,
+  // 	},
+  // },
+  // Base keymap: VSCode, Atom, JetBrains, SublimeText, TextMate, None
+  // https://zed.dev/docs/key-bindings#predefined-keymaps
+  "base_keymap": "VSCode",
+  // Fallback fonts for editor buffer
+  // https://zed.dev/docs/reference/all-settings#buffer-font-fallbacks
+  "buffer_font_fallbacks": ["Symbols Nerd Font Mono"],
+  // Buffer font family (editor font)
+  // https://zed.dev/docs/reference/all-settings#buffer-font-family
+  "buffer_font_family": "MonoLisa Variant",
+  // Editor buffer font size
+  // https://zed.dev/docs/reference/all-settings#buffer-font-size
+  "buffer_font_size": 13,
+  // Zen mode / centered layout
+  // https://zed.dev/docs/reference/all-settings#centered-layout
+  "centered_layout": {
+    "left_padding": 0.15,
+    "right_padding": 0.15
+  },
+  // Default behavior for opening files via CLI
+  // https://zed.dev/docs/reference/all-settings#cli-default-open-behavior
+  "cli_default_open_behavior": "new_window",
+  // Whether and how to display code lenses from language servers
+  // https://zed.dev/docs/reference/all-settings#code-lens
+  "code_lens": "menu",
+  // Collaboration panel settings
+  // https://zed.dev/docs/reference/all-settings#collaboration-panel
+  "collaboration_panel": {
+    "button": false,
+    "dock": "right"
+  },
+  // Whether to colorize matching brackets (rainbow brackets)
+  // https://zed.dev/docs/reference/all-settings#colorize-brackets
+  "colorize_brackets": true,
+  // Context servers (MCP servers) - kept as recipe only
+  // https://zed.dev/docs/remote-development#mcp
+  // The react-grab MCP server is kept as a recipe only. Leaving an active
+  // custom context server makes Zed Preview show a no-op migration banner.
+  // "context_servers": {
+  //   "react-grab-mcp": {
+  //     "args": ["-y", "@react-grab/mcp", "--stdio"],
+  //     "command": "npx",
+  //     "env": {}
+  //   }
+  // },
+  // Confirm before quitting with unsaved changes (nvim's confirm=true)
+  // https://zed.dev/docs/reference/all-settings#confirm-quit
+  // "confirm_quit": true,
+  // Whether the cursor blinks
+  // https://zed.dev/docs/reference/all-settings#cursor-blink
+  "cursor_blink": true,
+  // Cursor shape: bar, block, underline, hollow
+  // https://zed.dev/docs/reference/all-settings#cursor-shape
+  "cursor_shape": "bar",
+  // Inline diagnostics at end of line (replaces VS Code's Error Lens)
+  // https://zed.dev/docs/reference/all-settings#diagnostics
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "max_severity": "error"
+    }
+  },
+  // Edit predictions settings (AI autocomplete)
+  // https://zed.dev/docs/reference/all-settings#edit-predictions
+  "edit_predictions": {
+    "provider": "zed"
+  },
+  // Finder model width
+  // https://zed.dev/docs/reference/all-settings#file-finder
+  "file_finder": {
+    "modal_max_width": "medium"
+  },
+  // File scan exclusions (files to hide from file explorer and search)
+  // https://zed.dev/docs/reference/all-settings#file-scan-exclusions
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    // Above is default from Zed
+    "**/out",
+    "**/dist",
+    "**/.husky",
+    "**/.turbo",
+    "**/.vscode-test",
+    "**/.vscode",
+    "**/.next",
+    "**/.storybook",
+    "**/.tap",
+    "**/.nyc_output",
+    "**/report",
+    "**/node_modules"
+  ],
+  // File type associations
+  // https://zed.dev/docs/configuring-languages#file-associations
+  "file_types": {
+    "Dockerfile": ["Dockerfile", "Dockerfile.*"],
+    "JSON": ["json", "jsonc", "*.code-snippets"],
+    "Shell Script": [
+      ".shellcheckrc",
+      ".zsh_plugins.txt",
+      "**/htop/htoprc",
+      "**/postgres/psqlrc",
+      "**/skhd/skhdrc",
+      "**/tmux/*.conf",
+      "**/yabai/yabairc"
+    ],
+    "TOML": ["**/bat/config", "**/ghostty/config"]
+  },
+  // Whole buffer, matching VS Code's editor.formatOnSave default ("file").
+  // Must stay "on": JSON key sorting and Markdown fix-all are whole-document,
+  // and Biome advertises range formatting, so "modifications" would feed it
+  // only the changed lines and the sort would silently no-op.
+  // https://zed.dev/docs/reference/all-settings#format-on-save
+  "format_on_save": "on",
+  // Git settings
+  // https://zed.dev/docs/reference/all-settings#git
+  "git": {
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  // Git panel settings
+  // https://zed.dev/docs/reference/all-settings#git-panel
+  "git_panel": {
+    "collapse_untracked_diff": true,
+    "diff_stats": true,
+    "dock": "right",
+    "file_icons": true,
+    "show_count_badge": true,
+    "tree_view": false
+  },
+  // Gutter settings
+  // https://zed.dev/docs/reference/all-settings#gutter
+  "gutter": {
+    "line_numbers": true
+  },
+  // Use tab characters instead of spaces
+  // https://zed.dev/docs/reference/all-settings#hard-tabs
+  "hard_tabs": false,
+  // Editor horizontal scroll margin (nvim's sidescrolloff=8)
+  // Columns to keep left/right of cursor
+  // https://zed.dev/docs/reference/all-settings#horizontal-scroll-margin
+  "horizontal_scroll_margin": 8,
+  // Icon theme settings
+  // https://zed.dev/docs/reference/all-settings#icon-theme
+  "icon_theme": {
+    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Mocha",
+    "mode": "dark"
+  },
+  // Indentation guides (rainbow indentation)
+  // https://zed.dev/docs/reference/all-settings#indent-guides
+  "indent_guides": {
+    "coloring": "indent_aware",
+    "enabled": true
+  },
+  // Inlay hints (parameter names, types, etc.)
+  // https://zed.dev/docs/reference/all-settings#inlay-hints
+  // Preconfigured for: Go, Rust, TypeScript, Svelte
+  "inlay_hints": {
+    "enabled": true
+  },
+  // Per-provider language model options
+  // https://zed.dev/docs/ai/llm-providers
+  "language_models": {
+    "opencode": {
+      "show_zen_models": false
+    }
+  },
+  // Language-specific settings; each entry overrides the top-level defaults.
+  // https://zed.dev/docs/configuring-languages#language-specific-settings
+  "languages": {
+    // CSS family — oxfmt
+    "CSS": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    },
+    // Go — gopls formatter
+    // https://zed.dev/docs/languages/go
+    "Go": {
+      "formatter": {
+        "language_server": {
+          "name": "gopls"
+        }
+      },
+      "language_servers": ["gopls", "!goimports"]
+    },
+    "GraphQL": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    },
+    "HTML": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    },
+    // JS/TS — oxfmt formats, then oxlint applies safe fixes
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.addMissingImports": true,
+        "source.removeUnusedImports": true
+      },
+      "formatter": [
+        { "language_server": { "name": "oxfmt" } },
+        { "code_action": "source.fixAll.oxc" }
+      ],
+      "prettier": { "allowed": false }
+    },
+    // JSON — biome sorts keys, then oxfmt formats. Order matters.
+    // biome's own formatter is disabled in ~/Library/Application Support/biome/biome.json
+    "JSON": {
+      "formatter": [
+        {
+          "external": {
+            "arguments": [
+              "check",
+              "--write",
+              "--config-path",
+              "/Users/jacebabin/Library/Application Support/biome",
+              "--stdin-file-path",
+              "{buffer_path}"
+            ],
+            "command": "/opt/homebrew/bin/biome"
+          }
+        },
+        { "language_server": { "name": "oxfmt" } }
+      ],
+      "prettier": { "allowed": false }
+    },
+    "JSONC": {
+      "formatter": [
+        {
+          "external": {
+            "arguments": [
+              "check",
+              "--write",
+              "--config-path",
+              "/Users/jacebabin/Library/Application Support/biome",
+              "--stdin-file-path",
+              "{buffer_path}"
+            ],
+            "command": "/opt/homebrew/bin/biome"
+          }
+        },
+        { "language_server": { "name": "oxfmt" } }
+      ],
+      "prettier": { "allowed": false }
+    },
+    // Markdown — markdownlint owns it (reads .markdownlint-cli2.* configs).
+    // "formatter": "none" still runs code_actions_on_format, so fix-all
+    // applies on save without a formatter fighting it.
+    // https://zed.dev/docs/languages/markdown
+    "Markdown": {
+      "code_actions_on_format": { "source.fixAll": true },
+      "formatter": "none",
+      "preferred_line_length": 80,
+      "prettier": { "allowed": false }
+    },
+    // Python — ruff formatter, ty type-checker
+    // https://zed.dev/docs/languages/python
+    "Python": {
+      "formatter": {
+        "language_server": {
+          "name": "ruff"
+        }
+      },
+      "language_servers": ["ty", "ruff", "!basedpyright", "!pyrefly", "!pyright", "!pylsp"]
+    },
+    // Rust — spaces + rust-analyzer formatter
+    // https://zed.dev/docs/languages/rust
+    "Rust": {
+      "formatter": {
+        "language_server": {
+          "name": "rust-analyzer"
+        }
+      },
+      "language_servers": ["rust-analyzer", "!rustc"]
+    },
+    "SCSS": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    },
+    "Svelte": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    },
+    "TOML": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.addMissingImports": true,
+        "source.removeUnusedImports": true
+      },
+      "formatter": [
+        { "language_server": { "name": "oxfmt" } },
+        { "code_action": "source.fixAll.oxc" }
+      ],
+      "prettier": { "allowed": false }
+    },
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.addMissingImports": true,
+        "source.removeUnusedImports": true
+      },
+      "formatter": [
+        { "language_server": { "name": "oxfmt" } },
+        { "code_action": "source.fixAll.oxc" }
+      ],
+      "prettier": { "allowed": false }
+    },
+    "Vue.js": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    },
+    "YAML": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }],
+      "prettier": { "allowed": false }
+    }
+  },
+  // LSP (Language Server Protocol) configuration
+  // https://zed.dev/docs/configuring-languages#configuring-language-servers
+  // Recipes (rust-analyzer, gopls, vtsls, biome) → example/lsp-settings.jsonc
+  "lsp": {
+    "biome": {
+      "binary": {
+        "arguments": ["lsp-proxy"],
+        "path": "/opt/homebrew/bin/biome"
+      }
+    },
+    // .markdownlint-cli2.mjs configs are skipped unless this is enabled
+    "markdownlint": {
+      "initialization_options": {
+        "allowJavaScriptConfig": true
+      }
+    },
+    "tailwindcss-language-server": {
+      "settings": {
+        "classAttributes": ["class", "className", "ngClass", "styles"],
+        "classFunctions": ["tv", "cn", "cx", "cva"],
+        "experimental": {
+          "classRegex": [["tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]]
+        }
+      }
+    },
+    "vtsls": {
+      "settings": {
+        "javascript": {
+          "updateImportsOnFileMove": { "enabled": "always" }
+        },
+        "typescript": {
+          "updateImportsOnFileMove": { "enabled": "always" }
+        }
+      }
+    },
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          "disableSchemaDetection": [
+            "**/.forgejo/workflows/*.yaml",
+            "**/.forgejo/workflows/*.yml",
+            "**/.gitea/workflows/*.yaml",
+            "**/.gitea/workflows/*.yml",
+            "**/.github/workflows/*.yaml",
+            "**/.github/workflows/*.yml"
+          ]
+        }
+      }
+    }
+  },
+  // Close least-recently-used tab past this count (VS Code editor.limit)
+  // https://zed.dev/docs/reference/all-settings#max-tabs
+  "max_tabs": 8,
+  // Outline panel settings
+  // https://zed.dev/docs/reference/all-settings#outline-panel
+  "outline_panel": {
+    "dock": "left"
+  },
+  // Project panel settings
+  // https://zed.dev/docs/reference/all-settings#project-panel
+  "project_panel": {
+    "auto_fold_dirs": false,
+    "button": true,
+    "diagnostic_badges": true,
+    "dock": "right",
+    "git_status": true,
+    "git_status_indicator": true,
+    "hide_root": true,
+    "show_diagnostics": "errors"
+  },
+  // Hide variable values in private files (e.g., .env, .pem)
+  // https://zed.dev/docs/reference/all-settings#redact-private-values
+  "redact_private_values": true,
+  // Use relative line numbers in gutter
+  // https://zed.dev/docs/reference/all-settings#relative-line-numbers
+  "relative_line_numbers": "enabled",
+  // Scrollbar settings
+  // https://zed.dev/docs/reference/all-settings#editor-scrollbar
+  "scrollbar": {
+    "show": "never"
+  },
+  // Session settings
+  // https://zed.dev/docs/reference/all-settings#session
+  "session": {
+    "trust_all_worktrees": true
+  },
+  // Show AI edit predictions in the editor
+  // https://zed.dev/docs/reference/all-settings#show-edit-predictions
+  "show_edit_predictions": true,
+  // Whether to show signature help after completion or bracket pair inserted
+  // https://zed.dev/docs/reference/all-settings#show-signature-help-after-edits
+  "show_signature_help_after_edits": false,
+  // Show whitespace characters: all, selection, none, boundary
+  // https://zed.dev/docs/reference/all-settings#show-whitespaces
+  "show_whitespaces": "boundary",
+  // Wrap long lines at the editor width
+  // https://zed.dev/docs/reference/all-settings#soft-wrap
+  "soft_wrap": "editor_width",
+  // Status bar settings
+  // https://zed.dev/docs/reference/all-settings#status-bar
+  "status_bar": {
+    "experimental.show": true,
+    "show_active_file": false
+  },
+  // Tab bar settings
+  // https://zed.dev/docs/reference/all-settings#editor-tab-bar
+  "tab_bar": {
+    "show": true
+  },
+  // Only show error on tab
+  // https://zed.dev/docs/reference/all-settings#editor-tabs
+  "tabs": {
+    "file_icons": true,
+    "git_status": true,
+    "show_diagnostics": "errors"
+  },
+  // Telemetry settings
+  // https://zed.dev/docs/reference/all-settings#telemetry
+  "telemetry": {
+    "diagnostics": true,
+    "metrics": false
+  },
+  // Terminal settings
+  // https://zed.dev/docs/reference/all-settings#terminal
+  "terminal": {
+    "env": {
+      "EDITOR": "zed --wait"
+    },
+    "font_size": 13.0,
+    "show_count_badge": true
+  },
+  // Theme settings
+  // https://zed.dev/docs/themes
+  "theme": {
+    "dark": "Catppuccin Macchiato",
+    "light": "Catppuccin Latte",
+    "mode": "dark"
+  },
+  // Editor toolbar settings
+  // https://zed.dev/docs/reference/all-settings#editor-toolbar
+  "toolbar": {
+    "code_actions": true
+  },
+  // Fallback fonts for UI chrome (nerd font icons)
+  // https://zed.dev/docs/reference/all-settings#ui-font-fallbacks
+  "ui_font_fallbacks": ["Symbols Nerd Font"],
+  // UI font family (for menus, panels, etc.)
+  // https://zed.dev/docs/reference/all-settings#ui-font-family
+  "ui_font_family": "MonoLisa Variant",
+  // UI font size (for menus, panels, etc.)
+  // https://zed.dev/docs/reference/all-settings#ui-font-size
+  "ui_font_size": 15,
+  // Use macOS native window tabs
+  // https://zed.dev/docs/reference/all-settings#use-system-tabs
+  "use_system_window_tabs": true,
+  // Editor vertical scroll margin (nvim's scrolloff=4)
+  // Lines to keep above/below cursor
+  // https://zed.dev/docs/reference/all-settings#vertical-scroll-margin
+  "vertical_scroll_margin": 4,
+  // Vim settings (empty = use defaults)
+  // https://zed.dev/docs/reference/all-settings#vim
+  "vim": {},
+  // Vim mode settings
+  // https://zed.dev/docs/reference/all-settings#vim
+  "vim_mode": true,
+  // Which-key (vim keybinding helper) settings
+  // https://zed.dev/docs/visual-customization#vim-mode
+  "which_key": {
+    "delay_ms": 500,
+    "enabled": true
+  },
+  // Vertical ruler columns (VS Code editor.wordWrapColumn)
+  // https://zed.dev/docs/reference/all-settings#wrap-guides
+  "wrap_guides": [100]
+}

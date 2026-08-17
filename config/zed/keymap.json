@@ -1,0 +1,304 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+//
+// ── Comment convention ────────────────────────────────────────────────
+// This file is key-sorted on save (Biome `useSortedKeys`), and comments
+// travel with the key directly below them. So:
+//
+//   • Narrative that describes a whole block goes ABOVE the block's `{`.
+//     Array order is never rearranged, so those stay put.
+//   • A comment inside `bindings` must explain exactly ONE key, the one
+//     directly beneath it. Never write a comment for a group or a pair —
+//     sorting separates them and the comment is left pointing at nothing.
+//   • Don't restate the action name. `"space c f": "editor::Format"`
+//     needs no comment. Explain WHY a binding is unusual, not what it is.
+//
+// Layout follows LazyVim (https://www.lazyvim.org/keymaps) so muscle
+// memory carries between the two. Zed-only capabilities get Zed-native
+// keys chosen not to collide with vim or LazyVim.
+// ──────────────────────────────────────────────────────────────────────
+[
+  // Normal + visual mode. Leader-prefixed commands that make sense with or
+  // without a selection, plus the agent panel.
+  {
+    "bindings": {
+      "g f": "editor::OpenExcerpts",
+      "space a a": "agent::OpenProjectAGENTS.mdRules",
+      "space a c": "agent::ToggleFocus",
+      // Shift-D: visual-mode `space a d` is "document selection" and would shadow this.
+      "space a D": "agent::OpenAgentDiff",
+      "space a i": "assistant::InlineAssist",
+      "space a m": "agent::ToggleModelSelector",
+      "space a n": "agent::NewThread",
+      "space a s": "agent::OpenSettings",
+      "space f p": "projects::OpenRecent",
+      "space g h d": "editor::ToggleSelectedDiffHunks",
+      "space g s": "git_panel::ToggleFocus",
+      "space m P": "markdown::OpenPreviewToTheSide",
+      "space m p": "markdown::OpenPreview",
+      "space s b": "buffer_search::Deploy",
+      // Plain project search. LazyVim's <leader>sw seeds the word under the
+      // cursor; Zed has no action for that, so this duplicates `space /`.
+      "space s w": "pane::DeploySearch",
+      // `space u` is LazyVim's UI-toggle namespace. `space t` is deliberately
+      // left free for a future test namespace (neotest convention).
+      "space u h": "editor::ToggleInlayHints",
+      "space u w": "editor::ToggleSoftWrap",
+      "space u z": "workspace::ToggleCenteredLayout"
+    },
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu"
+  },
+  // Normal mode only.
+  //
+  // Bracket pairs ([x / ]x) are split apart by key sorting — that is expected,
+  // not a mistake. `[` = previous, `]` = next, for buffers (b), diagnostics (d),
+  // errors (e), hints (H), hunks (h) and warnings (w).
+  //
+  // Goto set matches LazyVim exactly: gd gD gr gI gy gK. `g t`/`g T` stay free
+  // for vim's tab motions and `g i` for insert-at-last-exit.
+  {
+    "bindings": {
+      "[ b": "pane::ActivatePreviousItem",
+      "[ d": "editor::GoToPreviousDiagnostic",
+      "[ e": ["editor::GoToPreviousDiagnostic", { "severity": "error" }],
+      "[ H": ["editor::GoToPreviousDiagnostic", { "severity": "hint" }],
+      "[ h": "editor::GoToPreviousHunk",
+      "[ w": ["editor::GoToPreviousDiagnostic", { "severity": "warning" }],
+      "] b": "pane::ActivateNextItem",
+      "] d": "editor::GoToDiagnostic",
+      "] e": ["editor::GoToDiagnostic", { "severity": "error" }],
+      "] H": ["editor::GoToDiagnostic", { "severity": "hint" }],
+      "] h": "editor::GoToHunk",
+      "] w": ["editor::GoToDiagnostic", { "severity": "warning" }],
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-q": "pane::CloseActiveItem",
+      "ctrl-s": "workspace::Save",
+      "ctrl-shift-h": "vim::ResizePaneLeft",
+      "ctrl-shift-j": "vim::ResizePaneDown",
+      "ctrl-shift-k": "vim::ResizePaneUp",
+      "ctrl-shift-l": "vim::ResizePaneRight",
+      // Zed-only. Same letter as the plain goto plus ctrl opens it in a split,
+      // echoing vim's `g CTRL-]`. LazyVim has no split-goto bindings.
+      "g ctrl-d": "editor::GoToDefinitionSplit",
+      "g ctrl-i": "editor::GoToImplementationSplit",
+      "g ctrl-y": "editor::GoToTypeDefinitionSplit",
+      "g D": "editor::GoToDeclaration",
+      "g d": "editor::GoToDefinition",
+      "g I": "editor::GoToImplementation",
+      "g K": "editor::ShowSignatureHelp",
+      "g r": "editor::FindAllReferences",
+      "g y": "editor::GoToTypeDefinition",
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem",
+      "space /": "pane::DeploySearch",
+      // Alternate buffer (vim's <C-^>), not "previous tab in order".
+      "space b b": "pane::AlternateFile",
+      "space b d": "pane::CloseActiveItem",
+      "space b o": "pane::CloseOtherItems",
+      "space c a": "editor::ToggleCodeActions",
+      "space c f": "editor::Format",
+      "space c r": "editor::Rename",
+      "space e": "pane::RevealInProjectPanel",
+      "space f n": "workspace::NewFile",
+      "space g b": "editor::ToggleGitBlameInline",
+      "space g d": "git::Diff",
+      "space g h e": "editor::ExpandAllDiffHunks",
+      // Closes the window, not the whole app — Zed has no true "quit all".
+      "space q q": "workspace::CloseWindow",
+      // Space-prefixed so bare `s`/`S` stay free for the sneak motion below.
+      "space s S": "project_symbols::Toggle",
+      "space s s": "outline::Toggle",
+      "space space": "file_finder::Toggle",
+      "space w -": "pane::SplitDown",
+      "space w d": "pane::CloseActiveItem",
+      // `|` is not a valid Zed keystroke token; shift-\ is the same keypress.
+      "space w shift-\\": "pane::SplitRight",
+      "space w w": "workspace::ActivatePreviousPane",
+      "space x x": "diagnostics::Deploy"
+    },
+    "context": "Editor && vim_mode == normal && !VimWaiting && !menu"
+  },
+  // No active editor — a subset of the leader map that still makes sense.
+  {
+    "bindings": {
+      "space a c": "agent::ToggleFocus",
+      // Task labels must match tasks.json exactly. Needs `brew install fff-gpui`.
+      "space f f": ["task::Spawn", { "task_name": "fff-gpui: Files" }],
+      "space f g": ["task::Spawn", { "task_name": "fff-gpui: Grep" }],
+      "space f p": "projects::OpenRecent",
+      "space g s": "git_panel::ToggleFocus",
+      "space space": "file_finder::Toggle"
+    },
+    "context": "EmptyPane || SharedScreen"
+  },
+  // Visual mode. `space a <key>` sends the selection to an inline assist with a
+  // canned prompt; each prompt is the binding's own documentation.
+  {
+    "bindings": {
+      "g c": "editor::ToggleComments",
+      "space a d": [
+        "assistant::InlineAssist",
+        {
+          "prompt": "Add concise inline documentation comments to the selected code without changing logic."
+        }
+      ],
+      "space a e": [
+        "assistant::InlineAssist",
+        {
+          "prompt": "Explain the selected code. Cover purpose, control flow, and non-obvious behavior."
+        }
+      ],
+      "space a f": [
+        "assistant::InlineAssist",
+        {
+          "prompt": "Fix bugs and issues in the selected code. Identify root causes, not just symptoms."
+        }
+      ],
+      "space a k": [
+        "assistant::InlineAssist",
+        {
+          "prompt": "Summarize the selected code. One-paragraph summary plus key takeaways."
+        }
+      ],
+      "space a r": [
+        "assistant::InlineAssist",
+        {
+          "prompt": "Refactor the selected code for clarity and maintainability without changing external behavior. Extract functions, simplify conditions, remove duplication."
+        }
+      ],
+      "space a t": [
+        "assistant::InlineAssist",
+        {
+          "prompt": "Generate focused unit tests for the selected code. Use the project's test framework and conventions. Output with arrange/act/assert sections."
+        }
+      ],
+      // Mirrors sidekick.nvim's <leader>av: focus the panel, carry the selection.
+      "space a v": ["action::Sequence", ["agent::ToggleFocus", "agent::AddSelectionToThread"]]
+    },
+    "context": "Editor && vim_mode == visual && !VimWaiting && !menu"
+  },
+  // Escape from insert without reaching for Esc.
+  {
+    "bindings": {
+      "j j": "vim::NormalBefore",
+      "j k": "vim::NormalBefore"
+    },
+    "context": "Editor && vim_mode == insert && !menu"
+  },
+  // Pending `c` operator: cc changes the line, cr renames, ca opens code actions.
+  // `r` and `a` are Zed additions; `c` is vim's own.
+  {
+    "bindings": {
+      "a": "editor::ToggleCodeActions",
+      "c": "vim::CurrentLine",
+      "r": "editor::Rename"
+    },
+    "context": "Editor && vim_operator == c"
+  },
+  // Available anywhere in the workspace, including non-editor panes.
+  {
+    "bindings": {
+      "cmd-b": "workspace::ToggleRightDock",
+      "ctrl-\\": "terminal_panel::ToggleFocus"
+    },
+    "context": "Workspace"
+  },
+  // Zed binds cmd-, to zed::OpenSettings (the UI) in context "!SettingsWindow",
+  // and to settings_editor::OpenCurrentFile inside "SettingsWindow" — which is
+  // why pressing it twice lands on the JSON. Overriding requires matching that
+  // exact context; a broader "Workspace" binding loses to it.
+  // Zed also ships cmd-alt-, for the file, contextless.
+  {
+    "bindings": {
+      "cmd-,": "zed::OpenSettingsFile"
+    },
+    "context": "!SettingsWindow"
+  },
+  // Pane navigation stays consistent inside the terminal.
+  {
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    },
+    "context": "Terminal"
+  },
+  // Project panel, netrw-style. Single letters act on the selected entry.
+  {
+    "bindings": {
+      "A": "project_panel::NewDirectory",
+      "a": "project_panel::NewFile",
+      "c": "project_panel::Copy",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "d": "project_panel::Delete",
+      "p": "project_panel::Paste",
+      // The panel is docked right, so closing it means toggling that dock.
+      "q": "workspace::ToggleRightDock",
+      "r": "project_panel::Rename",
+      "space e": "workspace::ToggleRightDock",
+      "x": "project_panel::Cut"
+    },
+    "context": "ProjectPanel && not_editing"
+  },
+  // Vim's ctrl-w window prefix, extended to Zed's docks.
+  {
+    "bindings": {
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w j": "workspace::ActivatePaneDown",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w l": "workspace::ActivatePaneRight"
+    },
+    "context": "Dock"
+  },
+  // Run the task nearest the cursor without stealing focus.
+  {
+    "bindings": {
+      "space r t": ["editor::SpawnNearestTask", { "reveal": "no_focus" }]
+    },
+    "context": "EmptyPane || SharedScreen || vim_mode == normal"
+  },
+  // Sneak motion — two-character jump, replacing vim's substitute on s/S.
+  // LazyVim does the same with flash.nvim, so this matches expectations.
+  // https://github.com/zed-industries/zed/pull/22793
+  {
+    "bindings": {
+      "S": ["vim::PushSneakBackward", {}],
+      "s": ["vim::PushSneak", {}]
+    },
+    "context": "vim_mode == normal || vim_mode == visual"
+  },
+  // Which-key support. https://github.com/zed-industries/zed/pull/43618
+  {
+    "bindings": {
+      // Freeing bare space (default vim::WrappingRight) is what lets it be a leader.
+      "space": null,
+      "space f f": ["task::Spawn", { "task_name": "fff-gpui: Files" }],
+      "space f g": ["task::Spawn", { "task_name": "fff-gpui: Grep" }]
+    },
+    "context": "(VimControl && !menu)"
+  }
+  // Subword motion, disabled — it interacts badly with `ciw`.
+  // {
+  //   "context": "VimControl && !menu",
+  //   "bindings": {
+  //     "w": "vim::NextSubwordStart",
+  //     "b": "vim::PreviousSubwordStart",
+  //     "e": "vim::NextSubwordEnd",
+  //     "g e": "vim::PreviousSubwordEnd"
+  //   }
+  // }
+]

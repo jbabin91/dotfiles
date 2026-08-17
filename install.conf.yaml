@@ -54,3 +54,9 @@
     ~/.config/btop: config/btop
     # Neovim (LazyVim)
     ~/.config/nvim: config/nvim
+    # fff-gpui
+    ~/.config/fff-gpui/config.toml: config/fff-gpui/config.toml
+    # Zed - config files only; conversations/embeddings/themes stay local
+    ~/.config/zed/settings.json: config/zed/settings.json
+    ~/.config/zed/keymap.json: config/zed/keymap.json
+    ~/.config/zed/tasks.json: config/zed/tasks.json
