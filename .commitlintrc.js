@@ -1,4 +1,17 @@
+import { readdirSync } from 'node:fs';
 import { defineConfig } from 'cz-git';
+
+// Every directory under config/ is a scope, so adding a tool never needs an
+// edit here. Scopes outside config/ live in general/ or apply repo-wide.
+const scopes = [
+  ...readdirSync(new URL('config', import.meta.url), { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name),
+  'git',
+  'brew',
+  'cspell',
+  'deps',
+].sort();
 
 export default defineConfig({
   extends: ['@commitlint/config-conventional'],
@@ -9,23 +22,7 @@ export default defineConfig({
     },
     allowCustomScopes: false,
     allowEmptyScopes: true,
-    scopes: [
-      'zsh',
-      'git',
-      'brew',
-      'ghostty',
-      'kitty',
-      'starship',
-      'karabiner',
-      'mise',
-      'nvim',
-      'bat',
-      'btop',
-      'tmux',
-      'fastfetch',
-      'cspell',
-      'deps',
-    ],
+    scopes,
   },
   rules: {
     'header-max-length': [2, 'always', 200],

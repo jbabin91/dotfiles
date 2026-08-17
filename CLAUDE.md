@@ -19,7 +19,11 @@ pnpm run lint:md:fix       # Auto-fix markdown issues
 
 ## Commit Conventions
 
-Commits use [Conventional Commits](https://www.conventionalcommits.org/) enforced by commitlint. Allowed scopes: `zsh`, `git`, `brew`, `ghostty`, `kitty`, `starship`, `karabiner`, `mise`, `nvim`, `bat`, `tmux`, `fastfetch`, `cspell`, `deps`. Custom scopes are not allowed; empty scopes are fine.
+Commits use [Conventional Commits](https://www.conventionalcommits.org/), enforced by commitlint.
+
+Scopes are derived in `.commitlintrc.js` from the directory names under `config/`, plus `git`, `brew`, `cspell`, and `deps`. Adding a tool under `config/` makes its scope available with no config edit.
+
+That list drives the `cz-git` prompt, which rejects scopes outside it. Commitlint itself has no `scope-enum` rule, so a hand-written `git commit -m` accepts any scope. Empty scopes are fine either way.
 
 ## Architecture
 
