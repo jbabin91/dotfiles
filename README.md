@@ -8,7 +8,7 @@ Jace Babin's dotfiles, managed with [Dotbot](https://github.com/anishathalye/dot
 - **Zsh** with [Antidote](https://getantidote.github.io/) plugin manager
 - **[Starship](https://starship.rs/)** prompt
 - **[Ghostty](https://ghostty.org/)** terminal (with [Kitty](https://sw.kovidgoyal.net/kitty/) as an alternative)
-- **[mise](https://mise.jdx.dev/)** for tool version management (uv, .NET)
+- **[mise](https://mise.jdx.dev/)** for tool version management (Node, Rust, .NET)
 - **[Karabiner-Elements](https://karabiner-elements.pqrs.org/)** keyboard customization
 - **[Homebrew](https://brew.sh/)** package management via Brewfile
 - **[Lefthook](https://github.com/evilmartians/lefthook)** git hooks with Prettier, Shellcheck, and markdownlint
@@ -69,7 +69,7 @@ exec zsh
 │   ├── btop/           # btop system monitor
 │   ├── karabiner/      # Keyboard customization (copy-synced)
 │   ├── kitty/          # Kitty terminal
-│   ├── mise/           # Tool version manager (uv, dotnet)
+│   ├── mise/           # Tool version manager (node, rust, dotnet)
 │   ├── nvim/           # Neovim config (LazyVim)
 │   ├── starship/       # Starship prompt
 │   └── zsh/            # Zsh shell config + Antidote plugins
@@ -91,11 +91,13 @@ the latest version in either direction.
 
 ## Version Management
 
-All tool versions are managed through [mise](https://mise.jdx.dev/):
+Tools are installed by Homebrew where possible; mise covers the rest. Priority is
+`brew > mise > pnpm | cargo | uv`.
 
-- **Python** — [uv](https://github.com/astral-sh/uv) with automatic version switching
+- **Python** — [uv](https://github.com/astral-sh/uv), installed via Homebrew, with automatic version switching
 - **Node.js** — managed via mise; `.nvmrc` / `.node-version` auto-switching enabled via `idiomatic_version_file_enable_tools`
 - **.NET** — SDK managed via mise
+- **Rust** — toolchain via mise, along with any crate that has no Homebrew formula (`cargo:` backend)
 
 ## Development
 
