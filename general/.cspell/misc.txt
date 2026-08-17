@@ -65,6 +65,7 @@ CCPA
 ccstatusline
 ccstripe
 CDPATH
+cghid
 Cgreen
 changedfiles
 changeme
@@ -187,6 +188,7 @@ Gephi
 getbrevo
 GGUF
 ghostty
+GHSA
 ghuntley
 GIDP
 gitcl
@@ -243,6 +245,7 @@ kcuu
 Keon
 Kiro
 kmeans
+Knope
 Koality
 koalitygame
 Kokoro
@@ -262,6 +265,8 @@ linearization
 llmfit
 llms
 llmstxt
+Loanee
+loanees
 LOCOMO
 luarc
 Lxqs
@@ -306,6 +311,7 @@ nfhfn
 njsproj
 NLSC
 Nombre
+noout
 nowarn
 nspanel
 ntfy
@@ -330,6 +336,7 @@ ovidiueftimie
 OWUI
 oxfmt
 Paginatable
+pbxproj
 pdfs
 peduarte
 pgvector
@@ -384,6 +391,7 @@ rofi
 romkatv
 ROTY
 RRULE
+rtfd
 rubocop
 rumdl
 rusqlite
@@ -412,6 +420,7 @@ shortlog
 signingkey
 signoz
 Sinthros
+Siri
 Sirianni
 Sixel
 skeuomorphism
@@ -437,6 +446,7 @@ supabase
 svgs
 svix
 Swapi
+swiftpm
 swiftui
 Syncer
 tahun
@@ -475,8 +485,10 @@ txns
 uastc
 Ucwn
 UDFA
+unbanded
 undecl
 undrafted
+unemphasized
 Unfakeable
 unfetched
 unhashed
@@ -521,7 +533,11 @@ winit
 Witsy
 wofi
 worktree
+WWDR
 Xbnm
+xcassets
+xcuserdata
+xcuserstate
 Xcxc
 xenova
 xfuncname
@@ -547,6 +563,7 @@ zfunc
 ZFZX
 zimfw
 zimrc
+zizmor
 zmodload
 zwily
 Zwlr
