@@ -17,6 +17,9 @@ node_modules/
 *.tmp
 *.log
 
+# ctags output
+/tags
+
 # review-cycle (local review state)
 .claude/.review-mark
 .claude/.no-review-gate
