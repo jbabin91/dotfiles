@@ -26,4 +26,3 @@ config/karabiner/karabiner.json
 
 # Brewfile (has custom format)
 Brewfile
-Brewfile.lock.json

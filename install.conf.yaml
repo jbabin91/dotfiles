@@ -4,6 +4,11 @@
       create: true
       relink: true
       force: true
+    shell:
+      # Without these, dotbot echoes the whole command and swallows its output.
+      quiet: true
+      stdout: true
+      stderr: true
 
 - clean:
     ~/:
@@ -24,7 +29,6 @@
     ~/.editorconfig: general/.editorconfig
     ~/.hushlogin: general/.hushlogin
     ~/Brewfile: general/Brewfile
-    ~/Brewfile.lock.json: general/Brewfile.lock.json
     ~/.cspell.json: general/.cspell.json
     ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
     ~/.cspell/misc.txt: general/.cspell/misc.txt
@@ -60,3 +64,14 @@
     ~/.config/zed/settings.json: config/zed/settings.json
     ~/.config/zed/keymap.json: config/zed/keymap.json
     ~/.config/zed/tasks.json: config/zed/tasks.json
+
+# Placed after link: so a network failure here cannot stop the symlinks. brew
+# runs first because mise itself comes from the Brewfile. The shell defaults
+# enable stdout, so it is switched off per entry to suppress brew's ~170 lines.
+- shell:
+    - command: brew bundle --file=general/Brewfile --no-upgrade
+      description: Installing Homebrew packages
+      stdout: false
+    - command: mise install
+      description: Installing mise tools
+      stdout: false
