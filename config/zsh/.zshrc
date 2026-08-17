@@ -100,9 +100,6 @@ eval "$(zoxide init zsh)"
 # Aliases
 # -----------------------------------------------------------------------------
 
-# root privileges
-alias doas="doas --"
-
 [[ "$TERM" == "xterm-kitty" ]] && alias ssh="TERM=xterm-256color ssh"
 
 # navigation
@@ -112,7 +109,7 @@ alias .3="cd ../../.."
 alias .4="cd ../../../.."
 alias .5="cd ../../../../.."
 
-# vim and emacs
+# vim
 alias vim="nvim"
 alias v="nvim"
 function e() {
@@ -124,12 +121,9 @@ function ec() {
 function ie() {
   open "${1:-.}" -a "Visual Studio Code - Insiders"
 }
-alias em="/usr/bin/emacs -nw"
-alias emacs="emacsclient -c -a 'emacs'"
-alias doomsync="~/.emacs.d/bin/doom sync"
-alias doomdoctor="~/.emacs.d/bin/doom doctor"
-alias doomupgrade="~/.emacs.d/bin/doom upgrade"
-alias doompurge="~/.emacs.d/bin/doom purge"
+
+# opencode: the @next channel ships its bin as opencode2
+alias opencode="opencode2"
 
 # Brew
 alias bu="brew update"
@@ -138,11 +132,11 @@ alias bc="brew cleanup"
 alias ud="brew update && brew upgrade && brew cleanup"
 
 # eza
-alias l="eza -al --color=always --group-directories-first --git --icons"
-alias ls="eza -al --color=always --group-directories-first --git --icons"
-alias la="eza -a --color=always --group-directories-first --git --icons"
-alias ll="eza -l --color=always --group-directories-first --git --icons"
-alias t="eza -aT --color=always --group-directories-first --git --icons"
+alias l="eza -al --color=auto --group-directories-first --git --icons=auto"
+alias ls="eza -al --color=auto --group-directories-first --git --icons=auto"
+alias la="eza -a --color=auto --group-directories-first --git --icons=auto"
+alias ll="eza -l --color=auto --group-directories-first --git --icons=auto"
+alias t="eza -aT --color=auto --group-directories-first --git --icons=auto"
 alias l.='eza -a | egrep "^\."'
 
 # Colorize grep output
@@ -162,14 +156,6 @@ alias path='echo -e ${PATH//:/\\n}'
 # alias pi="ping -Anc 5 1.1.1.1"
 alias reload!='exec "$SHELL" -l'
 alias zr='exec zsh'
-alias srm="srm -v"
-
-# adding flag
-alias free='free -m'
-alias lynx='lynx -cfg=~/.lynx/lynx.cfg -lss=~/.lynx/lynx.lss -vikeys'
-alias vifm='./.config/vifm/scripts/vifmrun'
-alias ncmpcpp='ncmpcpp ncmpcpp_directory=$HOME/.config/ncmpcpp/'
-alias mocp='mocp -M "$XDG_CONFIG_HOME"/moc -O MOCDir="$XDG_CONFIG_HOME"/moc'
 
 # ps
 alias psa="ps auxf"
@@ -219,11 +205,7 @@ alias .zsh="cd ~/.dotfiles/config/zsh && nvim .zshrc"
 # Git/Work directories
 alias .g="z jbabin91"
 
-# Minikube
-alias kubectl="minikube kubectl --"
-
 # PNPM
-alias pn="pnpm"
 alias px="pnpx"
 
 # Git - checkout git branch/tag with fzf
@@ -308,9 +290,6 @@ fi
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/jacebabin/.lmstudio/bin"
 # End of LM Studio CLI section
-
-# opencode
-export PATH=/Users/jacebabin/.opencode/bin:$PATH
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

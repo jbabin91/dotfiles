@@ -14,6 +14,8 @@ export CLICOLOR=1
 # -----------------------------------------------------------------------------
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export HOMEBREW_NO_ENV_HINTS=1
+# Ask mode is on by default in current Homebrew; this turns it back off.
+export HOMEBREW_NO_ASK=1
 # Re-prepend after brew shellenv; path_helper can push /usr/bin ahead of Homebrew
 case "$PATH" in
   /opt/homebrew/bin:*) ;;
