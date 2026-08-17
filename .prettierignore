@@ -16,6 +16,9 @@ build/
 # Neovim (managed by LazyVim)
 config/nvim/
 
+# Karabiner (the app rewrites this file in its own format on every reload)
+config/karabiner/karabiner.json
+
 # Config files that shouldn't be formatted
 .zshrc
 .zshenv
