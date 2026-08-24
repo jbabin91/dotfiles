@@ -10,16 +10,11 @@ rust = "stable"
 # `cargo install --path`, making the working tree the source of truth.
 "cargo:cargo-interactive-update" = "0.6.2"
 
-"npm:@github/copilot" = "1.0.79"
-"npm:@oakoss/account-switch" = "0.5.1"
 "npm:@obsfx/trekker" = "1.11.0"
 "npm:@opencode-ai/cli" = "0.0.0-beta-17498"
 "npm:@tanstack/intent" = "0.3.6"
 "npm:czg" = "1.13.1"
-"npm:markdownlint-cli2" = "0.23.2"
-"npm:prettier" = "3.9.6"
-"npm:tamux" = "0.7.1"
-"npm:vibe-rules" = "0.3.91"
+"cargo:knope" = "0.22.4"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
