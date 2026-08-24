@@ -12,29 +12,35 @@ export CLICOLOR=1
 # -----------------------------------------------------------------------------
 # Homebrew (sets PREFIX, CELLAR, REPOSITORY, fpath, MANPATH, INFOPATH, PATH)
 # -----------------------------------------------------------------------------
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export HOMEBREW_NO_ENV_HINTS=1
-# Ask mode is on by default in current Homebrew; this turns it back off.
-export HOMEBREW_NO_ASK=1
-# Re-prepend after brew shellenv; path_helper can push /usr/bin ahead of Homebrew
-case "$PATH" in
-  /opt/homebrew/bin:*) ;;
-  *) export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" ;;
-esac
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  export HOMEBREW_NO_ENV_HINTS=1
+  # Ask mode is on by default in current Homebrew; this turns it back off.
+  export HOMEBREW_NO_ASK=1
+  # Re-prepend after brew shellenv; path_helper can push /usr/bin ahead of Homebrew
+  case "$PATH" in
+    /opt/homebrew/bin:*) ;;
+    *) export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" ;;
+  esac
+fi
 
 # -----------------------------------------------------------------------------
 # Development Tool PATHs
 # -----------------------------------------------------------------------------
 
 # pnpm — $PNPM_HOME/bin: global package shims; $PNPM_HOME: pnpm runtime shims (standalone installer)
-export PNPM_HOME="$HOME/Library/pnpm"
+if [[ "$OSTYPE" == darwin* ]]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+else
+  export PNPM_HOME="$HOME/.local/share/pnpm"
+fi
 case ":$PATH:" in
   *":$PNPM_HOME/bin:"*) ;;
   *) export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH" ;;
 esac
 
 # mise - manages node and other tools; --shims mode keeps tools resolvable in non-interactive shells (git hooks, GUI apps)
-eval "$(mise activate zsh --shims)"
+command -v mise >/dev/null && eval "$(mise activate zsh --shims)"
 
 # Cargo/Rust binaries
 case ":$PATH:" in
@@ -58,11 +64,13 @@ esac
 # -----------------------------------------------------------------------------
 # Android SDK
 # -----------------------------------------------------------------------------
-export ANDROID_HOME=$HOME/Library/Android/sdk
-case ":$PATH:" in
-  *":$ANDROID_HOME/cmdline-tools/10.0/bin:"*) ;;
-  *) export PATH="$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin" ;;
-esac
+if [[ -d "$HOME/Library/Android/sdk" ]]; then
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+  case ":$PATH:" in
+    *":$ANDROID_HOME/cmdline-tools/10.0/bin:"*) ;;
+    *) export PATH="$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin" ;;
+  esac
+fi
 
 # -----------------------------------------------------------------------------
 # Core Environment Variables

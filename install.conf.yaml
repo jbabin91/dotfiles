@@ -43,10 +43,7 @@
     ~/.config/kitty: config/kitty
     # Karabiner - managed via shell sync (app replaces symlinks)
     # Starship — migrated to chezmoi (chezmoi/dot_config/starship.toml)
-    # ZSH
-    ~/.zshenv: config/zsh/.zshenv
-    ~/.zshrc: config/zsh/.zshrc
-    ~/.config/zsh/.zsh_plugins.txt: config/zsh/.zsh_plugins.txt
+    # ZSH — migrated to chezmoi (chezmoi/dot_zshenv, dot_zshrc, dot_config/zsh)
     # mise (tool version manager)
     ~/.config/mise: config/mise
     # Fastfetch
