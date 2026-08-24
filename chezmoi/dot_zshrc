@@ -105,6 +105,8 @@ eval "$(zoxide init zsh)"
 # Omarchy shell integration (aliases/functions/envs only; tool inits are ours)
 # -----------------------------------------------------------------------------
 if [[ -d /usr/share/omarchy-zsh/shell ]]; then
+  # covers non-login shells that miss /etc/profile.d (e.g. ssh <host> zsh)
+  [[ -f /usr/share/omarchy/default/bash/env-bootstrap ]] && source /usr/share/omarchy/default/bash/env-bootstrap
   source /usr/share/omarchy-zsh/shell/envs
   source /usr/share/omarchy-zsh/shell/aliases
   source /usr/share/omarchy-zsh/shell/functions
