@@ -102,6 +102,15 @@ eval "$(mise activate zsh)"
 eval "$(zoxide init zsh)"
 
 # -----------------------------------------------------------------------------
+# Omarchy shell integration (aliases/functions/envs only; tool inits are ours)
+# -----------------------------------------------------------------------------
+if [[ -d /usr/share/omarchy-zsh/shell ]]; then
+  source /usr/share/omarchy-zsh/shell/envs
+  source /usr/share/omarchy-zsh/shell/aliases
+  source /usr/share/omarchy-zsh/shell/functions
+fi
+
+# -----------------------------------------------------------------------------
 # Aliases
 # -----------------------------------------------------------------------------
 
