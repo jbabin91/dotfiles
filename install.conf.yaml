@@ -42,8 +42,7 @@
     # Kitty
     ~/.config/kitty: config/kitty
     # Karabiner - managed via shell sync (app replaces symlinks)
-    # Starship
-    ~/.config/starship.toml: config/starship/config.toml
+    # Starship — migrated to chezmoi (chezmoi/dot_config/starship.toml)
     # ZSH
     ~/.zshenv: config/zsh/.zshenv
     ~/.zshrc: config/zsh/.zshrc
