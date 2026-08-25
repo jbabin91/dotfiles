@@ -1,0 +1,21 @@
+# Named windows act as workspaces within one session: switch with prefix + 1/2,
+# or prefix + n/p. Windows inherit the session's path unless given their own,
+# and are reusable across sessions by name.
+#
+# The agent runs as a [[window]] startup_script, not the session's
+# startup_command: sesh runs startup_command detached rather than as the
+# window's foreground process, so an interactive TUI launched there gets no TTY
+# and exits immediately. The cost is that tmux's own first window remains as an
+# unused shell at index 1.
+
+[[session]]
+name = "oakum"
+path = "~/.code/github/oakoss/oakum"
+windows = ["agents", "dev"]
+
+[[window]]
+name = "agents"
+startup_script = "claude"
+
+[[window]]
+name = "dev"
