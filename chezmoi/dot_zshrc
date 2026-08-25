@@ -316,5 +316,17 @@ fi
 # mise on Linux is package-managed; its upstream-release banner is not actionable there
 [[ "$OSTYPE" == linux* ]] && export MISE_HIDE_UPDATE_WARNING=1
 
+# Bare `tmux` attaches to a single named session instead of creating a new
+# auto-numbered one each time (0, 13, 14, ...). Arguments pass through
+# untouched, so `tmux ls`, `tmux kill-server` etc. behave normally. Per-project
+# sessions still come from sesh (prefix + s).
+tmux() {
+  if (( $# == 0 )); then
+    command tmux new-session -A -s main
+  else
+    command tmux "$@"
+  fi
+}
+
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

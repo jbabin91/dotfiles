@@ -78,3 +78,17 @@ fi
 export LC_ALL="en_US.UTF-8"
 export EDITOR=nvim
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
+
+# -----------------------------------------------------------------------------
+# kiro-cli
+# -----------------------------------------------------------------------------
+# kiro-cli's pre-init exec-wraps every interactive zsh in its own pty
+# (kiro-cli-term), which hides the real foreground process from tmux: window
+# names cannot follow the running command and tmux-resurrect cannot restore
+# programs. Upstream has no supported opt-out (kirodotdev/Kiro#6037, #7169).
+#
+# The pre-init only wraps when Q_TERM is empty, or when Q_TERM_TMUX is empty
+# inside tmux; setting both skips it. Inline autosuggestions are unaffected —
+# they live in the post-init as a self-contained zsh-autosuggestions fork with
+# its own zpty. What is given up is kiro's OSC session tracking.
+export PROCESS_LAUNCHED_BY_Q=1
