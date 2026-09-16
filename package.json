@@ -12,10 +12,11 @@
   "scripts": {
     "format": "prettier --write '**/*.{json,yml,yaml,md}'",
     "format:check": "prettier --check '**/*.{json,yml,yaml,md}'",
-    "lint": "pnpm run format:check && pnpm run lint:shell && pnpm run lint:md",
+    "lint": "pnpm run format:check && pnpm run lint:shell && pnpm run lint:zsh && pnpm run lint:md",
     "lint:md": "markdownlint-cli2 '**/*.md'",
     "lint:md:fix": "markdownlint-cli2 --fix '**/*.md'",
-    "lint:shell": "shellcheck config/**/*.sh",
+    "lint:shell": "git ls-files -z '*.sh' install | xargs -0 -r shellcheck",
+    "lint:zsh": "git ls-files -z 'chezmoi/dot_z*' | xargs -0 -r -n1 zsh -n",
     "prepare": "lefthook install"
   },
   "devDependencies": {

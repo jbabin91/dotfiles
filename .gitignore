@@ -23,3 +23,4 @@ node_modules/
 # review-cycle (local review state)
 .claude/.review-mark
 .claude/.no-review-gate
+.claude/review-cycle/

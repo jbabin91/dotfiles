@@ -8,10 +8,17 @@ output:
 pre-commit:
   parallel: true
   commands:
-    # Lint shell scripts
+    # Lint shell scripts. `install` has no extension, so it needs naming.
     shellcheck:
-      glob: '*.sh'
+      glob: '{*.sh,install}'
       run: shellcheck {staged_files}
+    # shellcheck has no zsh mode, so these get a syntax check instead. zsh
+    # abandons the rest of a file after a parse error, silently dropping the
+    # PATH and tool setup below it. One file per call: `zsh -n a b` parses only
+    # a, passing b to it as an argument.
+    zsh-syntax:
+      glob: 'chezmoi/dot_z*'
+      run: for f in {staged_files}; do zsh -n "$f" || exit 1; done
     # Lint Markdown files
     lint-md:
       glob: '*.md'
@@ -19,7 +26,7 @@ pre-commit:
       stage_fixed: true
     # Format JSON, YAML, and Markdown files
     prettier:
-      glob: '*.{ts,tsx,js,jsx,cjs,mjs,json,md,mdx}'
+      glob: '*.{ts,tsx,js,jsx,cjs,mjs,json,yaml,yml,md,mdx}'
       run: pnpm exec prettier -uwl {staged_files}
       stage_fixed: true
 
