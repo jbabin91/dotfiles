@@ -20,6 +20,11 @@ confirm-close-surface = false
 link-url = true
 scrollback-limit = 75000
 
+# Where a window starts when it has no focused window to inherit from. The default,
+# `inherit`, takes Ghostty's own working directory — and launchd starts Ghostty with `/`,
+# so those windows opened at the filesystem root.
+working-directory = home
+
 # =============================================================================
 # Shell Integration
 # =============================================================================

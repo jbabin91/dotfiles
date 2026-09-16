@@ -46,6 +46,7 @@ Bezeled
 bharathvaj
 bidir
 Bleasel
+borisachen
 bradlc
 Brevo
 Brooooooklyn
@@ -166,6 +167,7 @@ excludesfile
 execa
 Falk
 Fastly
+fftiers
 fgrep
 figd
 FIIO
@@ -382,6 +384,7 @@ reflog
 regen
 Registrator
 reimagining
+releaserc
 Reprioritized
 rerere
 resps
@@ -512,12 +515,16 @@ unhydrated
 unlayered
 unlinted
 unmaintenance
+unmodelled
 unmoderated
+unpriceable
 unpushed
 UNREDACTED
 unreviewed
 unsourced
 unstaging
+unstarted
+unstringifiable
 Untacked
 untarring
 unzooms
@@ -550,6 +557,7 @@ winit
 Witsy
 wofi
 worktree
+WRRB
 WWDR
 Xbnm
 xcassets
