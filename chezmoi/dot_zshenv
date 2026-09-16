@@ -39,8 +39,30 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH" ;;
 esac
 
+# User binaries (uv-installed tools, custom scripts, mise itself) — must precede
+# the mise activation below, which is where `command -v mise` finds the binary
+# now that mise installs from https://mise.run instead of Homebrew. The cargo,
+# bun and shim entries prepended after this one therefore outrank it.
+case ":$PATH:" in
+  *":$HOME/.local/bin:"*) ;;
+  *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+
 # mise - manages node and other tools; --shims mode keeps tools resolvable in non-interactive shells (git hooks, GUI apps)
-command -v mise >/dev/null && eval "$(mise activate zsh --shims)"
+#
+# The result is checked against PATH rather than against activate's output or
+# status: activate prints nothing once the shims dir is already there, and a
+# truncated mise binary also prints nothing while exiting 0. Only PATH tells
+# those apart, and an unnoticed failure silently drops every pinned tool to its
+# system version. stderr stays out of the capture because eval runs whatever it
+# holds — one mise warning would otherwise execute as shell code in every shell.
+if command -v mise >/dev/null; then
+  _mise_shims=$(mise activate zsh --shims 2>/dev/null) && eval "$_mise_shims"
+  if [[ ":$PATH:" != *":$HOME/.local/share/mise/shims:"* ]]; then
+    print -u2 "zshenv: mise did not activate, tools resolve to system versions. Diagnose with: mise activate zsh --shims"
+  fi
+  unset _mise_shims
+fi
 
 # Cargo/Rust binaries
 case ":$PATH:" in
@@ -53,12 +75,6 @@ export BUN_INSTALL="$HOME/.bun"
 case ":$PATH:" in
   *":$BUN_INSTALL/bin:"*) ;;
   *) export PATH="$BUN_INSTALL/bin:$PATH" ;;
-esac
-
-# User binaries (uv-installed tools, custom scripts)
-case ":$PATH:" in
-  *":$HOME/.local/bin:"*) ;;
-  *) export PATH="$HOME/.local/bin:$PATH" ;;
 esac
 
 # -----------------------------------------------------------------------------

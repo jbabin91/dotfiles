@@ -91,8 +91,18 @@ the latest version in either direction.
 
 ## Version Management
 
-Tools are installed by Homebrew where possible; mise covers the rest. Priority is
-`brew > mise > pnpm | cargo | uv`.
+Tools are installed by Homebrew where possible; mise covers the rest, in the
+order `brew > mise > pnpm | cargo | uv`. That order picks the installer, not the
+winner on PATH: eight names exist in both `/opt/homebrew/bin` and mise's shims —
+`node`, `npm` and `npx` among them — and `.zshenv` puts the shims first, so the
+mise-pinned version is the one that runs.
+
+mise itself is the exception: it installs from <https://mise.run> into
+`~/.local/bin`, not from the Brewfile, so it updates itself (`auto_update` in
+`config/mise/config.toml`) instead of waiting on `brew upgrade`. `./install`
+bootstraps it, so it needs no manual install — but a machine that carries a
+Homebrew mise from before this change wants `brew uninstall mise`, since
+`brew bundle` leaves an already-installed formula in place.
 
 - **Python** — [uv](https://github.com/astral-sh/uv), installed via Homebrew, with automatic version switching
 - **Node.js** — managed via mise; `.nvmrc` / `.node-version` auto-switching enabled via `idiomatic_version_file_enable_tools`

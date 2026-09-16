@@ -2,7 +2,7 @@
 dotnet = "10.0.400"
 gitleaks = "8.30.1"
 node = "lts"
-pnpm = "11.22.0"
+pnpm = "11.24.0"
 rust = "stable"
 
 # No Homebrew formula; declared here (not Brewfile's `cargo`) so mise resolves the
@@ -12,9 +12,10 @@ rust = "stable"
 
 "npm:@obsfx/trekker" = "1.11.0"
 "npm:@opencode-ai/cli" = "0.0.0-beta-17498"
-"npm:@tanstack/intent" = "0.3.6"
-"npm:czg" = "1.13.1"
-"cargo:knope" = "0.22.4"
+"npm:@tanstack/intent" = "0.3.7"
+"npm:czg" = "1.14.0"
+"cargo:knope" = "0.23.0"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
+auto_update = true
