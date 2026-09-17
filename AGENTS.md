@@ -15,7 +15,47 @@ pnpm run lint              # Run all linting (format check + shellcheck + markdo
 pnpm run lint:shell        # Lint shell scripts only
 pnpm run lint:md           # Lint markdown only
 pnpm run lint:md:fix       # Auto-fix markdown issues
+pnpm test                  # Run the test suite once
+pnpm run test:watch        # Re-run on change
+pnpm run typecheck         # tsc --noEmit over tests/
 ```
+
+## Tests
+
+Vitest, in TypeScript, under `tests/`. The subjects are shell, but every case
+spawns a process and asserts on its exit status and stderr, so nothing is lost
+by driving them from JS -- and the fixtures stop being shell, which is where
+they kept breaking.
+
+**Assert stderr, not just the exit status.** Mutation testing measured nine of
+the thirteen `install` guards as message-only: deleting them leaves the exit code
+unchanged, so a status-only suite stays green against a build with the guard
+removed.
+
+**The child's environment is built, never inherited.** `fixture.run()` passes an
+explicit `env`, the equivalent of `env -i`. Inheriting it leaks the real `$HOME`,
+the real chezmoi on PATH and mise's shims, and the result stops meaning
+anything.
+
+**Cases that need a tool skip rather than pass.** `realChezmoi()` and the zsh
+probe gate their suites with `skipIf`, so a machine without them reports
+skipped. An early `return` would report green while asserting nothing --
+`pnpm test` without chezmoi on PATH shows 13 skipped.
+
+`vitest.config.ts` carries three deliberate settings. `pool: 'forks'` is
+load-bearing -- the threads pool restricts the process APIs these tests are
+built on. `expect.requireAssertions` fails any test that asserts nothing, which
+is how the `skipIf` mistake above would have been caught. `chaiConfig`
+disables diff truncation, because every assertion here is on a long stderr
+string and the default hides the differing part.
+
+A failing test keeps its fixture and prints `fixture kept for inspection:
+<path>`, holding the tree, the stubs and whatever the run left in `$HOME`.
+Detection uses `task.result`, not `onTestFailed` -- measured, the latter does
+not fire from the fixture's scope.
+
+Point `DOTFILES_ZSHENV` at a copy to mutation-test `dot_zshenv` without touching
+the real file.
 
 ## Task tracking
 

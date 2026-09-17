@@ -26,3 +26,8 @@ config/karabiner/karabiner.json
 
 # Brewfile (has custom format)
 Brewfile
+
+# Beads (bd generates these and regenerates them unformatted; .beads/backup/
+# is runtime state that only .beads/.gitignore excludes, which prettier does
+# not read)
+.beads/

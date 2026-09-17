@@ -35,6 +35,12 @@ pre-commit:
       glob: '*.md'
       run: pnpm markdownlint-cli2 --fix {staged_files}
       stage_fixed: true
+    # Workflow YAML is not covered by prettier's syntax checking: actionlint
+    # also validates runs-on labels, context expressions, and shellchecks each
+    # `run:` block. Measured: it catches all four of those.
+    actionlint:
+      glob: '.github/workflows/*.{yml,yaml}'
+      run: actionlint {staged_files}
     # Format JSON, YAML, and Markdown files
     prettier:
       glob: '*.{ts,tsx,js,jsx,cjs,mjs,json,yaml,yml,md,mdx}'

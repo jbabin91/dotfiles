@@ -1,2 +1,8 @@
 allowBuilds:
   lefthook: true
+
+# Supply chain: a compromised publish has to survive a day before it can
+# install here. 1440 minutes.
+minimumReleaseAge: 1440
+overrides:
+  smol-toml@<=1.7.0: ^1.7.1
