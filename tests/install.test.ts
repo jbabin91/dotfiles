@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import {
   chmodSync,
   existsSync,
@@ -59,7 +60,7 @@ describe('preconditions', () => {
     expect(r.status).toBe(0);
     expect(r.stderr).toContain('chezmoi: skipped, arguments scope dotbot only');
     expect(existsSync(join(f.home, '.zshrc'))).toBe(false);
-    // dotbot must actually receive the flag: dropping `"${@}"` from the call
+    // dotbot must receive the flag: dropping `"${@}"` from the call
     // breaks every scoped run the script documents, silently.
     expect(readFileSync(join(f.dir, 'uv-args'), 'utf8').split('\n')).toContain('--help');
   });
@@ -287,12 +288,74 @@ withChezmoi('against a real chezmoi', () => {
       '.gitignore',
       '.config/git/allowed_signers',
       '.config/git/template.txt',
+      '.config/bat/config',
+      '.config/fastfetch/config.jsonc',
+      '.config/fff-gpui/config.toml',
+      '.config/sesh/sesh.toml',
+      '.config/ghostty/config',
+      '.config/ghostty/font/monolisa',
+      // Ghostty names its opacity fragments 70% through 100%; chezmoi has no
+      // attribute prefix for a percent sign, but the name survives a round
+      // trip only if nothing along the way treats it as a format specifier.
+      '.config/ghostty/opacity/95%',
+      '.config/ghostty/font/jetbrains-mono',
+      '.config/ghostty/font/victor',
+      '.config/ghostty/opacity/70%',
+      '.config/ghostty/opacity/75%',
+      '.config/ghostty/opacity/80%',
+      '.config/ghostty/opacity/85%',
+      '.config/ghostty/opacity/90%',
+      '.config/ghostty/opacity/100%',
+      '.config/zsh/.zsh_plugins.txt',
+      '.config/zellij/layouts/default.kdl',
+      '.config/zellij/layouts/claude-orch.kdl',
     ]) {
-      expect(existsSync(join(f.home, rel))).toBe(true);
+      expect(existsSync(join(f.home, rel)), rel).toBe(true);
     }
-    // The size, not just existence: a source that stops being empty deploys a
+    // The size, not only existence: a source that stops being empty deploys a
     // non-empty ~/.hushlogin, which an existence check passes.
     expect(statSync(join(f.home, '.hushlogin')).size).toBe(0);
+  });
+
+  test('deploys every managed file byte-identical to its source', ({ fixture }) => {
+    // Existence proves a path was written, not what landed there. Measured:
+    // a source that renders to different non-empty bytes deploys and passes
+    // every existence assertion above. chezmoi supplies the target-to-source
+    // map, so the attribute prefixes are never re-implemented here.
+    const f = fixture({ useRealChezmoi: true });
+    expect(f.run().status).toBe(0);
+    const listing = spawnSync(
+      CHEZMOI!,
+      [
+        'managed',
+        '--source',
+        join(f.repo, 'home'),
+        '--destination',
+        f.home,
+        '--config',
+        join(f.home, '.config', 'chezmoi', 'chezmoi.toml'),
+        '--include=files',
+        '--path-style=all',
+        '--format=json',
+      ],
+      // Built, not inherited, like every other child here: an unpinned --config
+      // still reads $HOME/.config/chezmoi/chezmoi.toml, so an unparseable one
+      // on the developer's machine fails this test for an unrelated reason.
+      { encoding: 'utf8', env: { HOME: f.home, PATH: `${f.stubDir}:/usr/bin:/bin` } },
+    );
+    expect(listing.status).toBe(0);
+    const managed = JSON.parse(listing.stdout) as Record<
+      string,
+      { absolute: string; sourceAbsolute: string }
+    >;
+    expect(Object.keys(managed).length).toBeGreaterThan(0);
+    // No .tmpl exemption on purpose: nothing here is templated, so this also
+    // pins that, and a future template has to be allowlisted deliberately --
+    // a template being exactly the thing that can change content in transit.
+    const mangled = Object.entries(managed)
+      .filter(([, p]) => !readFileSync(p.absolute).equals(readFileSync(p.sourceAbsolute)))
+      .map(([target]) => target);
+    expect(mangled).toEqual([]);
   });
 
   test('is idempotent across a second run', ({ fixture }) => {

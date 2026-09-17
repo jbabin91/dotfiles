@@ -25,7 +25,14 @@
       ]
 
 - link:
-    # General — editorconfig and hushlogin migrated to chezmoi
+    # Most targets below hold state a tool rewrites -- lazy-lock.json, a theme
+    # the kitten swaps, whatever `mise use` edits, zellij's regeneration on
+    # upgrade -- even where most of the tree is hand-written. The symlink
+    # carries those writes back into the repo for git to see; under chezmoi
+    # they would strand in ~ and fail `chezmoi verify`, which ./install treats
+    # as fatal. tmux stays for another reason: `tpack install` below reads the
+    # deployed ~/.config/tmux/tmux.conf, and dotbot's shell section runs before
+    # chezmoi deploys anything.
     ~/Brewfile: general/Brewfile
     ~/.cspell.json: general/.cspell.json
     ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
@@ -38,35 +45,15 @@
     # Reference docs linked from it. Only docs/: ~/.agents/skills is managed by
     # the skills installer.
     ~/.agents/docs: general/agents/docs
-    # Git — migrated to chezmoi (home/dot_git*, home/dot_config/git/)
-    # Ghostty
-    ~/.config/ghostty: config/ghostty
-    # Kitty
     ~/.config/kitty: config/kitty
     # Karabiner - managed via shell sync (app replaces symlinks)
-    # Starship — migrated to chezmoi (home/dot_config/starship.toml)
-    # ZSH — migrated to chezmoi (home/dot_zshenv, dot_zshrc, dot_config/zsh)
-    # mise (tool version manager)
     ~/.config/mise: config/mise
-    # tmux
     ~/.config/tmux: config/tmux
-    # sesh (tmux session manager)
-    ~/.config/sesh/sesh.toml: config/sesh/sesh.toml
-    # Zellij - config files only; zellij regenerates config.kdl on upgrade and
-    # keeps .bak files and its plugin cache alongside them
-    ~/.config/zellij/config.kdl: config/zellij/config.kdl
-    ~/.config/zellij/layouts/default.kdl: config/zellij/layouts/default.kdl
-    ~/.config/zellij/layouts/claude-orch.kdl: config/zellij/layouts/claude-orch.kdl
-    # Fastfetch
-    ~/.config/fastfetch: config/fastfetch
-    # bat
-    ~/.config/bat/config: config/bat/config
-    # btop
     ~/.config/btop: config/btop
-    # Neovim (LazyVim)
     ~/.config/nvim: config/nvim
-    # fff-gpui
-    ~/.config/fff-gpui/config.toml: config/fff-gpui/config.toml
+    # Zellij regenerates config.kdl on upgrade; the layouts it never touches
+    # are chezmoi-managed under home/dot_config/zellij/
+    ~/.config/zellij/config.kdl: config/zellij/config.kdl
     # Zed - config files only; conversations/embeddings/themes stay local
     ~/.config/zed/settings.json: config/zed/settings.json
     ~/.config/zed/keymap.json: config/zed/keymap.json
