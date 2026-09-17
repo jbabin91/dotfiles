@@ -37,7 +37,7 @@ jobs:
           # reports sh's status, so a failed or truncated download would run a
           # partial installer and still leave the step green.
           curl -fsSL -o get-chezmoi.sh https://get.chezmoi.io
-          sh get-chezmoi.sh -- -b "$HOME/.local/bin"
+          sh get-chezmoi.sh -b "$HOME/.local/bin"
           rm -f get-chezmoi.sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
