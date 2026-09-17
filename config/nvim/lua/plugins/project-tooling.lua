@@ -46,8 +46,19 @@ local function prettier_configured(path)
   end
   local manifests = vim.fs.find("package.json", { path = path, upward = true, limit = math.huge })
   for _, manifest in ipairs(manifests) do
-    local ok, pkg = pcall(vim.json.decode, table.concat(vim.fn.readfile(manifest), "\n"))
-    if ok and type(pkg) == "table" and pkg.prettier ~= nil then
+    -- readfile goes inside the pcall: Lua evaluates arguments first, so an
+    -- unreadable manifest would otherwise throw past a pcall wrapping only the
+    -- decode.
+    local ok, pkg = pcall(function()
+      return vim.json.decode(table.concat(vim.fn.readfile(manifest), "\n"))
+    end)
+    if not ok then
+      vim.notify_once(
+        ("%s is not readable as JSON (%s); treating this repo as not configuring prettier"):format(manifest, pkg),
+        vim.log.levels.WARN,
+        { title = "project-tooling" }
+      )
+    elseif type(pkg) == "table" and pkg.prettier ~= nil then
       return true
     end
   end
@@ -77,25 +88,111 @@ end
 -- fixture, a generated lockfile -- would rewrite it. Each tool is asked
 -- directly whether it owns the path. Memoized: one ~20ms call per file.
 
----@param cmd string[]
----@param path string
-local function run(cmd, path)
-  local res = vim.system(cmd, { cwd = vim.fs.dirname(path), text = true }):wait()
-  return res.stdout or "", res.stderr or ""
+local tool_owner = require("util.tool_owner")
+
+-- Registered defensively: these calls sit above the returned spec table, so an
+-- assert here would drop the conform, nvim-lint and none-ls overrides together
+-- and quietly restore the behaviour this file exists to prevent.
+local function register(tool, spec)
+  local ok, err = pcall(tool_owner.register, tool, spec)
+  if not ok then
+    -- Scheduled: this runs during lazy.nvim's spec evaluation, before the
+    -- notifier is loaded, and the filetype is left unformatted rather than
+    -- falling back, so the message has to survive to be read.
+    vim.schedule(function()
+      vim.notify(
+        ("%s is disabled: %s. Files it would format are left unformatted."):format(tool, err),
+        vim.log.levels.ERROR,
+        { title = "project-tooling" }
+      )
+    end)
+  end
 end
 
-local dprint_owns = LazyVim.memoize(function(path)
-  local stdout = run({ "dprint", "file-paths", path }, path)
-  return vim.trim(stdout) ~= ""
-end)
+register("dprint", {
+  cmd = function(path)
+    return { "dprint", "file-paths", path }
+  end,
+  ok_codes = { 0 },
+  lost = "no formatting",
+  decide = function(out, path)
+    -- Match the path back: any output at all would otherwise read as ownership.
+    -- dprint answers with resolved paths and owns() keys on the resolved form,
+    -- so the two are directly comparable.
+    for line in vim.gsplit(out.stdout, "\n", { trimempty = true }) do
+      -- Compared raw: both sides are already absolute and symlink-resolved, and
+      -- vim.fs.normalize expands $VAR, which mangles any path component spelled
+      -- like a set environment variable.
+      if vim.trim(line) == path then
+        return true
+      end
+    end
+    if vim.trim(out.stdout) ~= "" then
+      -- Output that names something else is a format this code does not
+      -- understand, not a considered "no"; say so rather than silently
+      -- disabling the formatter.
+      vim.notify_once(
+        ("dprint listed paths that do not match %s; formatting it is disabled"):format(vim.fs.basename(path)),
+        vim.log.levels.WARN,
+        { title = "project-tooling" }
+      )
+    end
+    return false
+  end,
+})
 
--- `rumdl fmt --check` names filtered paths on stderr and says nothing about the
--- files it would process. `check --output json` cannot answer this: an excluded
--- file and a clean one are both `[]`.
-local rumdl_owns = LazyVim.memoize(function(path)
-  local _, stderr = run({ "rumdl", "fmt", "--check", path }, path)
-  return not stderr:find("filtered out", 1, true)
-end)
+register("rumdl", {
+  -- `rumdl fmt --check` names filtered paths on stderr and says nothing about
+  -- the files it would process. `check --output json` cannot answer this: an
+  -- excluded file and a clean one are both `[]`.
+  cmd = function(path)
+    return { "rumdl", "fmt", "--check", path }
+  end,
+  -- 0 clean or excluded, 1 needs formatting; 2 and up is a missing file or a
+  -- config it could not parse.
+  ok_codes = { 0, 1 },
+  lost = "no markdown linting or formatting",
+  decide = function(out)
+    -- Excluded reads "No markdown files left to check: 1 file found was
+    -- filtered out." -- matched in full, because a count of zero filtered files
+    -- carries the substring "filtered out" and means the opposite.
+    return not out.stderr:find("No markdown files left to check", 1, true)
+  end,
+})
+
+---@return boolean|nil owned nil when dprint could not answer
+local function dprint_owns(path)
+  return tool_owner.owns("dprint", path)
+end
+
+---@return boolean|nil owned nil when rumdl could not answer
+local function rumdl_owns(path)
+  return tool_owner.owns("rumdl", path)
+end
+
+-- An exclude change only takes effect when a tool is next asked, so writing one
+-- of these configs drops what was remembered about the tree beneath it. The
+-- buffer's name is used rather than <afile>, which keeps the path as typed and
+-- would leave a relative or symlinked spelling matching no cache key.
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = vim.api.nvim_create_augroup("project_tooling_config", { clear = true }),
+  pattern = vim.list_extend(vim.deepcopy(DPRINT), RUMDL),
+  callback = function(args)
+    -- Reporting the count is what distinguishes invalidation from a no-op; a
+    -- silent zero is the signature of a root that matches no cached key.
+    local dropped = tool_owner.forget(vim.fs.dirname(vim.api.nvim_buf_get_name(args.buf)))
+    vim.notify(
+      dropped > 0 and ("re-asking %d remembered answer(s)"):format(dropped) or "no remembered answers under this config",
+      vim.log.levels.INFO,
+      { title = "project-tooling" }
+    )
+  end,
+})
+
+vim.api.nvim_create_user_command("ProjectToolingReset", function()
+  tool_owner.reset()
+  vim.notify("forgot every remembered answer", vim.log.levels.INFO, { title = "project-tooling" })
+end, { desc = "Re-ask formatters and linters which files they own" })
 
 ---LazyVim's `lang.typescript.oxc` extra appends oxfmt to every filetype it
 ---claims, which would leave prettier and oxfmt both writing the same buffer in
@@ -380,7 +477,7 @@ return {
         },
         rumdl = {
           condition = function(ctx)
-            return configured(RUMDL, ctx.filename) and rumdl_owns(ctx.filename)
+            return ctx.filename ~= "" and configured(RUMDL, ctx.filename) and rumdl_owns(ctx.filename)
           end,
         },
         ["markdownlint-cli2"] = {
