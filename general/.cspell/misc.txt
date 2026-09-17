@@ -51,6 +51,7 @@ bradlc
 Brevo
 Brooooooklyn
 bspwm
+bufnr
 BYOK
 caniemail
 Casdoor
@@ -107,6 +108,7 @@ ctlseqs
 cvvi
 cwork
 daml
+davidmh
 Daytona
 dbname
 Debouncer
@@ -209,6 +211,7 @@ Goey
 govet
 gpgsign
 Groq
+gsplit
 gsports
 gtimeout
 Guake
@@ -292,6 +295,7 @@ mechanised
 mentals
 mergetool
 metamcp
+mfussenegger
 minilm
 miscategorized
 mlua
@@ -325,6 +329,7 @@ nowarn
 nspanel
 ntfy
 ntvs
+nvimtools
 oakoss
 obra
 oddvfag
@@ -497,6 +502,7 @@ tsvector
 TTFB
 tweener
 txns
+typst
 uastc
 Ucwn
 UDFA
@@ -540,6 +546,7 @@ vifmrun
 vikeys
 Vimium
 virtualenv
+vlabo
 vscdb
 vuejs
 wasmi

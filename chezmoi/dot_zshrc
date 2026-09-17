@@ -170,7 +170,7 @@ alias fgrep='fgrep --color=auto'
 alias c="clear"
 alias cp="cp -v"
 alias df="df -h"
-alias du="du -d 1 -h"
+alias du1="du -d 1 -h"
 alias duf="du -sh *"
 alias mkdir="mkdir -pv"
 alias mv="mv -v"
