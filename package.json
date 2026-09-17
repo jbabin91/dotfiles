@@ -16,8 +16,7 @@
     "lint:md": "markdownlint-cli2 '**/*.md'",
     "lint:md:fix": "markdownlint-cli2 --fix '**/*.md'",
     "lint:shell": "git ls-files -z '*.sh' install | xargs -0 -r shellcheck",
-    "lint:zsh": "git ls-files -z 'chezmoi/dot_z*' | xargs -0 -r -n1 zsh -n",
-    "prepare": "lefthook install"
+    "lint:zsh": "git ls-files -z 'home/dot_z*' | xargs -0 -r -n1 zsh -n"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^20.4.2",

@@ -17,7 +17,7 @@ pre-commit:
     # PATH and tool setup below it. One file per call: `zsh -n a b` parses only
     # a, passing b to it as an argument.
     zsh-syntax:
-      glob: 'chezmoi/dot_z*'
+      glob: 'home/dot_z*'
       run: for f in {staged_files}; do zsh -n "$f" || exit 1; done
     # Lint Markdown files
     lint-md:

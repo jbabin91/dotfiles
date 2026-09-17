@@ -30,8 +30,6 @@ brew "cargo-dist"
 brew "cargo-release"
 # Cargo subcommand for checking and applying updates to installed executables
 brew "cargo-update"
-# Manage your dotfiles across multiple diverse machines, securely
-brew "chezmoi"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Spell checker for code

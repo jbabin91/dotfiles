@@ -7,4 +7,85 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "${BASEDIR}"
 
-uv tool run dotbot -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+# Everything below deploys into $HOME; without it chezmoi reads as a broken binary
+# and the installer tries to write /.local.
+[ -n "${HOME}" ] && [ -d "${HOME}" ] ||
+  { echo "  \$HOME is unset or not a directory; ./install deploys into \$HOME and cannot continue" >&2; exit 1; }
+
+# The one tool this script needs and does not bootstrap.
+command -v uv >/dev/null ||
+  { echo "  uv is required to run dotbot but is not on PATH; install it first (brew install uv)" >&2; exit 127; }
+
+uv tool run dotbot -d "${BASEDIR}" -c "${CONFIG}" "${@}" ||
+  { s=$?; echo "  dotbot exited ${s} (over 128 means killed by signal); symlinks, brew and mise may be incomplete, and chezmoi was not run" >&2; exit "${s}"; }
+
+# Arguments reach dotbot only, so a scoped or informational run stops here;
+# otherwise --help and --dry-run would deploy the chezmoi source for real.
+if [ "$#" -gt 0 ]; then
+  echo "  chezmoi: skipped, arguments scope dotbot only; run ./install with none to bootstrap" >&2
+  exit 0
+fi
+
+# Runs the binary rather than trusting the file: a truncated install leaves a
+# zero-byte file that is still executable and still exits 0 on every call.
+usable() { [ -s "$1" ] && "$1" --version >/dev/null 2>&1; }
+
+CHEZMOI="$(command -v chezmoi || true)"
+if [ -n "${CHEZMOI}" ] && ! usable "${CHEZMOI}"; then
+  echo "  chezmoi: ${CHEZMOI} is on PATH but will not run; installing a fresh copy" >&2
+  CHEZMOI=""
+fi
+if [ -z "${CHEZMOI}" ] && [ -e "${HOME}/.local/bin/chezmoi" ]; then
+  if usable "${HOME}/.local/bin/chezmoi"; then
+    CHEZMOI="${HOME}/.local/bin/chezmoi"
+  else
+    echo "  chezmoi: ${HOME}/.local/bin/chezmoi exists but will not run; reinstalling over it" >&2
+  fi
+fi
+# chezmoi is not in the Brewfile, so it installs itself. Placed after dotbot so
+# a network failure here cannot stop the symlinks. Fetched to a file because a
+# pipeline reports sh's status, and sh on a truncated download exits 0. Its -b
+# defaults to ./bin.
+if [ -z "${CHEZMOI}" ]; then
+  installer="$(mktemp)" ||
+    { echo "  chezmoi: mktemp failed, cannot stage the installer" >&2; exit 1; }
+  trap 'rm -f "${installer}"' EXIT
+  curl -fsSL https://get.chezmoi.io -o "${installer}" ||
+    { s=$?; echo "  chezmoi: could not download https://get.chezmoi.io (curl exited ${s}); symlinks are in place" >&2; exit "${s}"; }
+  head -n1 "${installer}" | grep -q '^#!' ||
+    { echo "  chezmoi: https://get.chezmoi.io returned $(wc -c <"${installer}" | tr -d " ") bytes that are not a script" >&2; exit 1; }
+  sh "${installer}" -b "${HOME}/.local/bin" ||
+    { s=$?; echo "  chezmoi: installer exited ${s} (over 128 means killed by signal); symlinks are in place" >&2; exit "${s}"; }
+  CHEZMOI="${HOME}/.local/bin/chezmoi"
+  usable "${CHEZMOI}" ||
+    { echo "  chezmoi: installer exited 0 but left no working binary at ${CHEZMOI}" >&2; exit 1; }
+fi
+
+# .chezmoiroot is the one place recording where source state lives, and
+# chezmoi init <url> reads it too, so deriving --source from it keeps both entry
+# points on the same directory. Trimmed the way chezmoi trims it, so a stray
+# space or a CRLF checkout still resolves.
+ROOT="$(cat "${BASEDIR}/.chezmoiroot" 2>/dev/null || true)"
+ROOT="${ROOT#"${ROOT%%[![:space:]]*}"}"
+ROOT="${ROOT%"${ROOT##*[![:space:]]}"}"
+SOURCE="${BASEDIR}/${ROOT}"
+# Checked before applying: pointed at the repo root instead, init exits 0 having
+# applied the whole repo into $HOME, and no later check undoes that.
+[ -n "${ROOT}" ] && [ -d "${SOURCE}" ] ||
+  { echo "  chezmoi: .chezmoiroot is missing, unreadable, or names no directory under ${BASEDIR}; refusing to apply the repo root into ${HOME}" >&2; exit 1; }
+
+# init writes sourceDir into ~/.config/chezmoi/chezmoi.toml from the template,
+# which resolves it rather than hardcoding a path, so the repo can live anywhere.
+# --destination is pinned because init's apply stage otherwise honours a destDir
+# already in that file, sending the whole apply elsewhere while every check passes.
+"${CHEZMOI}" init --source "${SOURCE}" --destination "${HOME}" --apply ||
+  { s=$?; echo "  dotbot finished, but chezmoi init exited ${s} (over 128 means killed by signal); it applies as it goes, so ${HOME} may hold some, all or none of zsh and starship -- run ${CHEZMOI} status --source ${SOURCE} to see what landed" >&2; exit "${s}"; }
+
+# Whole-tree verify first, so drift is reported as drift. It passes vacuously on
+# an empty source, which the targeted verify below then catches: once everything
+# managed matches disk, .zshrc can only fail for not being managed at all. A run_
+# (always) script or an unstable template would fail both on every correct run.
+"${CHEZMOI}" verify --source "${SOURCE}" --destination "${HOME}" ||
+  { s=$?; echo "  dotbot finished (brew and mise ran), but chezmoi verify exited ${s} (over 128 means killed by signal); if chezmoi printed an error above that is the cause, otherwise ${HOME} does not match ${SOURCE} -- run ${CHEZMOI} status --source ${SOURCE}" >&2; exit "${s}"; }
+"${CHEZMOI}" verify --source "${SOURCE}" --destination "${HOME}" "${HOME}/.zshrc" ||
+  { s=$?; echo "  dotbot finished (brew and mise ran), but chezmoi verify of .zshrc exited ${s} (over 128 means killed by signal); if chezmoi printed an error above that is the cause, otherwise chezmoi manages no .zshrc from ${SOURCE} -- check ${SOURCE}/dot_zshrc exists and is not excluded by .chezmoiignore" >&2; exit "${s}"; }

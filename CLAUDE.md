@@ -6,10 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal macOS dotfiles managed with [Dotbot](https://github.com/anishathalye/dotbot) via `uv tool run dotbot`. Configs are symlinked from this repo to their expected locations in `~` and `~/.config/`.
 
+A migration to [chezmoi](https://www.chezmoi.io/) is in progress: files under `home/` (zsh, starship) are chezmoi-managed copies rather than symlinks, so editing the deployed file and editing the repo are no longer the same act — use `chezmoi re-add` or edit the source. `./install` runs dotbot and then `chezmoi init --apply`. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin` — after dotbot, so a network failure there cannot cost you the symlinks.
+
 ## Commands
 
 ```bash
-./install                  # Run dotbot to create/update symlinks
+./install                  # Run dotbot, bootstrap chezmoi, then chezmoi init --apply
 pnpm run format            # Format JSON/YAML/MD with prettier
 pnpm run lint              # Run all linting (format check + shellcheck + markdownlint)
 pnpm run lint:shell        # Lint shell scripts only
@@ -27,8 +29,9 @@ That list drives the `cz-git` prompt, which rejects scopes outside it. Commitlin
 
 ## Architecture
 
-- **`config/`** — Application configs symlinked to `~/.config/<app>` (zsh, ghostty, kitty, starship, mise, nvim, fastfetch, btop, bat, tmux)
+- **`config/`** — Application configs symlinked to `~/.config/<app>` (ghostty, kitty, mise, nvim, fastfetch, btop, bat, tmux)
 - **`general/`** — Dotfiles symlinked to `~/` or `~/.` (Brewfile, git config, editorconfig, cspell)
+- **`home/`** — chezmoi source, mirroring `~/` (`dot_zshrc` becomes `~/.zshrc`); `.chezmoiroot` points chezmoi here, and `home/.chezmoi.toml.tmpl` generates `~/.config/chezmoi/chezmoi.toml`
 - **`install.conf.yaml`** — Dotbot config defining all symlinks and shell commands
 - **`config/macos/set-defaults.sh`** — macOS system defaults (not auto-run, manual script)
 
@@ -36,7 +39,7 @@ That list drives the `cz-git` prompt, which rejects scopes outside it. Commitlin
 
 - **Karabiner**: Cannot use symlinks (the app replaces them). Uses bidirectional copy sync in `install.conf.yaml` shell section — copies whichever version is newer.
 - **Neovim**: Uses LazyVim. The `config/nvim/` directory is excluded from prettier via `.prettierignore`.
-- **Zsh**: Uses Antidote plugin manager. Plugins defined in `config/zsh/.zsh_plugins.txt`, shell config split between `.zshenv` (all shells) and `.zshrc` (interactive).
+- **Zsh**: Uses Antidote plugin manager, and is chezmoi-managed. Plugins in `home/dot_config/zsh/dot_zsh_plugins.txt`, shell config split between `home/dot_zshenv` (all shells) and `home/dot_zshrc` (interactive).
 
 ## Style
 

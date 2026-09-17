@@ -42,8 +42,8 @@
     # Kitty
     ~/.config/kitty: config/kitty
     # Karabiner - managed via shell sync (app replaces symlinks)
-    # Starship — migrated to chezmoi (chezmoi/dot_config/starship.toml)
-    # ZSH — migrated to chezmoi (chezmoi/dot_zshenv, dot_zshrc, dot_config/zsh)
+    # Starship — migrated to chezmoi (home/dot_config/starship.toml)
+    # ZSH — migrated to chezmoi (home/dot_zshenv, dot_zshrc, dot_config/zsh)
     # mise (tool version manager)
     ~/.config/mise: config/mise
     # tmux
@@ -90,7 +90,7 @@
         trap 'rm -f "$t"; true' EXIT;
         curl -fsSL https://mise.run -o "$t";
         head -n1 "$t" | grep -q '^#!' ||
-        { echo "  mise: https://mise.run returned $(wc -c <"$t") bytes that are not a script" >&2; exit 1; };
+        { echo "  mise: https://mise.run returned $(wc -c <"$t" | tr -d " ") bytes that are not a script" >&2; exit 1; };
         MISE_INSTALL_SKIP_IF_EXISTS=1 MISE_QUIET=1 sh "$t" ||
         { s=$?; echo "  mise: installer exited $s (over 128 means killed by signal)" >&2; exit "$s"; };
         [ -s "$HOME/.local/bin/mise" ] ||

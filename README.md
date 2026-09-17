@@ -1,7 +1,9 @@
 # github.com/jbabin91/dotfiles
 
 Jace Babin's dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot) via
-[uv](https://github.com/astral-sh/uv).
+[uv](https://github.com/astral-sh/uv), and migrating to
+[chezmoi](https://www.chezmoi.io/), which already owns the zsh and starship
+configs under `home/`. `./install` runs both.
 
 ## Features
 
@@ -70,13 +72,13 @@ exec zsh
 │   ├── karabiner/      # Keyboard customization (copy-synced)
 │   ├── kitty/          # Kitty terminal
 │   ├── mise/           # Tool version manager (node, rust, dotnet)
-│   ├── nvim/           # Neovim config (LazyVim)
-│   ├── starship/       # Starship prompt
-│   └── zsh/            # Zsh shell config + Antidote plugins
+│   └── nvim/           # Neovim config (LazyVim)
 ├── general/
 │   ├── git/            # Git config, attributes, ignore
 │   ├── .cspell/        # Spell checking dictionaries
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
+├── home/               # chezmoi source; mirrors ~/ (dot_zshrc -> ~/.zshrc)
+├── .chezmoiroot        # Points chezmoi's source at home/
 ├── install.conf.yaml   # Dotbot symlink configuration
 ├── lefthook.yml        # Git hooks
 ├── prettier.config.js  # Code formatting
@@ -103,6 +105,12 @@ mise itself is the exception: it installs from <https://mise.run> into
 bootstraps it, so it needs no manual install — but a machine that carries a
 Homebrew mise from before this change wants `brew uninstall mise`, since
 `brew bundle` leaves an already-installed formula in place.
+
+chezmoi is nearly the same: `./install` uses a working chezmoi already on PATH,
+and otherwise bootstraps one from <https://get.chezmoi.io> into `~/.local/bin`. A
+machine carrying a Homebrew chezmoi from before this change therefore keeps using
+it, so `brew uninstall chezmoi` to switch to that copy, which `chezmoi upgrade`
+updates in place.
 
 - **Python** — [uv](https://github.com/astral-sh/uv), installed via Homebrew, with automatic version switching
 - **Node.js** — managed via mise; `.nvmrc` / `.node-version` auto-switching enabled via `idiomatic_version_file_enable_tools`
