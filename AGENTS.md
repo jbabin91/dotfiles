@@ -4,7 +4,7 @@
 
 Personal macOS dotfiles managed with [Dotbot](https://github.com/anishathalye/dotbot) via `uv tool run dotbot`. Configs are symlinked from this repo to their expected locations in `~` and `~/.config/`.
 
-A migration to [chezmoi](https://www.chezmoi.io/) is in progress: files under `home/` (zsh, starship) are chezmoi-managed copies rather than symlinks, so editing the deployed file and editing the repo are no longer the same act — use `chezmoi re-add` or edit the source. `./install` runs dotbot and then `chezmoi init --apply`. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin` — after dotbot, so a network failure there cannot cost you the symlinks.
+A migration to [chezmoi](https://www.chezmoi.io/) is in progress: files under `home/` (see Architecture) are chezmoi-managed copies rather than symlinks, so editing the deployed file and editing the repo are no longer the same act — use `chezmoi re-add` or edit the source. `./install` runs dotbot and then `chezmoi init --apply`. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin` — after dotbot, so a network failure there cannot cost you the symlinks.
 
 ## Commands
 
@@ -80,9 +80,9 @@ That list drives the `cz-git` prompt, which rejects scopes outside it. Commitlin
 ## Architecture
 
 - **`config/`** — Application configs symlinked to `~/.config/<app>` (ghostty, kitty, mise, nvim, fastfetch, btop, bat, tmux)
-- **`general/`** — Dotfiles symlinked to `~/` or `~/.` (Brewfile, git config, editorconfig, cspell)
+- **`general/`** — Dotfiles symlinked to `~/` or `~/.` (Brewfile, cspell)
 - **`general/agents/`** — Global agent instructions: `AGENTS.global.md` links to `~/AGENTS.md` and `~/.codex/AGENTS.md`, `docs/` to `~/.agents/docs`. The `.global` suffix keeps agents in this repo from loading it as `general/agents/`'s project instructions.
-- **`home/`** — chezmoi source, mirroring `~/` (`dot_zshrc` becomes `~/.zshrc`); `.chezmoiroot` points chezmoi here, and `home/.chezmoi.toml.tmpl` generates `~/.config/chezmoi/chezmoi.toml`
+- **`home/`** — chezmoi source, mirroring `~/` (`dot_zshrc` becomes `~/.zshrc`): zsh, starship, git, editorconfig, hushlogin. `.chezmoiroot` points chezmoi here, and `home/.chezmoi.toml.tmpl` generates `~/.config/chezmoi/chezmoi.toml`. The `empty_` prefix on `empty_dot_hushlogin` is load-bearing: chezmoi deletes a target whose source file is zero bytes, so `dot_hushlogin` would remove `~/.hushlogin`.
 - **`install.conf.yaml`** — Dotbot config defining all symlinks and shell commands
 - **`config/macos/set-defaults.sh`** — macOS system defaults (not auto-run, manual script)
 

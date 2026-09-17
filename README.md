@@ -2,8 +2,8 @@
 
 Jace Babin's dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot) via
 [uv](https://github.com/astral-sh/uv), and migrating to
-[chezmoi](https://www.chezmoi.io/), which already owns the zsh and starship
-configs under `home/`. `./install` runs both.
+[chezmoi](https://www.chezmoi.io/), which already owns the zsh, starship, git,
+editorconfig and hushlogin configs under `home/`. `./install` runs both.
 
 ## Features
 
@@ -75,10 +75,9 @@ exec zsh
 │   └── nvim/           # Neovim config (LazyVim)
 ├── general/
 │   ├── agents/         # Global agent instructions (~/AGENTS.md, ~/.codex/AGENTS.md, ~/.agents/docs)
-│   ├── git/            # Git config, attributes, ignore
 │   ├── .cspell/        # Spell checking dictionaries
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
-├── home/               # chezmoi source; mirrors ~/ (dot_zshrc -> ~/.zshrc)
+├── home/               # chezmoi source; mirrors ~/ (zsh, starship, git, editorconfig, hushlogin)
 ├── .chezmoiroot        # Points chezmoi's source at home/
 ├── install.conf.yaml   # Dotbot symlink configuration
 ├── lefthook.yml        # Git hooks

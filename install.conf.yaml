@@ -25,9 +25,7 @@
       ]
 
 - link:
-    # General
-    ~/.editorconfig: general/.editorconfig
-    ~/.hushlogin: general/.hushlogin
+    # General — editorconfig and hushlogin migrated to chezmoi
     ~/Brewfile: general/Brewfile
     ~/.cspell.json: general/.cspell.json
     ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
@@ -40,11 +38,7 @@
     # Reference docs linked from it. Only docs/: ~/.agents/skills is managed by
     # the skills installer.
     ~/.agents/docs: general/agents/docs
-    # Git Config
-    ~/.gitattributes: general/git/.gitattributes
-    ~/.gitconfig: general/git/.gitconfig
-    ~/.gitignore: general/git/.gitignore
-    ~/.config/git/allowed_signers: general/git/allowed_signers
+    # Git — migrated to chezmoi (home/dot_git*, home/dot_config/git/)
     # Ghostty
     ~/.config/ghostty: config/ghostty
     # Kitty

@@ -5,6 +5,7 @@ import {
   readFileSync,
   readdirSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from 'node:fs';
 import { join } from 'node:path';
@@ -271,14 +272,27 @@ describe('post-apply verification', () => {
 });
 
 withChezmoi('against a real chezmoi', () => {
-  test('deploys zsh and starship into an empty $HOME', ({ fixture }) => {
+  test('deploys every managed file into an empty $HOME', ({ fixture }) => {
     const f = fixture({ useRealChezmoi: true });
     const r = f.run();
     expect(r.stderr).toBe('');
     expect(r.status).toBe(0);
-    for (const rel of ['.zshrc', '.zshenv', '.config/starship.toml']) {
+    for (const rel of [
+      '.zshrc',
+      '.zshenv',
+      '.config/starship.toml',
+      '.editorconfig',
+      '.gitattributes',
+      '.gitconfig',
+      '.gitignore',
+      '.config/git/allowed_signers',
+      '.config/git/template.txt',
+    ]) {
       expect(existsSync(join(f.home, rel))).toBe(true);
     }
+    // The size, not just existence: a source that stops being empty deploys a
+    // non-empty ~/.hushlogin, which an existence check passes.
+    expect(statSync(join(f.home, '.hushlogin')).size).toBe(0);
   });
 
   test('is idempotent across a second run', ({ fixture }) => {
