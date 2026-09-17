@@ -54,12 +54,17 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # -----------------------------------------------------------------------------
 # Antidote Plugin Manager
 # -----------------------------------------------------------------------------
-source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
-zsh_plugins=~/.config/zsh/.zsh_plugins
-if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
-  antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
+for _antidote in /opt/homebrew/opt/antidote/share/antidote/antidote.zsh /usr/share/zsh-antidote/antidote.zsh "$HOME/.antidote/antidote.zsh"; do
+  [[ -f $_antidote ]] && { source "$_antidote"; break }
+done
+unset _antidote
+if (( $+functions[antidote] )); then
+  zsh_plugins=~/.config/zsh/.zsh_plugins
+  if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+    antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
+  fi
+  source ${zsh_plugins}.zsh
 fi
-source ${zsh_plugins}.zsh
 
 # -----------------------------------------------------------------------------
 # Cached compinit (rebuild once per 24h)
@@ -97,6 +102,17 @@ eval "$(mise activate zsh)"
 eval "$(zoxide init zsh)"
 
 # -----------------------------------------------------------------------------
+# Omarchy shell integration (aliases/functions/envs only; tool inits are ours)
+# -----------------------------------------------------------------------------
+if [[ -d /usr/share/omarchy-zsh/shell ]]; then
+  # covers non-login shells that miss /etc/profile.d (e.g. ssh <host> zsh)
+  [[ -f /usr/share/omarchy/default/bash/env-bootstrap ]] && source /usr/share/omarchy/default/bash/env-bootstrap
+  source /usr/share/omarchy-zsh/shell/envs
+  source /usr/share/omarchy-zsh/shell/aliases
+  source /usr/share/omarchy-zsh/shell/functions
+fi
+
+# -----------------------------------------------------------------------------
 # Aliases
 # -----------------------------------------------------------------------------
 
@@ -112,24 +128,30 @@ alias .5="cd ../../../../.."
 # vim
 alias vim="nvim"
 alias v="nvim"
-function e() {
-  open "$1" -a Visual\ Studio\ Code
-}
-function ec() {
-  open "$1" -a Cursor
-}
-function ie() {
-  open "${1:-.}" -a "Visual Studio Code - Insiders"
-}
+if [[ "$OSTYPE" == darwin* ]]; then
+  function e() {
+    open "$1" -a Visual\ Studio\ Code
+  }
+  function ec() {
+    open "$1" -a Cursor
+  }
+  function ie() {
+    open "${1:-.}" -a "Visual Studio Code - Insiders"
+  }
+fi
 
 # opencode: the @next channel ships its bin as opencode2
 alias opencode="opencode2"
 
-# Brew
-alias bu="brew update"
-alias buu="brew upgrade"
-alias bc="brew cleanup"
-alias ud="brew update && brew upgrade && brew cleanup"
+# System updates: brew on the Mac, omarchy elsewhere
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias bu="brew update"
+  alias buu="brew upgrade"
+  alias bc="brew cleanup"
+  alias ud="brew update && brew upgrade && brew cleanup"
+elif command -v omarchy >/dev/null; then
+  alias ud="omarchy update"
+fi
 
 # eza
 alias l="eza -al --color=auto --group-directories-first --git --icons=auto"
@@ -148,7 +170,7 @@ alias fgrep='fgrep --color=auto'
 alias c="clear"
 alias cp="cp -v"
 alias df="df -h"
-alias du="du -d 1 -h"
+alias du1="du -d 1 -h"
 alias duf="du -sh *"
 alias mkdir="mkdir -pv"
 alias mv="mv -v"
@@ -288,8 +310,23 @@ fi
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/jacebabin/.lmstudio/bin"
+[[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
+
+# mise on Linux is package-managed; its upstream-release banner is not actionable there
+[[ "$OSTYPE" == linux* ]] && export MISE_HIDE_UPDATE_WARNING=1
+
+# Bare `tmux` attaches to a single named session instead of creating a new
+# auto-numbered one each time (0, 13, 14, ...). Arguments pass through
+# untouched, so `tmux ls`, `tmux kill-server` etc. behave normally. Per-project
+# sessions still come from sesh (prefix + s).
+tmux() {
+  if (( $# == 0 )); then
+    command tmux new-session -A -s main
+  else
+    command tmux "$@"
+  fi
+}
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

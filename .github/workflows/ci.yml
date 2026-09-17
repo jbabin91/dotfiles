@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A second push supersedes the first; nothing here is worth finishing twice.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Actions are pinned by commit SHA. A tag is mutable -- it can be repointed at
+# other code after review -- and the moving major tags are not even current:
+# pnpm/setup's `@v2` still pointed at v2.0.2 three weeks after v2.1.0 shipped.
+# The trailing comment is what Dependabot reads to offer bumps.
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # Nothing here writes: checkout, apt, curl, pnpm. Stated so the job does not
+    # inherit a read/write GITHUB_TOKEN by default.
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Not on the runner image. Without it the dot_zshenv suite skips, which
+      # looks identical to a green run.
+      - name: Install zsh
+        run: sudo apt-get update && sudo apt-get install -y zsh
+
+      # From the same source ./install uses. Without it every case needing a
+      # real chezmoi reports as skipped rather than failing.
+      - name: Install chezmoi
+        run: |
+          # Fetched to a file, not substituted into sh: a command substitution
+          # reports sh's status, so a failed or truncated download would run a
+          # partial installer and still leave the step green.
+          curl -fsSL -o get-chezmoi.sh https://get.chezmoi.io
+          sh get-chezmoi.sh -b "$HOME/.local/bin"
+          rm -f get-chezmoi.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      # Installs pnpm plus every entry in package.json's devEngines.runtime, so
+      # the node version is declared once there rather than duplicated here. It
+      # does not read `engines`, .node-version or .nvmrc.
+      # `install: false` keeps the install below explicit: a CI run that
+      # silently accepted a stale lockfile is worse than one that fails.
+      - name: Install pnpm and Node
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          cache: true
+          install: false
+
+      # `pnpm run lint` chains actionlint, which is not on the runner image.
+      # Pinned and checksum-verified rather than piped from a moving ref.
+      - name: Install actionlint
+        env:
+          ACTIONLINT_VERSION: 1.7.12
+        run: |
+          base="https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}"
+          # Saved under its published name: `sha256sum -c` takes the filename
+          # from the checksum line, so renaming the download makes it unreadable.
+          tarball="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL -o "$tarball" "${base}/${tarball}"
+          curl -fsSL -o checksums.txt "${base}/actionlint_${ACTIONLINT_VERSION}_checksums.txt"
+          # Not piped: a pipeline reports only the right-hand status, so a grep
+          # matching nothing would leave verification up to how sha256sum treats
+          # empty input -- which differs between implementations.
+          grep " ${tarball}$" checksums.txt > "${tarball}.sha256"
+          sha256sum -c "${tarball}.sha256"
+          tar -xzf "$tarball" actionlint
+          mkdir -p "$HOME/.local/bin"
+          mv actionlint "$HOME/.local/bin/"
+          rm -f "$tarball" "${tarball}.sha256" checksums.txt
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      # The suite skips rather than fails when these are missing, so a broken
+      # install would otherwise produce a green run with 13 silent skips.
+      # `chezmoi --version` not `command -v`: the gate runs the binary, so a
+      # truncated download passes a PATH check and still skips everything.
+      - name: Assert test prerequisites
+        run: |
+          zsh --version
+          chezmoi --version
+          actionlint --version
+          # Recorded because the runner's shellcheck is not the one pinned in
+          # config/mise/config.toml, and the two disagree on info-level checks.
+          shellcheck --version
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Test
+        run: pnpm run test
+
+      - name: Lint
+        run: pnpm run lint

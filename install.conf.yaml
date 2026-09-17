@@ -42,14 +42,19 @@
     # Kitty
     ~/.config/kitty: config/kitty
     # Karabiner - managed via shell sync (app replaces symlinks)
-    # Starship
-    ~/.config/starship.toml: config/starship/config.toml
-    # ZSH
-    ~/.zshenv: config/zsh/.zshenv
-    ~/.zshrc: config/zsh/.zshrc
-    ~/.config/zsh/.zsh_plugins.txt: config/zsh/.zsh_plugins.txt
+    # Starship — migrated to chezmoi (home/dot_config/starship.toml)
+    # ZSH — migrated to chezmoi (home/dot_zshenv, dot_zshrc, dot_config/zsh)
     # mise (tool version manager)
     ~/.config/mise: config/mise
+    # tmux
+    ~/.config/tmux: config/tmux
+    # sesh (tmux session manager)
+    ~/.config/sesh/sesh.toml: config/sesh/sesh.toml
+    # Zellij - config files only; zellij regenerates config.kdl on upgrade and
+    # keeps .bak files and its plugin cache alongside them
+    ~/.config/zellij/config.kdl: config/zellij/config.kdl
+    ~/.config/zellij/layouts/default.kdl: config/zellij/layouts/default.kdl
+    ~/.config/zellij/layouts/claude-orch.kdl: config/zellij/layouts/claude-orch.kdl
     # Fastfetch
     ~/.config/fastfetch: config/fastfetch
     # bat
@@ -65,13 +70,53 @@
     ~/.config/zed/keymap.json: config/zed/keymap.json
     ~/.config/zed/tasks.json: config/zed/tasks.json
 
-# Placed after link: so a network failure here cannot stop the symlinks. brew
-# runs first because mise itself comes from the Brewfile. The shell defaults
-# enable stdout, so it is switched off per entry to suppress brew's ~170 lines.
+# Placed after link: so a network failure here cannot stop the symlinks. mise
+# installs itself (https://mise.run) into ~/.local/bin rather than coming from
+# the Brewfile, so it can self-update; SKIP_IF_EXISTS makes the re-run a no-op
+# once the installed binary matches the release. Every step of that download is
+# checked because each failure mode exits 0 on its own: piped into sh a failed
+# fetch reports success, curl -f accepts a 2xx body that is empty or not a
+# script, and sh runs both without complaint. mise is then called by absolute
+# path, since the shell running ./install predates the .zshenv that puts
+# ~/.local/bin on PATH. `quiet` suppresses the descriptions below, so each
+# message names mise itself; stdout is off per entry to hide brew's ~170 lines.
 - shell:
     - command: brew bundle --file=general/Brewfile --no-upgrade
       description: Installing Homebrew packages
       stdout: false
-    - command: mise install
+    - command: >
+        set -e;
+        t=$(mktemp);
+        trap 'rm -f "$t"; true' EXIT;
+        curl -fsSL https://mise.run -o "$t";
+        head -n1 "$t" | grep -q '^#!' ||
+        { echo "  mise: https://mise.run returned $(wc -c <"$t" | tr -d " ") bytes that are not a script" >&2; exit 1; };
+        MISE_INSTALL_SKIP_IF_EXISTS=1 MISE_QUIET=1 sh "$t" ||
+        { s=$?; echo "  mise: installer exited $s (over 128 means killed by signal)" >&2; exit "$s"; };
+        [ -s "$HOME/.local/bin/mise" ] ||
+        { echo "  mise: installer exited 0 but left nothing at ~/.local/bin/mise" >&2; exit 1; }
+      description: Installing mise
+      stdout: false
+    # -s, not -x: a truncated install leaves an empty file that is still
+    # executable and still exits 0 on every invocation.
+    - command: >
+        m="$HOME/.local/bin/mise";
+        if [ ! -s "$m" ] || ! "$m" --version >/dev/null 2>&1; then
+        echo "  mise: $m is missing or will not run, so the install step above left no working binary" >&2;
+        exit 1; fi;
+        "$m" install
       description: Installing mise tools
       stdout: false
+    # Runs after brew, which provides tpack. Reads the @plugin lines from
+    # tmux.conf and clones anything missing; a no-op once they are present.
+    - command: command -v tpack >/dev/null && tpack install || true
+      description: Installing tmux plugins
+    # tmux-which-key has no option for a config path (its XDG mode calls GNU
+    # `realpath --relative-to`, which BSD realpath rejects), so link the menu
+    # config into the plugin directory, whose name carries a content hash.
+    - [
+        'd=$(echo "$HOME"/.local/share/tmux/plugins/tmux-which-key-*); if [ -d "$d" ]; then ln -sfn
+        "$PWD/config/tmux/plugins/tmux-which-key/config.yaml" "$d/config.yaml" && echo "
+        tmux-which-key: menu config linked"; fi',
+        Linking tmux-which-key config,
+      ]

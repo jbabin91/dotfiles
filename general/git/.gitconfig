@@ -133,7 +133,9 @@
   updateRefs = true
 [rerere]
   enabled = true
-  autoupdate = true
+  # Replayed resolutions land in the worktree but stay unstaged, so a stale one
+  # shows up in git status instead of riding along in the next commit.
+  autoupdate = false
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f

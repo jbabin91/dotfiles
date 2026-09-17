@@ -1,0 +1,70 @@
+layout {
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
+                format_left   "{mode} #[fg=#8aadf4,bold]{session} #[fg=#5b6078]{swap_layout}"
+                format_center "{tabs}"
+                format_right  "{command_git_branch}{notifications}{datetime}"
+                format_space  ""
+
+                border_enabled  "false"
+                hide_frame_for_single_pane "false"
+
+                // Mode indicators (Catppuccin Macchiato)
+                mode_normal        "#[bg=#8aadf4,fg=#1e2030,bold] NORMAL "
+                mode_locked        "#[bg=#ed8796,fg=#1e2030,bold] LOCKED "
+                mode_resize        "#[bg=#f5a97f,fg=#1e2030,bold] RESIZE "
+                mode_pane          "#[bg=#a6da95,fg=#1e2030,bold] PANE "
+                mode_tab           "#[bg=#eed49f,fg=#1e2030,bold] TAB "
+                mode_scroll        "#[bg=#91d7e3,fg=#1e2030,bold] SCROLL "
+                mode_enter_search  "#[bg=#f5bde6,fg=#1e2030,bold] SEARCH "
+                mode_search        "#[bg=#f5bde6,fg=#1e2030,bold] SEARCH "
+                mode_rename_tab    "#[bg=#eed49f,fg=#1e2030,bold] RENAME "
+                mode_rename_pane   "#[bg=#a6da95,fg=#1e2030,bold] RENAME "
+                mode_session       "#[bg=#8aadf4,fg=#1e2030,bold] SESSION "
+                mode_move          "#[bg=#f5a97f,fg=#1e2030,bold] MOVE "
+                mode_prompt        "#[bg=#a6da95,fg=#1e2030,bold] PROMPT "
+                mode_tmux          "#[bg=#f5a97f,fg=#1e2030,bold] TMUX "
+
+                // Tab styling with Macchiato colors
+                tab_normal              "#[fg=#6e738d] {index} {name} "
+                tab_normal_fullscreen   "#[fg=#6e738d] {index} {name} 󰊓 "
+                tab_normal_sync         "#[fg=#6e738d] {index} {name}  "
+                tab_active              "#[fg=#8aadf4,bold] {index} {name} "
+                tab_active_fullscreen   "#[fg=#8aadf4,bold] {index} {name} 󰊓 "
+                tab_active_sync         "#[fg=#8aadf4,bold] {index} {name}  "
+                tab_separator           "#[fg=#5b6078] | "
+
+                // Swap layout indicator
+                swap_layout_format "#[fg=#f5a97f]  {name} "
+
+                // Git branch with icon
+                command_git_branch_command     "git rev-parse --abbrev-ref HEAD 2>/dev/null"
+                command_git_branch_format      "#[fg=#8aadf4]  {stdout} "
+                command_git_branch_interval    "10"
+                command_git_branch_rendermode  "static"
+
+                // Notifications
+                notification_format_unread           "#[fg=#f5a97f] {count} "
+                notification_format_no_notifications ""
+                notification_show_interval           "2"
+
+                // Date/time with icon
+                datetime        "#[fg=#cad3f5]  {format} "
+                datetime_format "%H:%M"
+                datetime_timezone "America/New_York"
+            }
+        }
+    }
+    tab name="claude" {
+        pane split_direction="vertical" {
+            pane command="claude" {
+                args "--name" "orchestrator"
+            }
+            pane command="claude" size="38%" {
+                args "agents"
+            }
+        }
+    }
+}

@@ -1,0 +1,110 @@
+# shellcheck shell=bash
+# Environment (Sourced by ALL shells)
+# Only put things here that are needed everywhere — interactive, non-interactive, git hooks
+
+# -----------------------------------------------------------------------------
+# Color Support (MUST be first - needed for all terminal applications)
+# -----------------------------------------------------------------------------
+export COLORTERM="${COLORTERM:-truecolor}"
+export FORCE_COLOR="${FORCE_COLOR:-1}"
+export CLICOLOR=1
+
+# -----------------------------------------------------------------------------
+# Homebrew (sets PREFIX, CELLAR, REPOSITORY, fpath, MANPATH, INFOPATH, PATH)
+# -----------------------------------------------------------------------------
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  export HOMEBREW_NO_ENV_HINTS=1
+  # Ask mode is on by default in current Homebrew; this turns it back off.
+  export HOMEBREW_NO_ASK=1
+  # Re-prepend after brew shellenv; path_helper can push /usr/bin ahead of Homebrew
+  case "$PATH" in
+    /opt/homebrew/bin:*) ;;
+    *) export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" ;;
+  esac
+fi
+
+# -----------------------------------------------------------------------------
+# Development Tool PATHs
+# -----------------------------------------------------------------------------
+
+# pnpm — $PNPM_HOME/bin: global package shims; $PNPM_HOME: pnpm runtime shims (standalone installer)
+if [[ "$OSTYPE" == darwin* ]]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+else
+  export PNPM_HOME="$HOME/.local/share/pnpm"
+fi
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH" ;;
+esac
+
+# User binaries (uv-installed tools, custom scripts, mise itself) — must precede
+# the mise activation below, which is where `command -v mise` finds the binary
+# now that mise installs from https://mise.run instead of Homebrew. The cargo,
+# bun and shim entries prepended after this one therefore outrank it.
+case ":$PATH:" in
+  *":$HOME/.local/bin:"*) ;;
+  *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+
+# mise - manages node and other tools; --shims mode keeps tools resolvable in non-interactive shells (git hooks, GUI apps)
+#
+# The result is checked against PATH rather than against activate's output or
+# status: activate prints nothing once the shims dir is already there, and a
+# truncated mise binary also prints nothing while exiting 0. Only PATH tells
+# those apart, and an unnoticed failure silently drops every pinned tool to its
+# system version. stderr stays out of the capture because eval runs whatever it
+# holds — one mise warning would otherwise execute as shell code in every shell.
+if command -v mise >/dev/null; then
+  _mise_shims=$(mise activate zsh --shims 2>/dev/null) && eval "$_mise_shims"
+  if [[ ":$PATH:" != *":$HOME/.local/share/mise/shims:"* ]]; then
+    print -u2 "zshenv: mise did not activate, tools resolve to system versions. Diagnose with: mise activate zsh --shims"
+  fi
+  unset _mise_shims
+fi
+
+# Cargo/Rust binaries
+case ":$PATH:" in
+  *":$HOME/.cargo/bin:"*) ;;
+  *) export PATH="$HOME/.cargo/bin:$PATH" ;;
+esac
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+case ":$PATH:" in
+  *":$BUN_INSTALL/bin:"*) ;;
+  *) export PATH="$BUN_INSTALL/bin:$PATH" ;;
+esac
+
+# -----------------------------------------------------------------------------
+# Android SDK
+# -----------------------------------------------------------------------------
+if [[ -d "$HOME/Library/Android/sdk" ]]; then
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+  case ":$PATH:" in
+    *":$ANDROID_HOME/cmdline-tools/10.0/bin:"*) ;;
+    *) export PATH="$PATH:$ANDROID_HOME/cmdline-tools/10.0/bin" ;;
+  esac
+fi
+
+# -----------------------------------------------------------------------------
+# Core Environment Variables
+# -----------------------------------------------------------------------------
+export LC_ALL="en_US.UTF-8"
+export EDITOR=nvim
+export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
+
+# -----------------------------------------------------------------------------
+# kiro-cli
+# -----------------------------------------------------------------------------
+# kiro-cli's pre-init exec-wraps every interactive zsh in its own pty
+# (kiro-cli-term), which hides the real foreground process from tmux: window
+# names cannot follow the running command and tmux-resurrect cannot restore
+# programs. Upstream has no supported opt-out (kirodotdev/Kiro#6037, #7169).
+#
+# The pre-init only wraps when Q_TERM is empty, or when Q_TERM_TMUX is empty
+# inside tmux; setting both skips it. Inline autosuggestions are unaffected —
+# they live in the post-init as a self-contained zsh-autosuggestions fork with
+# its own zpty. What is given up is kiro's OSC session tracking.
+export PROCESS_LAUNCHED_BY_Q=1

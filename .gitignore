@@ -23,3 +23,11 @@ node_modules/
 # review-cycle (local review state)
 .claude/.review-mark
 .claude/.no-review-gate
+.claude/review-cycle/
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
+*.gate.lock*
