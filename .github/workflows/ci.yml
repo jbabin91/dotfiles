@@ -80,7 +80,13 @@ jobs:
       # `chezmoi --version` not `command -v`: the gate runs the binary, so a
       # truncated download passes a PATH check and still skips everything.
       - name: Assert test prerequisites
-        run: zsh --version && chezmoi --version && actionlint --version
+        run: |
+          zsh --version
+          chezmoi --version
+          actionlint --version
+          # Recorded because the runner's shellcheck is not the one pinned in
+          # config/mise/config.toml, and the two disagree on info-level checks.
+          shellcheck --version
 
       - run: pnpm install --frozen-lockfile
 

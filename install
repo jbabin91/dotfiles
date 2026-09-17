@@ -9,8 +9,10 @@ cd "${BASEDIR}"
 
 # Everything below deploys into $HOME; without it chezmoi reads as a broken binary
 # and the installer tries to write /.local.
-[ -n "${HOME}" ] && [ -d "${HOME}" ] ||
-  { echo "  \$HOME is unset or not a directory; ./install deploys into \$HOME and cannot continue" >&2; exit 1; }
+if [ -z "${HOME}" ] || [ ! -d "${HOME}" ]; then
+  echo "  \$HOME is unset or not a directory; ./install deploys into \$HOME and cannot continue" >&2
+  exit 1
+fi
 
 # The one tool this script needs and does not bootstrap.
 command -v uv >/dev/null ||
@@ -71,8 +73,10 @@ ROOT="${ROOT%"${ROOT##*[![:space:]]}"}"
 SOURCE="${BASEDIR}/${ROOT}"
 # Checked before applying: pointed at the repo root instead, init exits 0 having
 # applied the whole repo into $HOME, and no later check undoes that.
-[ -n "${ROOT}" ] && [ -d "${SOURCE}" ] ||
-  { echo "  chezmoi: .chezmoiroot is missing, unreadable, or names no directory under ${BASEDIR}; refusing to apply the repo root into ${HOME}" >&2; exit 1; }
+if [ -z "${ROOT}" ] || [ ! -d "${SOURCE}" ]; then
+  echo "  chezmoi: .chezmoiroot is missing, unreadable, or names no directory under ${BASEDIR}; refusing to apply the repo root into ${HOME}" >&2
+  exit 1
+fi
 
 # init writes sourceDir into ~/.config/chezmoi/chezmoi.toml from the template,
 # which resolves it rather than hardcoding a path, so the repo can live anywhere.
