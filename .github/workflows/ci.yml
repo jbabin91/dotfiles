@@ -33,7 +33,12 @@ jobs:
       # real chezmoi reports as skipped rather than failing.
       - name: Install chezmoi
         run: |
-          sh -c "$(curl -fsSL https://get.chezmoi.io)" -- -b "$HOME/.local/bin"
+          # Fetched to a file, not substituted into sh: a command substitution
+          # reports sh's status, so a failed or truncated download would run a
+          # partial installer and still leave the step green.
+          curl -fsSL -o get-chezmoi.sh https://get.chezmoi.io
+          sh get-chezmoi.sh -- -b "$HOME/.local/bin"
+          rm -f get-chezmoi.sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       # Installs pnpm plus every entry in package.json's devEngines.runtime, so
@@ -54,13 +59,20 @@ jobs:
           ACTIONLINT_VERSION: 1.7.12
         run: |
           base="https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}"
-          curl -fsSL -o actionlint.tar.gz "${base}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          # Saved under its published name: `sha256sum -c` takes the filename
+          # from the checksum line, so renaming the download makes it unreadable.
+          tarball="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL -o "$tarball" "${base}/${tarball}"
           curl -fsSL -o checksums.txt "${base}/actionlint_${ACTIONLINT_VERSION}_checksums.txt"
-          grep " actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz$" checksums.txt | sha256sum -c -
-          tar -xzf actionlint.tar.gz actionlint
+          # Not piped: a pipeline reports only the right-hand status, so a grep
+          # matching nothing would leave verification up to how sha256sum treats
+          # empty input -- which differs between implementations.
+          grep " ${tarball}$" checksums.txt > "${tarball}.sha256"
+          sha256sum -c "${tarball}.sha256"
+          tar -xzf "$tarball" actionlint
           mkdir -p "$HOME/.local/bin"
           mv actionlint "$HOME/.local/bin/"
-          rm -f actionlint.tar.gz checksums.txt
+          rm -f "$tarball" "${tarball}.sha256" checksums.txt
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       # The suite skips rather than fails when these are missing, so a broken
