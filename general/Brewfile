@@ -145,10 +145,6 @@ cask "chatgpt"
 cask "cmux"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
-# Write, edit, and chat about your code with AI
-cask "cursor"
-# Command-line agent for Cursor
-cask "cursor-cli"
 # Voice and text chat software
 cask "discord"
 cask "font-jetbrains-mono"

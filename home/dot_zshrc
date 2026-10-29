@@ -156,9 +156,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
   function e() {
     open "$1" -a Visual\ Studio\ Code
   }
-  function ec() {
-    open "$1" -a Cursor
-  }
 fi
 
 # System updates: brew on the Mac, omarchy elsewhere
