@@ -39,6 +39,11 @@ if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
   export TERM="${TERM:-xterm-ghostty}"
 fi
 
+# Rex draws OSC 8 links (Cmd-click), but Claude Code's terminal list omits it.
+if [[ "$TERM_PROGRAM" == "rex" ]]; then
+  export FORCE_HYPERLINK=1
+fi
+
 # -----------------------------------------------------------------------------
 # bat as MANPAGER (colored man pages)
 # -----------------------------------------------------------------------------
@@ -139,9 +144,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
     open "${1:-.}" -a "Visual Studio Code - Insiders"
   }
 fi
-
-# opencode: the @next channel ships its bin as opencode2
-alias opencode="opencode2"
 
 # System updates: brew on the Mac, omarchy elsewhere
 if [[ "$OSTYPE" == darwin* ]]; then

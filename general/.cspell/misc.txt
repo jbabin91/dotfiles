@@ -111,6 +111,9 @@ daml
 davidmh
 Daytona
 dbname
+debloat
+debloater
+debloating
 Debouncer
 DECALN
 DECAWM
@@ -155,6 +158,7 @@ Dtanner
 Duarte
 duplicative
 eamodio
+earendil
 effectful
 egui
 elgato
@@ -274,6 +278,7 @@ linearization
 llmfit
 llms
 llmstxt
+lmstudio
 Loanee
 loanees
 LOCOMO
@@ -316,6 +321,7 @@ napi
 narrrowable
 ncmpcpp
 NDCG
+neighbours
 netrw
 neugierig
 nexe
@@ -332,8 +338,11 @@ ntvs
 nvimtools
 oakoss
 obra
+obsfx
+Obtainium
 oddvfag
 Ohtani
+omarchy
 oneline
 ooik
 OOTP
@@ -428,6 +437,7 @@ SCIM
 sdec
 searxh
 sequentialthinking
+sesh
 setex
 sfnt
 sharkdp

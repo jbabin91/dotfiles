@@ -32,6 +32,14 @@
     ~/.cspell.json: general/.cspell.json
     ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
     ~/.cspell/misc.txt: general/.cspell/misc.txt
+    # Global agent instructions, shared by Claude Code (~/.claude/CLAUDE.md imports
+    # ~/AGENTS.md) and Codex. Named AGENTS.global.md so agents working in this repo
+    # don't load it as general/agents/'s own project instructions.
+    ~/AGENTS.md: general/agents/AGENTS.global.md
+    ~/.codex/AGENTS.md: general/agents/AGENTS.global.md
+    # Reference docs linked from it. Only docs/: ~/.agents/skills is managed by
+    # the skills installer.
+    ~/.agents/docs: general/agents/docs
     # Git Config
     ~/.gitattributes: general/git/.gitattributes
     ~/.gitconfig: general/git/.gitconfig
@@ -69,6 +77,12 @@
     ~/.config/zed/settings.json: config/zed/settings.json
     ~/.config/zed/keymap.json: config/zed/keymap.json
     ~/.config/zed/tasks.json: config/zed/tasks.json
+
+# Claude Code reads ~/AGENTS.md only through an import in ~/.claude/CLAUDE.md
+# (there is no user-level AGENTS.md lookup).
+- shell:
+    - command: sh general/agents/seed-claude-md.sh
+      description: Seeding ~/.claude/CLAUDE.md
 
 # Placed after link: so a network failure here cannot stop the symlinks. mise
 # installs itself (https://mise.run) into ~/.local/bin rather than coming from
