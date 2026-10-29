@@ -53,6 +53,20 @@ pnpm install
 exec zsh
 ```
 
+### Keeping it up to date
+
+`./install` is the only command you need, and it is safe to run at any time:
+after pulling, after editing the repo, or when something seems off. A re-run
+deploys only what changed, re-runs the Brewfile, mise, tmux and completion
+steps only when their inputs changed, and verifies the result.
+
+```bash
+cd ~/.dotfiles && git pull && ./install
+```
+
+Karabiner is the exception: the live config wins, so change it in
+Karabiner-Elements rather than in the repo (see [Karabiner](#karabiner)).
+
 ## Configuration Structure
 
 ```sh
