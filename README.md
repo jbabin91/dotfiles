@@ -100,7 +100,7 @@ winner on PATH: eight names exist in both `/opt/homebrew/bin` and mise's shims â
 mise-pinned version is the one that runs.
 
 mise itself is the exception: it installs from <https://mise.run> into
-`~/.local/bin`, not from the Brewfile, so it updates itself (`auto_update` in
+`~/.local/bin`, not from the Brewfile, so it updates itself (`self_update.auto` in
 `config/mise/config.toml`) instead of waiting on `brew upgrade`. `./install`
 bootstraps it, so it needs no manual install â€” but a machine that carries a
 Homebrew mise from before this change wants `brew uninstall mise`, since
