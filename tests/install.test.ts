@@ -64,8 +64,6 @@ describe('preconditions', () => {
 });
 
 describe('.chezmoiroot', () => {
-  // chezmoi trims the file's contents, so the guard must too: rejecting any of
-  // these would refuse a root chezmoi itself accepts.
   needsChezmoi.for([
     ['plain', 'home\n'],
     ['trailing space', 'home \n'],
@@ -81,16 +79,11 @@ describe('.chezmoiroot', () => {
     expect(existsSync(join(f.home, '.zshrc'))).toBe(true);
   });
 
-  test.for([
-    ['missing', { omitChezmoiroot: true }],
-    ['empty', { chezmoiroot: '' }],
-    ['whitespace only', { chezmoiroot: '   \n' }],
-    ['naming a missing directory', { chezmoiroot: 'nope\n' }],
-  ] as const)('refuses when %s', ([, opts], { fixture }) => {
-    const f = fixture({ ...opts, stubs: { chezmoi: chezmoiStub() } });
+  test('refuses when .chezmoiroot is missing', ({ fixture }) => {
+    const f = fixture({ omitChezmoiroot: true, stubs: { chezmoi: chezmoiStub() } });
     const r = f.run();
     expect(r.status).toBe(1);
-    expect(r.stderr).toContain('missing, unreadable, or names no directory');
+    expect(r.stderr).toContain('.chezmoiroot is missing or not a regular file; refusing');
   });
 
   test('refuses when .chezmoiroot is a directory', ({ fixture }) => {
@@ -98,16 +91,34 @@ describe('.chezmoiroot', () => {
     mkdirSync(join(f.repo, '.chezmoiroot'));
     const r = f.run();
     expect(r.status).toBe(1);
-    expect(r.stderr).toContain('missing, unreadable, or names no directory');
+    expect(r.stderr).toContain('.chezmoiroot is missing or not a regular file; refusing');
   });
 
-  test('refuses when it is unreadable', ({ fixture }) => {
-    const f = fixture({ stubs: { chezmoi: chezmoiStub() } });
-    chmodSync(join(f.repo, '.chezmoiroot'), 0o000);
+  // Left to chezmoi, which reads the file itself; each must still fail the run
+  // with nothing deployed.
+  needsChezmoi.for([
+    ['empty', '', '.chezmoiroot: : invalid path'],
+    ['whitespace only', '   \n', '.chezmoiroot: : invalid path'],
+    ['naming a missing directory', 'nope\n', 'manages no .zshrc'],
+  ])('fails when it is %s', ([, chezmoiroot, message], { fixture }) => {
+    const f = fixture({ chezmoiroot, useRealChezmoi: true });
     const r = f.run();
-    chmodSync(join(f.repo, '.chezmoiroot'), 0o644);
-    expect(r.status).toBe(1);
-    expect(r.stderr).toContain('missing, unreadable, or names no directory');
+    expect(r.status).not.toBe(0);
+    expect(r.stderr).toContain(message);
+    expect(existsSync(join(f.home, '.zshrc'))).toBe(false);
+  });
+
+  needsChezmoi('fails when it is unreadable', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    chmodSync(join(f.repo, '.chezmoiroot'), 0o000);
+    try {
+      const r = f.run();
+      expect(r.status).not.toBe(0);
+      expect(r.stderr).toContain('permission denied');
+      expect(existsSync(join(f.home, '.zshrc'))).toBe(false);
+    } finally {
+      chmodSync(join(f.repo, '.chezmoiroot'), 0o644);
+    }
   });
 
   needsChezmoi('a missing root leaves $HOME untouched', ({ fixture }) => {
