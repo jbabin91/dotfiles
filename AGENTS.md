@@ -42,12 +42,16 @@ probe gate their suites with `skipIf`, so a machine without them reports
 skipped. An early `return` would report green while asserting nothing --
 `pnpm test` without chezmoi on PATH reports every real-chezmoi case as skipped.
 
-`vitest.config.ts` carries three deliberate settings. `pool: 'forks'` is
-load-bearing -- the threads pool restricts the process APIs these tests are
-built on. `expect.requireAssertions` fails any test that asserts nothing, which
-is how the `skipIf` mistake above would have been caught. `chaiConfig`
-disables diff truncation, because every assertion here is on a long stderr
-string and the default hides the differing part.
+`vitest.config.ts` pins `pool: 'forks'` (measured, the suite passes under threads
+too) and sets three things that matter. `expect.requireAssertions` fails any test
+that asserts nothing, which is how the `skipIf` mistake above would have been
+caught. `chaiConfig` disables diff truncation, because every assertion here is
+on a long stderr string and the default hides the differing part. `testTimeout`
+is raised because a real-chezmoi test applies up to three times.
+
+The real-chezmoi groups live in separate files so they run in parallel: every
+run is a `spawnSync`, which blocks its worker, so tests in one file cannot
+overlap. Measured, splitting them took the suite from 80s to 29s.
 
 A failing test keeps its fixture and prints `fixture kept for inspection:
 <path>`, holding the tree, the stubs and whatever the run left in `$HOME`.
