@@ -10,29 +10,11 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 /** Files `./install` needs, copied so a test that writes cannot reach the real repo. */
 const REPO_FILES = [
   'install',
-  'install.conf.yaml',
   '.chezmoiroot',
   'home',
   'general/Brewfile',
   'config/mise/config.toml',
 ];
-
-/**
- * dotbot must never actually run: it writes into the real $HOME. It does
- * resolve the `-c` config the way dotbot would, so a script that failed to
- * anchor its own cwd is caught rather than passing on a stub that ignores its
- * arguments.
- */
-const NOOP_UV = `#!/bin/sh
-printf '%s\\n' "$@" > "$(dirname "$0")/../uv-args"
-while [ "$#" -gt 0 ]; do
-  case "$1" in
-    -c) [ -f "$2" ] || { echo "stub uv: config not found from $(pwd): $2" >&2; exit 2; }; shift ;;
-  esac
-  shift
-done
-exit 0
-`;
 
 export type RunResult = {
   status: number | null;
@@ -96,7 +78,6 @@ export function createFixture(opts: FixtureOptions = {}): Fixture {
     return path;
   };
 
-  stub('uv', NOOP_UV);
   if (opts.useRealChezmoi) {
     const real = realChezmoi();
     if (!real) throw new Error('useRealChezmoi: no working chezmoi on PATH');
@@ -136,8 +117,7 @@ export function createFixture(opts: FixtureOptions = {}): Fixture {
       const result = spawnSync('/bin/bash', [join(repo, 'install'), ...args], {
         env: childEnv,
         encoding: 'utf8',
-        // Deliberately not the repo: `install` resolves CONFIG relative to its
-        // own cwd, so running from elsewhere proves its `cd` is doing the work.
+        // Deliberately not the repo, so nothing in `install` can lean on its cwd.
         cwd: dir,
       });
       return {

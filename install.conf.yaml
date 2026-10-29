@@ -1,6 +1,0 @@
-- defaults:
-    shell:
-      # Without these, dotbot echoes the whole command and swallows its output.
-      quiet: true
-      stdout: true
-      stderr: true

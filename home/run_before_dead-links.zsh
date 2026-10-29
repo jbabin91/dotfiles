@@ -17,8 +17,8 @@ for path_ in ${(f)out}; do managed[$path_]=1; done
 
 # (-@) matches dangling links. Each target is resolved a component at a time,
 # splicing in every link met on the way and treating missing components as
-# plain names, as the realpath behind dotbot's check does; zsh's :P stops at a
-# dangling link part-way up a path.
+# plain names, as realpath does; zsh's :P stops at a dangling link part-way up
+# a path.
 for link in $HOME/*(ND-@) $HOME/.config/**/*(ND-@); do
   (( ${+managed[${link:a}]} )) && continue
   target=/ hops=0

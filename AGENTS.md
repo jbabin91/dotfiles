@@ -2,14 +2,14 @@
 
 ## Overview
 
-Personal macOS dotfiles deployed by [chezmoi](https://www.chezmoi.io/) from `home/`. [Dotbot](https://github.com/anishathalye/dotbot), run via `uv tool run dotbot`, still runs from `./install` with nothing left in `install.conf.yaml`.
+Personal macOS dotfiles deployed by [chezmoi](https://www.chezmoi.io/) from `home/`.
 
-Hand-edited configs are chezmoi copies, so editing the deployed file and editing the repo are not the same act — use `chezmoi re-add` or edit the source. Configs a tool rewrites (lazy-lock, `mise use`, Zed's settings UI, cspell's add-word, `brew bundle dump`, the kitty theme kitten) and the agent instructions are `symlink_*.tmpl` entries instead, pointing back into `config/` and `general/`, so those writes land in the repo. `./install` runs dotbot and then `chezmoi init --apply`. Its `home/run_before_*` scripts first remove the dead links into this repo that a moved or deleted file leaves in `~` and `~/.config`, sync the Karabiner config, and seed `~/.claude/CLAUDE.md`, and its `home/run_onchange_after_*` scripts run the Brewfile, mise and tmux plugin installs after the files land; each re-runs only when the file its comment hashes changes, and a failing one makes the apply exit nonzero, stops the ones after it, and runs again next time. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin`.
+Hand-edited configs are chezmoi copies, so editing the deployed file and editing the repo are not the same act — use `chezmoi re-add` or edit the source. Configs a tool rewrites (lazy-lock, `mise use`, Zed's settings UI, cspell's add-word, `brew bundle dump`, the kitty theme kitten) and the agent instructions are `symlink_*.tmpl` entries instead, pointing back into `config/` and `general/`, so those writes land in the repo. `./install` runs `chezmoi init --apply`. Its `home/run_before_*` scripts first remove the dead links into this repo that a moved or deleted file leaves in `~` and `~/.config`, sync the Karabiner config, and seed `~/.claude/CLAUDE.md`, and its `home/run_onchange_after_*` scripts run the Brewfile, mise and tmux plugin installs after the files land; each re-runs only when the file its comment hashes changes, and a failing one makes the apply exit nonzero, stops the ones after it, and runs again next time. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin`.
 
 ## Commands
 
 ```bash
-./install                  # Run dotbot, bootstrap chezmoi, then chezmoi init --apply
+./install                  # Bootstrap chezmoi, then chezmoi init --apply
 pnpm run format            # Format JSON/YAML/MD with prettier
 pnpm run lint              # Run all linting (format check + shellcheck + markdownlint)
 pnpm run lint:shell        # Lint shell scripts only
@@ -27,8 +27,8 @@ spawns a process and asserts on its exit status and stderr, so nothing is lost
 by driving them from JS -- and the fixtures stop being shell, which is where
 they kept breaking.
 
-**Assert stderr, not just the exit status.** Mutation testing measured nine of
-the thirteen `install` guards as message-only: deleting them leaves the exit code
+**Assert stderr, not just the exit status.** Mutation testing measured most
+of the `install` guards as message-only: deleting them leaves the exit code
 unchanged, so a status-only suite stays green against a build with the guard
 removed.
 
@@ -40,7 +40,7 @@ anything.
 **Cases that need a tool skip rather than pass.** `realChezmoi()` and the zsh
 probe gate their suites with `skipIf`, so a machine without them reports
 skipped. An early `return` would report green while asserting nothing --
-`pnpm test` without chezmoi on PATH shows 13 skipped.
+`pnpm test` without chezmoi on PATH reports every real-chezmoi case as skipped.
 
 `vitest.config.ts` carries three deliberate settings. `pool: 'forks'` is
 load-bearing -- the threads pool restricts the process APIs these tests are
@@ -83,7 +83,6 @@ That list drives the `cz-git` prompt, which rejects scopes outside it. Commitlin
 - **`general/`** — Brewfile and cspell, linked into `~` the same way
 - **`general/agents/`** — Global agent instructions: `AGENTS.global.md` links to `~/AGENTS.md` and `~/.codex/AGENTS.md`, `docs/` to `~/.agents/docs`. The `.global` suffix keeps agents in this repo from loading it as `general/agents/`'s project instructions.
 - **`home/`** — chezmoi source, mirroring `~/` (`dot_zshrc` becomes `~/.zshrc`): zsh, starship, git, editorconfig, hushlogin, ghostty, sesh, bat, fastfetch, fff-gpui, tmux, zellij's layouts. `.chezmoiroot` points chezmoi here, and `home/.chezmoi.toml.tmpl` generates `~/.config/chezmoi/chezmoi.toml`. The `empty_` prefix on `empty_dot_hushlogin` is load-bearing: chezmoi deletes a target whose source file is zero bytes, so `dot_hushlogin` would remove `~/.hushlogin`.
-- **`install.conf.yaml`** — Dotbot config, empty but for shell-output defaults
 - **`config/macos/set-defaults.sh`** — macOS system defaults (not auto-run, manual script)
 
 ### Special Cases

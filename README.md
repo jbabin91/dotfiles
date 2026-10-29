@@ -1,8 +1,6 @@
 # github.com/jbabin91/dotfiles
 
 Jace Babin's dotfiles, deployed by [chezmoi](https://www.chezmoi.io/) from `home/`.
-`./install` still runs [Dotbot](https://github.com/anishathalye/dotbot) via
-[uv](https://github.com/astral-sh/uv) first, with nothing left for it to do.
 
 ## Features
 
@@ -24,7 +22,6 @@ Jace Babin's dotfiles, deployed by [chezmoi](https://www.chezmoi.io/) from `home
 
 - macOS
 - [Homebrew](https://brew.sh/)
-- [uv](https://github.com/astral-sh/uv) (`brew install uv`)
 
 ### Quick Start
 
@@ -74,7 +71,6 @@ exec zsh
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
 ├── home/               # chezmoi source; mirrors ~/ (zsh, git, ghostty, zellij, …)
 ├── .chezmoiroot        # Points chezmoi's source at home/
-├── install.conf.yaml   # Dotbot: empty
 ├── lefthook.yml        # Git hooks
 ├── prettier.config.js  # Code formatting
 └── .markdownlint-cli2.mjs  # Markdown linting

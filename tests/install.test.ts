@@ -42,32 +42,24 @@ describe('preconditions', () => {
     expect(r.stderr).toContain('$HOME is unset or not a directory');
   });
 
-  test('names uv when it is missing, instead of a bare command-not-found', ({ fixture }) => {
+  test('refuses arguments rather than deploying with them ignored', ({ fixture }) => {
+    const calls = 'chezmoi-calls';
     const f = fixture();
-    rmSync(join(f.stubDir, 'uv'));
-    const r = f.run();
-    expect(r.status).toBe(127);
-    expect(r.stderr).toContain('uv is required to run dotbot');
+    f.stub('chezmoi', chezmoiStub({ init: `echo init >> "$HOME/../${calls}"` }));
+    const r = f.run(['--dry-run']);
+    expect(r.status).toBe(2);
+    expect(r.stderr).toContain('./install takes no arguments');
+    expect(existsSync(join(f.dir, calls))).toBe(false);
   });
 
-  test('a silent dotbot failure says chezmoi was not run', ({ fixture }) => {
-    const f = fixture({ stubs: { uv: '#!/bin/sh\nexit 42\n' } });
-    const r = f.run();
-    // 42, not 1: a hardcoded `exit 1` in the handler would pass either way.
-    expect(r.status).toBe(42);
-    expect(r.stderr).toContain('dotbot exited 42');
-    expect(r.stderr).toContain('chezmoi was not run, so no links, files, brew or mise');
-  });
-
-  test('arguments scope the run to dotbot and skip the chezmoi bootstrap', ({ fixture }) => {
-    const f = fixture({ stubs: { curl: '#!/bin/sh\nexit 99\n' } });
+  test('refuses arguments before bootstrapping a missing chezmoi', ({ fixture }) => {
+    const marker = 'curl-ran';
+    const f = fixture({ stubs: { curl: `#!/bin/sh\n: > "$HOME/../${marker}"\nexit 99\n` } });
     const r = f.run(['--help']);
-    expect(r.status).toBe(0);
-    expect(r.stderr).toContain('chezmoi: skipped, arguments scope dotbot only');
-    expect(existsSync(join(f.home, '.zshrc'))).toBe(false);
-    // dotbot must receive the flag: dropping `"${@}"` from the call
-    // breaks every scoped run the script documents, silently.
-    expect(readFileSync(join(f.dir, 'uv-args'), 'utf8').split('\n')).toContain('--help');
+    expect(r.status).toBe(2);
+    expect(r.stderr).toContain('./install takes no arguments');
+    expect(existsSync(join(f.dir, marker))).toBe(false);
+    expect(existsSync(join(f.home, '.local/bin/chezmoi'))).toBe(false);
   });
 });
 
@@ -120,7 +112,7 @@ describe('.chezmoiroot', () => {
 
   needsChezmoi('a missing root leaves $HOME untouched', ({ fixture }) => {
     // Without the pre-apply check, `chezmoi init` exits 0 having written the
-    // whole repo into $HOME -- ~/install, ~/install.conf.yaml, ~/home/.zshrc.
+    // whole repo into $HOME -- ~/install, ~/home/.zshrc.
     const f = fixture({ omitChezmoiroot: true, useRealChezmoi: true });
     const before = readdirSync(f.home, { recursive: true });
     const r = f.run();
@@ -512,8 +504,6 @@ withChezmoi('run_onchange_ scripts', () => {
   });
 
   test('a failing brew still leaves the files deployed, and names itself', ({ fixture }) => {
-    // The failure this replaced: a disabled cask stopped dotbot's shell
-    // section, so chezmoi never ran and ~/.gitconfig stayed undeployed.
     const f = fixture({ useRealChezmoi: true });
     f.stub('brew', recorder(join(f.dir, 'calls'), 'brew', 1));
     const r = f.run();
@@ -603,7 +593,7 @@ withChezmoi('dead-link sweep', () => {
     // The `..` applies to where the dangling repo/escape leads, not to repo.
     symlinkSync(`${f.repo}/escape/../gone`, links.danglingDotdot);
     symlinkSync(join(f.repo, 'install'), links.live);
-    // dotbot swept ~ itself but not its subdirectories other than ~/.config.
+    // The sweep covers ~ itself but no subdirectory other than ~/.config.
     symlinkSync(join(f.repo, 'gone'), links.deep);
 
     const r = f.run();
