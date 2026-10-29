@@ -2,8 +2,8 @@
 
 Jace Babin's dotfiles, deployed by [chezmoi](https://www.chezmoi.io/) from `home/`.
 [Dotbot](https://github.com/anishathalye/dotbot), run via
-[uv](https://github.com/astral-sh/uv), handles what is left: a dead-link sweep,
-the Karabiner sync and seeding `~/.claude/CLAUDE.md`. `./install` runs both.
+[uv](https://github.com/astral-sh/uv), handles what is left: the Karabiner sync
+and seeding `~/.claude/CLAUDE.md`. `./install` runs both.
 
 ## Features
 
@@ -75,7 +75,7 @@ exec zsh
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
 ├── home/               # chezmoi source; mirrors ~/ (zsh, git, ghostty, zellij, …)
 ├── .chezmoiroot        # Points chezmoi's source at home/
-├── install.conf.yaml   # Dotbot: dead-link sweep, Karabiner sync, CLAUDE.md seed
+├── install.conf.yaml   # Dotbot: Karabiner sync, CLAUDE.md seed
 ├── lefthook.yml        # Git hooks
 ├── prettier.config.js  # Code formatting
 └── .markdownlint-cli2.mjs  # Markdown linting

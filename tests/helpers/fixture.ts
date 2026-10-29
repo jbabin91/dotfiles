@@ -18,10 +18,10 @@ const REPO_FILES = [
 ];
 
 /**
- * dotbot must never actually run: it sweeps dead links and writes into the real
- * $HOME. It does resolve the `-c` config the way dotbot would, so a
- * script that failed to anchor its own cwd is caught rather than passing on a
- * stub that ignores its arguments.
+ * dotbot must never actually run: it writes into the real $HOME. It does
+ * resolve the `-c` config the way dotbot would, so a script that failed to
+ * anchor its own cwd is caught rather than passing on a stub that ignores its
+ * arguments.
  */
 const NOOP_UV = `#!/bin/sh
 printf '%s\\n' "$@" > "$(dirname "$0")/../uv-args"

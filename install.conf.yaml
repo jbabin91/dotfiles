@@ -5,11 +5,6 @@
       stdout: true
       stderr: true
 
-- clean:
-    ~/:
-    ~/.config:
-      recursive: true
-
 - shell:
     - [
         'src="config/karabiner/karabiner.json"; dest="$HOME/.config/karabiner/karabiner.json"; if [
