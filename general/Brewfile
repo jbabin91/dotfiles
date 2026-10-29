@@ -1,6 +1,9 @@
+tap "abue-ammar/tinycast", trusted: true
 tap "bjarneo/cliamp"
+tap "dmno-dev/tap"
 tap "gastownhall/beads", "https://github.com/gastownhall/homebrew-beads.git", trusted: true
 tap "libsql/sqld", trusted: true
+tap "oakoss/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "th0jensen/fff-gpui", trusted: true
 tap "tursodatabase/tap", trusted: true
@@ -86,8 +89,12 @@ brew "ollama", restart_service: :changed
 brew "pkl"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Display and control your Android device
+brew "scrcpy"
 # Smart session manager for the terminal
 brew "sesh"
+# 7-Zip is a file archiver with a high compression ratio
+brew "sevenzip"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Opinionated Lua code formatter
@@ -118,6 +125,8 @@ brew "zoxide"
 brew "zsh"
 # A retro terminal music player inspired by Winamp 2.x
 brew "bjarneo/cliamp/cliamp", trusted: true
+# varlock is a tool to load and validate .env files
+brew "dmno-dev/tap/varlock", trusted: true
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
 # System-wide file finder for macOS built on GPUI, with Zed integration
@@ -127,6 +136,8 @@ brew "tursodatabase/tap/turso"
 cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
+# Android SDK component
+cask "android-platform-tools"
 # Display management tool
 cask "betterdisplay"
 # Send any size file between devices
@@ -146,6 +157,8 @@ cask "ghostty"
 cask "github"
 # Git client focusing on productivity
 cask "gitkraken"
+# Speech to text application
+cask "handy"
 # Vector graphics editor
 cask "inkscape"
 # Menu bar calendar
@@ -158,6 +171,8 @@ cask "kitty"
 cask "linear"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# AI coding agent desktop client
+cask "opencode-desktop"
 # Local-first alternative to Logitech Options+ for HID++ devices
 cask "openlogi"
 # Control your tools with a few keystrokes
@@ -168,6 +183,8 @@ cask "spotify"
 cask "steam"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
+# Tiny, fully native launcher, hotkeys, and clipboard history
+cask "abue-ammar/tinycast/tinycast"
 # Open-source code editor
 cask "visual-studio-code"
 # Menu bar toolkit with keep-awake, system monitor and volume mixer
@@ -228,6 +245,7 @@ vscode "ms-vscode-remote.vscode-remote-extensionpack"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-server"
 vscode "openai.chatgpt"
+vscode "openai.codex-audio"
 vscode "orta.vscode-twoslash-queries"
 vscode "oxc.oxc-vscode"
 vscode "pkief.material-icon-theme"
