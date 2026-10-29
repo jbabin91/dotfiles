@@ -1,0 +1,9 @@
+#!/bin/sh
+# Re-runs when the Brewfile changes or brew reaches PATH: {{ include "../general/Brewfile" | sha256sum }} {{ lookPath "brew" }}
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "  brew: not on PATH; the Brewfile was not applied"
+  exit 0
+fi
+# stdout is ~170 "Using ..." lines; a failing package reports on stderr.
+brew bundle --file="$CHEZMOI_SOURCE_DIR/../general/Brewfile" --no-upgrade >/dev/null
