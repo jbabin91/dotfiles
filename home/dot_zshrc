@@ -9,9 +9,7 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   unset _vscode_shell_integration
 fi
 
-# =============================================================================
 # Zsh Configuration (Antidote)
-# =============================================================================
 
 # -----------------------------------------------------------------------------
 # Plugin Configuration (must be set BEFORE antidote loads plugins)
@@ -160,9 +158,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
   }
   function ec() {
     open "$1" -a Cursor
-  }
-  function ie() {
-    open "${1:-.}" -a "Visual Studio Code - Insiders"
   }
 fi
 

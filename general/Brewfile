@@ -186,8 +186,6 @@ cask "steam"
 cask "tailscale-app"
 # Open-source code editor
 cask "visual-studio-code"
-# Open-source code editor
-cask "visual-studio-code@insiders"
 # Menu bar toolkit with keep-awake, system monitor and volume mixer
 cask "vorssaint"
 # Rust-based terminal
