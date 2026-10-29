@@ -1,9 +1,4 @@
 - defaults:
-    link:
-      glob: true
-      create: true
-      relink: true
-      force: true
     shell:
       # Without these, dotbot echoes the whole command and swallows its output.
       quiet: true
@@ -23,38 +18,6 @@
         echo "  karabiner: dotfiles → live (bootstrap)"; fi',
         Syncing karabiner config,
       ]
-
-- link:
-    # Most targets below hold state a tool rewrites -- lazy-lock.json, a theme
-    # the kitten swaps, whatever `mise use` edits, zellij's regeneration on
-    # upgrade -- even where most of the tree is hand-written. The symlink
-    # carries those writes back into the repo for git to see; under chezmoi
-    # they would strand in ~ and fail `chezmoi verify`, which ./install treats
-    # as fatal.
-    ~/Brewfile: general/Brewfile
-    ~/.cspell.json: general/.cspell.json
-    ~/.cspell/personal-words.txt: general/.cspell/personal-words.txt
-    ~/.cspell/misc.txt: general/.cspell/misc.txt
-    # Global agent instructions, shared by Claude Code (~/.claude/CLAUDE.md imports
-    # ~/AGENTS.md) and Codex. Named AGENTS.global.md so agents working in this repo
-    # don't load it as general/agents/'s own project instructions.
-    ~/AGENTS.md: general/agents/AGENTS.global.md
-    ~/.codex/AGENTS.md: general/agents/AGENTS.global.md
-    # Reference docs linked from it. Only docs/: ~/.agents/skills is managed by
-    # the skills installer.
-    ~/.agents/docs: general/agents/docs
-    ~/.config/kitty: config/kitty
-    # Karabiner - managed via shell sync (app replaces symlinks)
-    ~/.config/mise: config/mise
-    ~/.config/btop: config/btop
-    ~/.config/nvim: config/nvim
-    # Zellij regenerates config.kdl on upgrade; the layouts it never touches
-    # are chezmoi-managed under home/dot_config/zellij/
-    ~/.config/zellij/config.kdl: config/zellij/config.kdl
-    # Zed - config files only; conversations/embeddings/themes stay local
-    ~/.config/zed/settings.json: config/zed/settings.json
-    ~/.config/zed/keymap.json: config/zed/keymap.json
-    ~/.config/zed/tasks.json: config/zed/tasks.json
 
 # Claude Code reads ~/AGENTS.md only through an import in ~/.claude/CLAUDE.md
 # (there is no user-level AGENTS.md lookup).

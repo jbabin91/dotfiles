@@ -2,7 +2,7 @@
   "name": "dotfiles",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal dotfiles managed with Dotbot",
+  "description": "Personal macOS dotfiles deployed by chezmoi",
   "keywords": [
     "dotfiles"
   ],

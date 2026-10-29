@@ -9,7 +9,7 @@ if [ -e "$f" ] || [ -L "$f" ]; then exit 0; fi
 mkdir -p "$HOME/.claude" &&
   cat >"$f" <<'EOF' &&
 <!--
-Shared instructions live in ~/AGENTS.md (a dotbot link to ~/.dotfiles/general/agents/AGENTS.global.md),
+Shared instructions live in ~/AGENTS.md (a chezmoi link to ~/.dotfiles/general/agents/AGENTS.global.md),
 read by Claude Code through the import below and by Codex directly. Claude-only rules go below the
 import. Never put @ imports in ~/AGENTS.md: Codex would see them as plain text.
 -->

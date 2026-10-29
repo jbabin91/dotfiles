@@ -2,9 +2,9 @@
 
 ## Overview
 
-Personal macOS dotfiles managed with [Dotbot](https://github.com/anishathalye/dotbot) via `uv tool run dotbot`. Configs are symlinked from this repo to their expected locations in `~` and `~/.config/`.
+Personal macOS dotfiles deployed by [chezmoi](https://www.chezmoi.io/) from `home/`. [Dotbot](https://github.com/anishathalye/dotbot), run via `uv tool run dotbot`, is left with a dead-link sweep, the Karabiner sync and the `CLAUDE.md` seed.
 
-A migration to [chezmoi](https://www.chezmoi.io/) is in progress: files under `home/` (see Architecture) are chezmoi-managed copies rather than symlinks, so editing the deployed file and editing the repo are no longer the same act — use `chezmoi re-add` or edit the source. `./install` runs dotbot and then `chezmoi init --apply`, whose `home/run_onchange_after_*` scripts run the Brewfile, mise and tmux plugin installs after the files land; each re-runs only when the file its comment hashes changes, and a failing one makes the apply exit nonzero, stops the ones after it, and runs again next time. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin` — after dotbot, so a network failure there cannot cost you the symlinks.
+Hand-edited configs are chezmoi copies, so editing the deployed file and editing the repo are not the same act — use `chezmoi re-add` or edit the source. Configs a tool rewrites (lazy-lock, `mise use`, Zed's settings UI, cspell's add-word, `brew bundle dump`, the kitty theme kitten) and the agent instructions are `symlink_*.tmpl` entries instead, pointing back into `config/` and `general/`, so those writes land in the repo. `./install` runs dotbot and then `chezmoi init --apply`, whose `home/run_onchange_after_*` scripts run the Brewfile, mise and tmux plugin installs after the files land; each re-runs only when the file its comment hashes changes, and a failing one makes the apply exit nonzero, stops the ones after it, and runs again next time. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin`.
 
 ## Commands
 
@@ -79,11 +79,11 @@ That list drives the `cz-git` prompt, which rejects scopes outside it. Commitlin
 
 ## Architecture
 
-- **`config/`** — Application configs symlinked to `~/.config/<app>` (kitty, mise, nvim, btop, zellij's config.kdl)
-- **`general/`** — Dotfiles symlinked to `~/` or `~/.` (Brewfile, cspell)
+- **`config/`** — Configs a tool rewrites, linked into `~/.config` by `symlink_*.tmpl` entries under `home/dot_config/` (kitty, mise, nvim, btop, zed, zellij's config.kdl)
+- **`general/`** — Brewfile and cspell, linked into `~` the same way
 - **`general/agents/`** — Global agent instructions: `AGENTS.global.md` links to `~/AGENTS.md` and `~/.codex/AGENTS.md`, `docs/` to `~/.agents/docs`. The `.global` suffix keeps agents in this repo from loading it as `general/agents/`'s project instructions.
 - **`home/`** — chezmoi source, mirroring `~/` (`dot_zshrc` becomes `~/.zshrc`): zsh, starship, git, editorconfig, hushlogin, ghostty, sesh, bat, fastfetch, fff-gpui, tmux, zellij's layouts. `.chezmoiroot` points chezmoi here, and `home/.chezmoi.toml.tmpl` generates `~/.config/chezmoi/chezmoi.toml`. The `empty_` prefix on `empty_dot_hushlogin` is load-bearing: chezmoi deletes a target whose source file is zero bytes, so `dot_hushlogin` would remove `~/.hushlogin`.
-- **`install.conf.yaml`** — Dotbot config defining all symlinks and shell commands
+- **`install.conf.yaml`** — Dotbot config: the dead-link sweep, the Karabiner sync and the `CLAUDE.md` seed
 - **`config/macos/set-defaults.sh`** — macOS system defaults (not auto-run, manual script)
 
 ### Special Cases
