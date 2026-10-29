@@ -332,13 +332,6 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # -----------------------------------------------------------------------------
-# iTerm2 Integration
-# -----------------------------------------------------------------------------
-if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
-  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-fi
-
-# -----------------------------------------------------------------------------
 # Bun Completions
 # -----------------------------------------------------------------------------
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
