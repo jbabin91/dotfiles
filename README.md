@@ -2,8 +2,8 @@
 
 Jace Babin's dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot) via
 [uv](https://github.com/astral-sh/uv), and migrating to
-[chezmoi](https://www.chezmoi.io/), which already owns the zsh and starship
-configs under `home/`. `./install` runs both.
+[chezmoi](https://www.chezmoi.io/), which already owns most of what lands
+in `~` and `~/.config` under `home/`. `./install` runs both.
 
 ## Features
 
@@ -64,21 +64,21 @@ exec zsh
 
 ```sh
 ~/.dotfiles/
-├── config/
-│   ├── bat/            # bat syntax highlighter
-│   ├── fastfetch/      # System information display
-│   ├── ghostty/        # Ghostty terminal
+├── config/             # Not chezmoi-managed (see install.conf.yaml for why)
 │   ├── btop/           # btop system monitor
 │   ├── karabiner/      # Keyboard customization (copy-synced)
 │   ├── kitty/          # Kitty terminal
+│   ├── macos/          # System defaults script (not auto-run)
 │   ├── mise/           # Tool version manager (node, rust, dotnet)
-│   └── nvim/           # Neovim config (LazyVim)
+│   ├── nvim/           # Neovim config (LazyVim)
+│   ├── tmux/           # tmux, plus the which-key menu config
+│   ├── zed/            # Zed settings, keymap, tasks
+│   └── zellij/         # config.kdl only; zellij rewrites it on upgrade
 ├── general/
 │   ├── agents/         # Global agent instructions (~/AGENTS.md, ~/.codex/AGENTS.md, ~/.agents/docs)
-│   ├── git/            # Git config, attributes, ignore
 │   ├── .cspell/        # Spell checking dictionaries
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
-├── home/               # chezmoi source; mirrors ~/ (dot_zshrc -> ~/.zshrc)
+├── home/               # chezmoi source; mirrors ~/ (zsh, git, ghostty, zellij, …)
 ├── .chezmoiroot        # Points chezmoi's source at home/
 ├── install.conf.yaml   # Dotbot symlink configuration
 ├── lefthook.yml        # Git hooks

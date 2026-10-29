@@ -1,16 +1,16 @@
 import { readdirSync } from 'node:fs';
 import { defineConfig } from 'cz-git';
 
-// Every directory under config/ is a scope, so adding a tool never needs an
-// edit here. Scopes outside config/ live in general/ or apply repo-wide.
-const scopes = [
-  ...readdirSync(new URL('config', import.meta.url), { withFileTypes: true })
+const dirsIn = (path) =>
+  readdirSync(new URL(path, import.meta.url), { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name),
-  'git',
-  'brew',
-  'cspell',
-  'deps',
+    .map((entry) => entry.name);
+
+// A tool's scope is its directory name, read from both places a tool's config
+// can live, so migrating one between them keeps its scope. Deduplicated
+// because `git` is named explicitly and also exists under home/dot_config/.
+const scopes = [
+  ...new Set([...dirsIn('config'), ...dirsIn('home/dot_config'), 'git', 'brew', 'cspell', 'deps']),
 ].sort();
 
 export default defineConfig({
