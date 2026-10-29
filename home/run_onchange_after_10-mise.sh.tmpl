@@ -1,0 +1,23 @@
+#!/bin/sh
+# Re-runs when the mise config changes or the binary goes missing: {{ include "../config/mise/config.toml" | sha256sum }} {{ stat (joinPath .chezmoi.homeDir ".local/bin/mise") | not }}
+
+# mise installs itself from https://mise.run rather than the Brewfile, so it can
+# self-update. -s, not -x: a truncated install leaves an empty file that is still
+# executable and exits 0 on every call.
+m="$HOME/.local/bin/mise"
+if [ ! -s "$m" ] || ! "$m" --version >/dev/null 2>&1; then
+  # Fetched to a file and checked at each step: piped into sh, a failed fetch
+  # reports success, and curl -f accepts a 2xx body that is not a script.
+  t=$(mktemp) || exit 1
+  trap 'rm -f "$t" "$t.log"' EXIT
+  curl -fsSL https://mise.run -o "$t" ||
+    { s=$?; echo "  mise: could not download https://mise.run (curl exited $s)" >&2; exit "$s"; }
+  head -n1 "$t" | grep -q '^#!' ||
+    { echo "  mise: https://mise.run returned $(wc -c <"$t" | tr -d ' ') bytes that are not a script" >&2; exit 1; }
+  # The installer draws a progress bar on stderr even under MISE_QUIET.
+  MISE_QUIET=1 sh "$t" >"$t.log" 2>&1 ||
+    { s=$?; cat "$t.log" >&2; echo "  mise: installer exited $s (over 128 means killed by signal)" >&2; exit "$s"; }
+  { [ -s "$m" ] && "$m" --version >/dev/null 2>&1; } ||
+    { echo "  mise: installer exited 0 but left no working binary at $m" >&2; exit 1; }
+fi
+"$m" install >/dev/null

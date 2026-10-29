@@ -4,7 +4,7 @@
 
 Personal macOS dotfiles managed with [Dotbot](https://github.com/anishathalye/dotbot) via `uv tool run dotbot`. Configs are symlinked from this repo to their expected locations in `~` and `~/.config/`.
 
-A migration to [chezmoi](https://www.chezmoi.io/) is in progress: files under `home/` (see Architecture) are chezmoi-managed copies rather than symlinks, so editing the deployed file and editing the repo are no longer the same act — use `chezmoi re-add` or edit the source. `./install` runs dotbot and then `chezmoi init --apply`. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin` — after dotbot, so a network failure there cannot cost you the symlinks.
+A migration to [chezmoi](https://www.chezmoi.io/) is in progress: files under `home/` (see Architecture) are chezmoi-managed copies rather than symlinks, so editing the deployed file and editing the repo are no longer the same act — use `chezmoi re-add` or edit the source. `./install` runs dotbot and then `chezmoi init --apply`, whose `home/run_onchange_after_*` scripts run the Brewfile, mise and tmux plugin installs after the files land; each re-runs only when the file its comment hashes changes, and a failing one makes the apply exit nonzero, stops the ones after it, and runs again next time. chezmoi is not in the Brewfile: `./install` uses a working one already on PATH, and otherwise bootstraps a copy into `~/.local/bin` — after dotbot, so a network failure there cannot cost you the symlinks.
 
 ## Commands
 

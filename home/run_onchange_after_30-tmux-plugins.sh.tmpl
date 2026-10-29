@@ -1,0 +1,17 @@
+#!/bin/sh
+# Re-runs when tmux.conf changes, tpack reaches PATH, or a plugin update renames
+# the which-key directory: {{ include "../config/tmux/tmux.conf" | sha256sum }} {{ lookPath "tpack" }} {{ glob (joinPath .chezmoi.homeDir ".local/share/tmux/plugins/tmux-which-key-*") }}
+
+if ! command -v tpack >/dev/null 2>&1; then
+  echo "  tpack: not on PATH; tmux plugins were not installed"
+  exit 0
+fi
+tpack install || exit
+
+# tmux-which-key has no option for a config path (its XDG mode calls GNU
+# `realpath --relative-to`, which BSD realpath rejects), so link the menu config
+# into the plugin directory, whose name carries a content hash.
+for d in "$HOME"/.local/share/tmux/plugins/tmux-which-key-*; do
+  [ -d "$d" ] || continue
+  ln -sfn "$HOME/.config/tmux/plugins/tmux-which-key/config.yaml" "$d/config.yaml" || exit
+done

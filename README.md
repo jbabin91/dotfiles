@@ -36,25 +36,21 @@ git clone https://github.com/jbabin91/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ```
 
-2. Run the install script to symlink configuration files:
+2. Run the install script. It links and deploys the configs, then chezmoi's
+   `run_onchange_` scripts apply the Brewfile, install mise and its tools, and
+   install tmux plugins, each again only when its input file changes:
 
 ```bash
 ./install
 ```
 
-3. Install Homebrew packages:
-
-```bash
-brew bundle --global
-```
-
-4. Install development dependencies:
+3. Install development dependencies:
 
 ```bash
 pnpm install
 ```
 
-5. Restart your shell:
+4. Restart your shell:
 
 ```bash
 exec zsh

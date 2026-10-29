@@ -8,7 +8,15 @@ import { test as base } from 'vitest';
 const REPO = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 /** Files `./install` needs, copied so a test that writes cannot reach the real repo. */
-const REPO_FILES = ['install', 'install.conf.yaml', '.chezmoiroot', 'home'];
+const REPO_FILES = [
+  'install',
+  'install.conf.yaml',
+  '.chezmoiroot',
+  'home',
+  'general/Brewfile',
+  'config/mise/config.toml',
+  'config/tmux',
+];
 
 /**
  * dotbot must never actually run: it deploys symlinks, runs brew bundle and
@@ -82,6 +90,9 @@ export function createFixture(opts: FixtureOptions = {}): Fixture {
 
   const stub = (name: string, body: string): string => {
     const path = join(stubDir, name);
+    // Unlinked first: writing through the `chezmoi` symlink below would
+    // overwrite the real binary it points at.
+    rmSync(path, { force: true });
     writeFileSync(path, body, { mode: 0o755 });
     return path;
   };
@@ -93,6 +104,10 @@ export function createFixture(opts: FixtureOptions = {}): Fixture {
     // Symlinked, not copied: it is ~38MB and code-signed, and a freshly copied
     // signed Mach-O intermittently fails to exec on macOS.
     symlinkSync(real, join(stubDir, 'chezmoi'));
+    // The mise run_ script downloads mise when this does not run; a working one
+    // keeps every real apply off the network.
+    mkdirSync(join(home, '.local/bin'), { recursive: true });
+    writeFileSync(join(home, '.local/bin/mise'), '#!/bin/sh\nexit 0\n', { mode: 0o755 });
   }
   for (const [name, body] of Object.entries(opts.stubs ?? {})) stub(name, body);
 
