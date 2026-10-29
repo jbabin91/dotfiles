@@ -3,7 +3,6 @@ tap "bjarneo/cliamp"
 tap "dmno-dev/tap"
 tap "gastownhall/beads", "https://github.com/gastownhall/homebrew-beads.git", trusted: true
 tap "libsql/sqld", trusted: true
-tap "oakoss/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "th0jensen/fff-gpui", trusted: true
 tap "tursodatabase/tap", trusted: true
