@@ -1,9 +1,7 @@
-tap "agentwrapper/tap"
 tap "bjarneo/cliamp"
 tap "gastownhall/beads", "https://github.com/gastownhall/homebrew-beads.git", trusted: true
 tap "libsql/sqld", trusted: true
 tap "oven-sh/bun", trusted: true
-tap "stablyai/orca"
 tap "th0jensen/fff-gpui", trusted: true
 tap "tursodatabase/tap", trusted: true
 # Static analysis and lint tool, for (ba)sh scripts
@@ -64,10 +62,6 @@ brew "git-extras"
 brew "git-lfs"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Agent multiplexer that lives in your terminal
-brew "herdr"
-# Review-first terminal diff viewer for agent-authored changesets
-brew "hunk"
 # CLI tool for searching and downloading app packages from the iOS App Store
 brew "ipatool"
 # Update of iperf: measures TCP, UDP, and SCTP bandwidth
@@ -133,16 +127,12 @@ brew "tursodatabase/tap/turso"
 cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
-# Orchestrator for running parallel coding agents
-cask "agentwrapper/tap/agent-orchestrator", trusted: true
 # Display management tool
 cask "betterdisplay"
 # Send any size file between devices
 cask "blip"
 # OpenAI's official ChatGPT desktop app
 cask "chatgpt"
-# Ghostty-based terminal with vertical tabs and notifications for AI coding agents
-cask "cmux"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Voice and text chat software
@@ -170,8 +160,6 @@ cask "linear"
 cask "obsidian"
 # Local-first alternative to Logitech Options+ for HID++ devices
 cask "openlogi"
-# IDE for orchestrating AI coding agents across terminals and worktrees
-cask "stablyai/orca/orca", trusted: true
 # Control your tools with a few keystrokes
 cask "raycast"
 # Music streaming service
