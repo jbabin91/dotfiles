@@ -143,3 +143,57 @@ describe.skipIf(!hasZsh)('dot_zshenv PATH construction', () => {
     expect(r.stderr).not.toContain('mise did not activate');
   });
 });
+
+const VARS = ['FORCE_COLOR', 'GIT_EDITOR', 'GIT_SEQUENCE_EDITOR', 'RIPGREP_CONFIG_PATH'] as const;
+
+/** Sources dot_zshenv with stdout on a pipe and reports each of VARS, or null when unset. */
+function sourceWithoutTty(
+  env: Record<string, string> = {},
+  home?: (home: string) => void,
+): Record<(typeof VARS)[number], string | null> {
+  const dir = mkdtempSync(join(tmpdir(), 'zshenv-test-'));
+  try {
+    const homeDir = join(dir, 'home');
+    mkdirSync(homeDir);
+    home?.(homeDir);
+    const report = VARS.map((v) => `print -r -- "\${${v}+set:}\${${v}}"`).join('; ');
+    const r = spawnSync('zsh', ['-c', `source ${JSON.stringify(ZSHENV)} >/dev/null; ${report}`], {
+      env: { HOME: homeDir, PATH: CHILD_PATH, ...env },
+      encoding: 'utf8',
+    });
+    const lines = (r.stdout ?? '').split('\n');
+    return Object.fromEntries(
+      VARS.map((v, i) => [v, lines[i]?.startsWith('set:') ? lines[i].slice(4) : null]),
+    ) as Record<(typeof VARS)[number], string | null>;
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+describe.skipIf(!hasZsh)('dot_zshenv without a terminal', () => {
+  test('leaves FORCE_COLOR unset, so tools keep escapes out of pipes', () => {
+    expect(sourceWithoutTty().FORCE_COLOR).toBeNull();
+  });
+
+  test('keeps an explicit FORCE_COLOR', () => {
+    expect(sourceWithoutTty({ FORCE_COLOR: '0' }).FORCE_COLOR).toBe('0');
+  });
+
+  test('makes git fail fast instead of opening an editor nobody can see', () => {
+    const r = sourceWithoutTty();
+    expect(r.GIT_EDITOR).toBe('false');
+    expect(r.GIT_SEQUENCE_EDITOR).toBe('false');
+  });
+
+  test('keeps an editor the caller set', () => {
+    const r = sourceWithoutTty({ GIT_EDITOR: 'true', GIT_SEQUENCE_EDITOR: 'true' });
+    expect(r.GIT_EDITOR).toBe('true');
+    expect(r.GIT_SEQUENCE_EDITOR).toBe('true');
+  });
+
+  test('exports RIPGREP_CONFIG_PATH only when ~/.rgrc exists', () => {
+    expect(sourceWithoutTty().RIPGREP_CONFIG_PATH).toBeNull();
+    const withRc = sourceWithoutTty({}, (h) => writeFileSync(join(h, '.rgrc'), ''));
+    expect(withRc.RIPGREP_CONFIG_PATH).toMatch(/\/home\/\.rgrc$/);
+  });
+});
