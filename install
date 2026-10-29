@@ -2,30 +2,19 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-cd "${BASEDIR}"
+# Refused rather than ignored, so --help or --dry-run cannot deploy for real.
+if [ "$#" -gt 0 ]; then
+  echo "  ./install takes no arguments; it bootstraps chezmoi and applies ${BASEDIR} into \$HOME" >&2
+  exit 2
+fi
 
 # Everything below deploys into $HOME; without it chezmoi reads as a broken binary
 # and the installer tries to write /.local.
 if [ -z "${HOME}" ] || [ ! -d "${HOME}" ]; then
   echo "  \$HOME is unset or not a directory; ./install deploys into \$HOME and cannot continue" >&2
   exit 1
-fi
-
-# The one tool this script needs and does not bootstrap.
-command -v uv >/dev/null ||
-  { echo "  uv is required to run dotbot but is not on PATH; install it first (brew install uv)" >&2; exit 127; }
-
-uv tool run dotbot -d "${BASEDIR}" -c "${CONFIG}" "${@}" ||
-  { s=$?; echo "  dotbot exited ${s} (over 128 means killed by signal); the dead-link sweep, Karabiner sync and CLAUDE.md seed may be incomplete, and chezmoi was not run, so no links, files, brew or mise" >&2; exit "${s}"; }
-
-# Arguments reach dotbot only, so a scoped or informational run stops here;
-# otherwise --help and --dry-run would deploy the chezmoi source for real.
-if [ "$#" -gt 0 ]; then
-  echo "  chezmoi: skipped, arguments scope dotbot only; run ./install with none to bootstrap" >&2
-  exit 0
 fi
 
 # Runs the binary rather than trusting the file: a truncated install leaves a
@@ -82,7 +71,7 @@ fi
 # --destination is pinned because init's apply stage otherwise honours a destDir
 # already in that file, sending the whole apply elsewhere while every check passes.
 "${CHEZMOI}" init --source "${SOURCE}" --destination "${HOME}" --apply ||
-  { s=$?; echo "  dotbot finished, but chezmoi init exited ${s} (over 128 means killed by signal); it applies as it goes, so ${HOME} may hold some, all or none of its files; its mise, brew and tmux-plugin scripts run last, and a failing one is named above and stops the ones after it -- run ${CHEZMOI} status --source ${SOURCE} to see what landed" >&2; exit "${s}"; }
+  { s=$?; echo "  chezmoi init exited ${s} (over 128 means killed by signal); it applies as it goes, so ${HOME} may hold some, all or none of its files; its mise, brew and tmux-plugin scripts run last, and a failing one is named above and stops the ones after it -- run ${CHEZMOI} status --source ${SOURCE} to see what landed" >&2; exit "${s}"; }
 
 # Whole-tree verify first, so drift is reported as drift. It passes vacuously on
 # an empty source, which the targeted verify below then catches: once everything

@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process';
 import {
   chmodSync,
   existsSync,
+  lstatSync,
   mkdirSync,
   readFileSync,
   readdirSync,
@@ -41,32 +42,24 @@ describe('preconditions', () => {
     expect(r.stderr).toContain('$HOME is unset or not a directory');
   });
 
-  test('names uv when it is missing, instead of a bare command-not-found', ({ fixture }) => {
+  test('refuses arguments rather than deploying with them ignored', ({ fixture }) => {
+    const calls = 'chezmoi-calls';
     const f = fixture();
-    rmSync(join(f.stubDir, 'uv'));
-    const r = f.run();
-    expect(r.status).toBe(127);
-    expect(r.stderr).toContain('uv is required to run dotbot');
+    f.stub('chezmoi', chezmoiStub({ init: `echo init >> "$HOME/../${calls}"` }));
+    const r = f.run(['--dry-run']);
+    expect(r.status).toBe(2);
+    expect(r.stderr).toContain('./install takes no arguments');
+    expect(existsSync(join(f.dir, calls))).toBe(false);
   });
 
-  test('a silent dotbot failure still explains what may be incomplete', ({ fixture }) => {
-    const f = fixture({ stubs: { uv: '#!/bin/sh\nexit 42\n' } });
-    const r = f.run();
-    // 42, not 1: a hardcoded `exit 1` in the handler would pass either way.
-    expect(r.status).toBe(42);
-    expect(r.stderr).toContain('dotbot exited 42');
-    expect(r.stderr).toContain('chezmoi was not run, so no links, files, brew or mise');
-  });
-
-  test('arguments scope the run to dotbot and skip the chezmoi bootstrap', ({ fixture }) => {
-    const f = fixture({ stubs: { curl: '#!/bin/sh\nexit 99\n' } });
+  test('refuses arguments before bootstrapping a missing chezmoi', ({ fixture }) => {
+    const marker = 'curl-ran';
+    const f = fixture({ stubs: { curl: `#!/bin/sh\n: > "$HOME/../${marker}"\nexit 99\n` } });
     const r = f.run(['--help']);
-    expect(r.status).toBe(0);
-    expect(r.stderr).toContain('chezmoi: skipped, arguments scope dotbot only');
-    expect(existsSync(join(f.home, '.zshrc'))).toBe(false);
-    // dotbot must receive the flag: dropping `"${@}"` from the call
-    // breaks every scoped run the script documents, silently.
-    expect(readFileSync(join(f.dir, 'uv-args'), 'utf8').split('\n')).toContain('--help');
+    expect(r.status).toBe(2);
+    expect(r.stderr).toContain('./install takes no arguments');
+    expect(existsSync(join(f.dir, marker))).toBe(false);
+    expect(existsSync(join(f.home, '.local/bin/chezmoi'))).toBe(false);
   });
 });
 
@@ -119,7 +112,7 @@ describe('.chezmoiroot', () => {
 
   needsChezmoi('a missing root leaves $HOME untouched', ({ fixture }) => {
     // Without the pre-apply check, `chezmoi init` exits 0 having written the
-    // whole repo into $HOME -- ~/install, ~/install.conf.yaml, ~/home/.zshrc.
+    // whole repo into $HOME -- ~/install, ~/home/.zshrc.
     const f = fixture({ omitChezmoiroot: true, useRealChezmoi: true });
     const before = readdirSync(f.home, { recursive: true });
     const r = f.run();
@@ -511,8 +504,6 @@ withChezmoi('run_onchange_ scripts', () => {
   });
 
   test('a failing brew still leaves the files deployed, and names itself', ({ fixture }) => {
-    // The failure this replaced: a disabled cask stopped dotbot's shell
-    // section, so chezmoi never ran and ~/.gitconfig stayed undeployed.
     const f = fixture({ useRealChezmoi: true });
     f.stub('brew', recorder(join(f.dir, 'calls'), 'brew', 1));
     const r = f.run();
@@ -560,6 +551,227 @@ withChezmoi('run_onchange_ scripts', () => {
     expect(r.status).toBe(0);
     expect(existsSync(marker)).toBe(true);
     expect(existsSync(join(f.home, '.local/bin/mise'))).toBe(true);
+  });
+});
+
+withChezmoi('dead-link sweep', () => {
+  test('removes dead links into the repo and leaves every other link', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    mkdirSync(join(f.home, '.config/tool'), { recursive: true });
+    const links = {
+      top: join(f.home, '.gone'),
+      nested: join(f.home, '.config/tool/gone.conf'),
+      relative: join(f.home, '.config/rel'),
+      parentGone: join(f.home, '.config/parent-gone'),
+      chain: join(f.home, '.chain'),
+      hop: join(f.home, '.config/hop'),
+      foreign: join(f.home, '.config/foreign'),
+      sibling: join(f.home, '.config/sibling'),
+      escapes: join(f.home, '.config/escapes'),
+      outward: join(f.home, '.config/outward'),
+      danglingDotdot: join(f.home, '.config/dangling-dotdot'),
+      live: join(f.home, '.config/live'),
+      deep: join(f.home, 'Library/gone'),
+    };
+    mkdirSync(join(f.home, 'Library'));
+    symlinkSync(join(f.repo, 'config/moved'), links.top);
+    symlinkSync(join(f.repo, 'config/tool/gone.conf'), links.nested);
+    symlinkSync(relative(dirname(links.relative), join(f.repo, 'gone')), links.relative);
+    symlinkSync(
+      relative(dirname(links.parentGone), join(f.repo, 'deleted-dir/gone')),
+      links.parentGone,
+    );
+    symlinkSync(links.hop, links.chain);
+    symlinkSync(join(f.repo, 'missing'), links.hop);
+    symlinkSync(join(f.dir, 'elsewhere'), links.foreign);
+    symlinkSync(`${f.repo}-old/gone`, links.sibling);
+    // Concatenated: join() would fold the `..` before the link ever held it.
+    symlinkSync(`${f.repo}/deleted-dir/../../elsewhere`, links.escapes);
+    // Folding the `..` exposes repo/escape, which leads out of the repo.
+    symlinkSync(join(f.dir, 'elsewhere'), join(f.repo, 'escape'));
+    symlinkSync(`${f.repo}/deleted-dir/../escape/gone`, links.outward);
+    // The `..` applies to where the dangling repo/escape leads, not to repo.
+    symlinkSync(`${f.repo}/escape/../gone`, links.danglingDotdot);
+    symlinkSync(join(f.repo, 'install'), links.live);
+    // The sweep covers ~ itself but no subdirectory other than ~/.config.
+    symlinkSync(join(f.repo, 'gone'), links.deep);
+
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    const left = Object.entries(links)
+      .filter(([, p]) => lstatSync(p, { throwIfNoEntry: false }))
+      .map(([name]) => name);
+    expect(left).toEqual([
+      'foreign',
+      'sibling',
+      'escapes',
+      'outward',
+      'danglingDotdot',
+      'live',
+      'deep',
+    ]);
+    expect(r.stdout).toContain(`removed dead link ${links.top}`);
+  });
+
+  test('leaves a chezmoi symlink_ entry whose target is missing to chezmoi', ({ fixture }) => {
+    // The fixture copies no config/kitty, so ~/.config/kitty deploys dead.
+    // Deleting it would make the next apply stop and ask about it.
+    const f = fixture({ useRealChezmoi: true });
+    expect(f.run().status).toBe(0);
+    const second = f.run();
+    expect(second.stderr).toBe('');
+    expect(second.status).toBe(0);
+    expect(readlinkSync(join(f.home, '.config/kitty'))).toBe(join(f.repo, 'config/kitty'));
+  });
+
+  test('warns about a link it cannot remove and still deploys', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    const locked = join(f.home, '.config/locked');
+    mkdirSync(locked, { recursive: true });
+    symlinkSync(join(f.repo, 'gone'), join(locked, 'dead'));
+    chmodSync(locked, 0o555);
+    try {
+      const r = f.run();
+      expect(r.stderr).toContain(`could not remove ${join(locked, 'dead')}`);
+      expect(r.status).toBe(0);
+      expect(existsSync(join(f.home, '.zshrc'))).toBe(true);
+    } finally {
+      chmodSync(locked, 0o755);
+    }
+  });
+
+  test('refuses to run without chezmoi', () => {
+    const r = spawnSync('/bin/zsh', [join(REPO, 'home/run_before_dead-links.zsh')], {
+      env: { HOME: '/nonexistent', PATH: '/usr/bin:/bin' },
+      encoding: 'utf8',
+      // Without the guard the source glob walks the whole filesystem.
+      timeout: 10_000,
+    });
+    expect(r.status).not.toBe(0);
+    expect(r.stderr).toContain('CHEZMOI_SOURCE_DIR: is unset');
+  });
+
+  test('runs before the install scripts, so a failing one cannot skip it', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    f.stub('brew', '#!/bin/sh\nexit 1\n');
+    const link = join(f.home, '.gone');
+    symlinkSync(join(f.repo, 'gone'), link);
+    expect(f.run().status).toBe(1);
+    expect(lstatSync(link, { throwIfNoEntry: false })).toBeUndefined();
+  });
+});
+
+withChezmoi('before-scripts', () => {
+  const KARABINER = '.config/karabiner/karabiner.json';
+  const repoCopy = (f: { repo: string }) => join(f.repo, 'config', 'karabiner', 'karabiner.json');
+
+  test('copies a changed live Karabiner config into the repo', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true, home: { [KARABINER]: '{"live":1}\n' } });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain('karabiner: live → dotfiles');
+    expect(readFileSync(repoCopy(f), 'utf8')).toBe('{"live":1}\n');
+    // In sync, the next apply has nothing to say.
+    expect(f.run().stdout).not.toContain('karabiner');
+  });
+
+  test('seeds the Karabiner config from the repo when none is live', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain('karabiner: dotfiles → live (bootstrap)');
+    expect(lstatSync(join(f.home, KARABINER)).isSymbolicLink()).toBe(false);
+    expect(readFileSync(join(f.home, KARABINER), 'utf8')).toBe('{"repo":1}\n');
+  });
+
+  test('replaces a leftover Karabiner link instead of writing through it', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    mkdirSync(join(f.home, '.config/karabiner'), { recursive: true });
+    symlinkSync(repoCopy(f), join(f.home, KARABINER));
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(lstatSync(join(f.home, KARABINER)).isSymbolicLink()).toBe(false);
+    expect(readFileSync(repoCopy(f), 'utf8')).toBe('{"repo":1}\n');
+  });
+
+  test('a failed Karabiner copy warns and still deploys', ({ fixture }) => {
+    const f = fixture({
+      useRealChezmoi: true,
+      home: { '.config/karabiner': 'not a directory\n' },
+    });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toContain('karabiner: could not sync');
+    expect(r.status).toBe(0);
+    expect(existsSync(join(f.home, '.zshrc'))).toBe(true);
+  });
+
+  test('keeps a working Karabiner link when its replacement cannot be read', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true, home: { 'elsewhere.json': '{"else":1}\n' } });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    chmodSync(repoCopy(f), 0o000);
+    mkdirSync(join(f.home, '.config/karabiner'), { recursive: true });
+    symlinkSync(join(f.home, 'elsewhere.json'), join(f.home, KARABINER));
+    try {
+      const r = f.run();
+      expect(r.stderr).toContain('karabiner: could not sync');
+      expect(r.status).toBe(0);
+      expect(readFileSync(join(f.home, KARABINER), 'utf8')).toBe('{"else":1}\n');
+      expect(readdirSync(join(f.home, '.config/karabiner'))).toEqual(['karabiner.json']);
+    } finally {
+      chmodSync(repoCopy(f), 0o644);
+    }
+  });
+
+  test('warns instead of copying into a directory at the Karabiner path', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    mkdirSync(join(f.home, KARABINER), { recursive: true });
+    const r = f.run();
+    expect(r.stderr).toContain('karabiner: could not sync');
+    expect(r.status).toBe(0);
+    expect(readdirSync(join(f.home, KARABINER))).toEqual([]);
+  });
+
+  test('does not copy an empty live Karabiner config over the repo', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true, home: { [KARABINER]: '' } });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toContain('is empty');
+    expect(r.status).toBe(0);
+    expect(readFileSync(repoCopy(f), 'utf8')).toBe('{"repo":1}\n');
+  });
+
+  test('the Karabiner sync refuses to run without chezmoi', () => {
+    const r = spawnSync('/bin/sh', [join(REPO, 'home/run_before_karabiner-sync.sh')], {
+      env: { HOME: '/nonexistent', PATH: '/usr/bin:/bin' },
+      encoding: 'utf8',
+    });
+    expect(r.status).not.toBe(0);
+    expect(r.stderr).toContain('CHEZMOI_SOURCE_DIR: is unset');
+  });
+
+  test('seeds ~/.claude/CLAUDE.md during the apply', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain('claude: created ~/.claude/CLAUDE.md');
+    expect(readFileSync(join(f.home, '.claude/CLAUDE.md'), 'utf8')).toContain('@~/AGENTS.md');
   });
 });
 
