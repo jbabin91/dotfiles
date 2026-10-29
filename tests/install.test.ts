@@ -50,7 +50,7 @@ describe('preconditions', () => {
     expect(r.stderr).toContain('uv is required to run dotbot');
   });
 
-  test('a silent dotbot failure still explains what may be incomplete', ({ fixture }) => {
+  test('a silent dotbot failure says chezmoi was not run', ({ fixture }) => {
     const f = fixture({ stubs: { uv: '#!/bin/sh\nexit 42\n' } });
     const r = f.run();
     // 42, not 1: a hardcoded `exit 1` in the handler would pass either way.
@@ -669,6 +669,119 @@ withChezmoi('dead-link sweep', () => {
     symlinkSync(join(f.repo, 'gone'), link);
     expect(f.run().status).toBe(1);
     expect(lstatSync(link, { throwIfNoEntry: false })).toBeUndefined();
+  });
+});
+
+withChezmoi('before-scripts', () => {
+  const KARABINER = '.config/karabiner/karabiner.json';
+  const repoCopy = (f: { repo: string }) => join(f.repo, 'config', 'karabiner', 'karabiner.json');
+
+  test('copies a changed live Karabiner config into the repo', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true, home: { [KARABINER]: '{"live":1}\n' } });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain('karabiner: live → dotfiles');
+    expect(readFileSync(repoCopy(f), 'utf8')).toBe('{"live":1}\n');
+    // In sync, the next apply has nothing to say.
+    expect(f.run().stdout).not.toContain('karabiner');
+  });
+
+  test('seeds the Karabiner config from the repo when none is live', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain('karabiner: dotfiles → live (bootstrap)');
+    expect(lstatSync(join(f.home, KARABINER)).isSymbolicLink()).toBe(false);
+    expect(readFileSync(join(f.home, KARABINER), 'utf8')).toBe('{"repo":1}\n');
+  });
+
+  test('replaces a leftover Karabiner link instead of writing through it', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    mkdirSync(join(f.home, '.config/karabiner'), { recursive: true });
+    symlinkSync(repoCopy(f), join(f.home, KARABINER));
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(lstatSync(join(f.home, KARABINER)).isSymbolicLink()).toBe(false);
+    expect(readFileSync(repoCopy(f), 'utf8')).toBe('{"repo":1}\n');
+  });
+
+  test('a failed Karabiner copy warns and still deploys', ({ fixture }) => {
+    const f = fixture({
+      useRealChezmoi: true,
+      home: { '.config/karabiner': 'not a directory\n' },
+    });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toContain('karabiner: could not sync');
+    expect(r.status).toBe(0);
+    expect(existsSync(join(f.home, '.zshrc'))).toBe(true);
+  });
+
+  test('keeps a working Karabiner link when its replacement cannot be read', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true, home: { 'elsewhere.json': '{"else":1}\n' } });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    chmodSync(repoCopy(f), 0o000);
+    mkdirSync(join(f.home, '.config/karabiner'), { recursive: true });
+    symlinkSync(join(f.home, 'elsewhere.json'), join(f.home, KARABINER));
+    try {
+      const r = f.run();
+      expect(r.stderr).toContain('karabiner: could not sync');
+      expect(r.status).toBe(0);
+      expect(readFileSync(join(f.home, KARABINER), 'utf8')).toBe('{"else":1}\n');
+      expect(readdirSync(join(f.home, '.config/karabiner'))).toEqual(['karabiner.json']);
+    } finally {
+      chmodSync(repoCopy(f), 0o644);
+    }
+  });
+
+  test('warns instead of copying into a directory at the Karabiner path', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    mkdirSync(join(f.home, KARABINER), { recursive: true });
+    const r = f.run();
+    expect(r.stderr).toContain('karabiner: could not sync');
+    expect(r.status).toBe(0);
+    expect(readdirSync(join(f.home, KARABINER))).toEqual([]);
+  });
+
+  test('does not copy an empty live Karabiner config over the repo', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true, home: { [KARABINER]: '' } });
+    mkdirSync(dirname(repoCopy(f)), { recursive: true });
+    writeFileSync(repoCopy(f), '{"repo":1}\n');
+    const r = f.run();
+    expect(r.stderr).toContain('is empty');
+    expect(r.status).toBe(0);
+    expect(readFileSync(repoCopy(f), 'utf8')).toBe('{"repo":1}\n');
+  });
+
+  test('the Karabiner sync refuses to run without chezmoi', () => {
+    const r = spawnSync('/bin/sh', [join(REPO, 'home/run_before_karabiner-sync.sh')], {
+      env: { HOME: '/nonexistent', PATH: '/usr/bin:/bin' },
+      encoding: 'utf8',
+    });
+    expect(r.status).not.toBe(0);
+    expect(r.stderr).toContain('CHEZMOI_SOURCE_DIR: is unset');
+  });
+
+  test('seeds ~/.claude/CLAUDE.md during the apply', ({ fixture }) => {
+    const f = fixture({ useRealChezmoi: true });
+    const r = f.run();
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain('claude: created ~/.claude/CLAUDE.md');
+    expect(readFileSync(join(f.home, '.claude/CLAUDE.md'), 'utf8')).toContain('@~/AGENTS.md');
   });
 });
 

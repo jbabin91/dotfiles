@@ -4,18 +4,3 @@
       quiet: true
       stdout: true
       stderr: true
-
-- shell:
-    - [
-        'src="config/karabiner/karabiner.json"; dest="$HOME/.config/karabiner/karabiner.json"; if [
-        -f "$dest" ] && [ ! -L "$dest" ]; then cp "$dest" "$src" && echo "  karabiner: live →
-        dotfiles"; elif [ -f "$src" ]; then mkdir -p "$(dirname "$dest")" && cp "$src" "$dest" &&
-        echo "  karabiner: dotfiles → live (bootstrap)"; fi',
-        Syncing karabiner config,
-      ]
-
-# Claude Code reads ~/AGENTS.md only through an import in ~/.claude/CLAUDE.md
-# (there is no user-level AGENTS.md lookup).
-- shell:
-    - command: sh general/agents/seed-claude-md.sh
-      description: Seeding ~/.claude/CLAUDE.md

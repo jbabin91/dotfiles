@@ -1,9 +1,8 @@
 # github.com/jbabin91/dotfiles
 
 Jace Babin's dotfiles, deployed by [chezmoi](https://www.chezmoi.io/) from `home/`.
-[Dotbot](https://github.com/anishathalye/dotbot), run via
-[uv](https://github.com/astral-sh/uv), handles what is left: the Karabiner sync
-and seeding `~/.claude/CLAUDE.md`. `./install` runs both.
+`./install` still runs [Dotbot](https://github.com/anishathalye/dotbot) via
+[uv](https://github.com/astral-sh/uv) first, with nothing left for it to do.
 
 ## Features
 
@@ -75,7 +74,7 @@ exec zsh
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
 ├── home/               # chezmoi source; mirrors ~/ (zsh, git, ghostty, zellij, …)
 ├── .chezmoiroot        # Points chezmoi's source at home/
-├── install.conf.yaml   # Dotbot: Karabiner sync, CLAUDE.md seed
+├── install.conf.yaml   # Dotbot: empty
 ├── lefthook.yml        # Git hooks
 ├── prettier.config.js  # Code formatting
 └── .markdownlint-cli2.mjs  # Markdown linting
@@ -84,8 +83,8 @@ exec zsh
 ### Karabiner
 
 Karabiner-Elements replaces symlinks when it writes config, so it uses a
-bidirectional copy sync instead of a symlink. Running `./install` will sync
-the latest version in either direction.
+copy instead of a symlink. Each `./install` copies the live config into the
+repo, or seeds it from the repo when there is none yet.
 
 ## Version Management
 

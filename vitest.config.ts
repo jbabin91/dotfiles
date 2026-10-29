@@ -13,5 +13,9 @@ export default defineConfig({
     // A test that asserts nothing passes by default. One already slipped
     // through this suite (an early `return` where `skipIf` was meant).
     expect: { requireAssertions: true },
+    // A real-chezmoi test applies up to three times, each apply running the
+    // before-scripts; measured, the slowest takes ~4s alone and exceeded the 5s
+    // default in a parallel run.
+    testTimeout: 20_000,
   },
 });
