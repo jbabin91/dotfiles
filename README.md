@@ -74,6 +74,7 @@ exec zsh
 │   ├── mise/           # Tool version manager (node, rust, dotnet)
 │   └── nvim/           # Neovim config (LazyVim)
 ├── general/
+│   ├── agents/         # Global agent instructions (~/AGENTS.md, ~/.codex/AGENTS.md, ~/.agents/docs)
 │   ├── git/            # Git config, attributes, ignore
 │   ├── .cspell/        # Spell checking dictionaries
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
