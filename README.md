@@ -1,9 +1,9 @@
 # github.com/jbabin91/dotfiles
 
-Jace Babin's dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot) via
-[uv](https://github.com/astral-sh/uv), and migrating to
-[chezmoi](https://www.chezmoi.io/), which already owns most of what lands
-in `~` and `~/.config` under `home/`. `./install` runs both.
+Jace Babin's dotfiles, deployed by [chezmoi](https://www.chezmoi.io/) from `home/`.
+[Dotbot](https://github.com/anishathalye/dotbot), run via
+[uv](https://github.com/astral-sh/uv), handles what is left: a dead-link sweep,
+the Karabiner sync and seeding `~/.claude/CLAUDE.md`. `./install` runs both.
 
 ## Features
 
@@ -60,7 +60,7 @@ exec zsh
 
 ```sh
 ~/.dotfiles/
-├── config/             # Not chezmoi-managed (see install.conf.yaml for why)
+├── config/             # Configs a tool rewrites; chezmoi symlinks them into ~/.config
 │   ├── btop/           # btop system monitor
 │   ├── karabiner/      # Keyboard customization (copy-synced)
 │   ├── kitty/          # Kitty terminal
@@ -75,7 +75,7 @@ exec zsh
 │   └── Brewfile        # Homebrew packages, casks, VS Code extensions
 ├── home/               # chezmoi source; mirrors ~/ (zsh, git, ghostty, zellij, …)
 ├── .chezmoiroot        # Points chezmoi's source at home/
-├── install.conf.yaml   # Dotbot symlink configuration
+├── install.conf.yaml   # Dotbot: dead-link sweep, Karabiner sync, CLAUDE.md seed
 ├── lefthook.yml        # Git hooks
 ├── prettier.config.js  # Code formatting
 └── .markdownlint-cli2.mjs  # Markdown linting

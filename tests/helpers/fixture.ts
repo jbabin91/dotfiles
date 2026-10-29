@@ -18,8 +18,8 @@ const REPO_FILES = [
 ];
 
 /**
- * dotbot must never actually run: it deploys symlinks, runs brew bundle and
- * installs mise. It does resolve the `-c` config the way dotbot would, so a
+ * dotbot must never actually run: it sweeps dead links and writes into the real
+ * $HOME. It does resolve the `-c` config the way dotbot would, so a
  * script that failed to anchor its own cwd is caught rather than passing on a
  * stub that ignores its arguments.
  */

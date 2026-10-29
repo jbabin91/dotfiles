@@ -11,7 +11,8 @@ import {
   symlinkSync,
   writeFileSync,
 } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect } from 'vitest';
 
 import { chezmoiStub, realChezmoi, test } from './helpers/fixture.ts';
@@ -25,6 +26,7 @@ import { chezmoiStub, realChezmoi, test } from './helpers/fixture.ts';
 
 // Reported as skipped rather than passing: an early `return` would make these
 // green on a machine without chezmoi while asserting nothing.
+const REPO = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CHEZMOI = realChezmoi();
 const needsChezmoi = test.skipIf(!CHEZMOI);
 const withChezmoi = describe.skipIf(!CHEZMOI);
@@ -53,7 +55,7 @@ describe('preconditions', () => {
     // 42, not 1: a hardcoded `exit 1` in the handler would pass either way.
     expect(r.status).toBe(42);
     expect(r.stderr).toContain('dotbot exited 42');
-    expect(r.stderr).toContain('chezmoi was not run');
+    expect(r.stderr).toContain('chezmoi was not run, so no links, files, brew or mise');
   });
 
   test('arguments scope the run to dotbot and skip the chezmoi bootstrap', ({ fixture }) => {
@@ -132,7 +134,7 @@ describe('chezmoi bootstrap', () => {
     const r = f.run();
     expect(r.status).toBe(22);
     expect(r.stderr).toContain('could not download https://get.chezmoi.io (curl exited 22)');
-    expect(r.stderr).toContain('symlinks are in place');
+    expect(r.stderr).toContain('nothing was linked or deployed');
   });
 
   test('rejects a 2xx body that is not a script, and says how big it was', ({ fixture }) => {
@@ -155,6 +157,7 @@ describe('chezmoi bootstrap', () => {
     const r = f.run();
     expect(r.status).toBe(3);
     expect(r.stderr).toContain('installer exited 3');
+    expect(r.stderr).toContain('nothing was linked or deployed');
   });
 
   test('catches an installer that exits 0 but installs nothing', ({ fixture }) => {
@@ -370,6 +373,66 @@ withChezmoi('against a real chezmoi', () => {
       .filter(([, p]) => !readFileSync(p.absolute).equals(readFileSync(p.sourceAbsolute)))
       .map(([target]) => target);
     expect(mangled).toEqual([]);
+  });
+
+  test('links each config a tool rewrites to its path in the repo', ({ fixture }) => {
+    // Exact, not "every listed link resolves": a deleted symlink_ entry, or one
+    // turned into a copy, drops out of chezmoi's listing and would pass that.
+    const expected: Record<string, string> = {
+      Brewfile: 'general/Brewfile',
+      '.cspell.json': 'general/.cspell.json',
+      '.cspell/personal-words.txt': 'general/.cspell/personal-words.txt',
+      '.cspell/misc.txt': 'general/.cspell/misc.txt',
+      'AGENTS.md': 'general/agents/AGENTS.global.md',
+      '.codex/AGENTS.md': 'general/agents/AGENTS.global.md',
+      '.agents/docs': 'general/agents/docs',
+      '.config/kitty': 'config/kitty',
+      '.config/mise': 'config/mise',
+      '.config/btop': 'config/btop',
+      '.config/nvim': 'config/nvim',
+      '.config/zellij/config.kdl': 'config/zellij/config.kdl',
+      '.config/zed/settings.json': 'config/zed/settings.json',
+      '.config/zed/keymap.json': 'config/zed/keymap.json',
+      '.config/zed/tasks.json': 'config/zed/tasks.json',
+    };
+    const f = fixture({ useRealChezmoi: true });
+    expect(f.run().status).toBe(0);
+    const listing = spawnSync(
+      CHEZMOI!,
+      [
+        'managed',
+        '--source',
+        join(f.repo, 'home'),
+        '--destination',
+        f.home,
+        '--config',
+        join(f.home, '.config', 'chezmoi', 'chezmoi.toml'),
+        '--include=symlinks',
+      ],
+      { encoding: 'utf8', env: { HOME: f.home, PATH: `${f.stubDir}:/usr/bin:/bin` } },
+    );
+    expect(listing.status).toBe(0);
+    const actual = Object.fromEntries(
+      listing.stdout
+        .trim()
+        .split('\n')
+        .map((rel) => [rel, relative(f.repo, readlinkSync(join(f.home, rel)))]),
+    );
+    expect(actual).toEqual(expected);
+    // A typo in a template deploys a dangling link that nothing else reads.
+    const missing = Object.values(expected).filter((p) => !existsSync(join(REPO, p)));
+    expect(missing).toEqual([]);
+  });
+
+  test('a write through a symlink_ entry lands in the repo', ({ fixture }) => {
+    // The reason these configs are links rather than copies: `mise use`,
+    // lazy.nvim and Zed rewrite them, and the repo has to see that.
+    const f = fixture({ useRealChezmoi: true });
+    expect(f.run().status).toBe(0);
+    writeFileSync(join(f.home, '.config/mise/config.toml'), '# written by mise use\n');
+    expect(readFileSync(join(f.repo, 'config/mise/config.toml'), 'utf8')).toBe(
+      '# written by mise use\n',
+    );
   });
 
   test('is idempotent across a second run', ({ fixture }) => {
