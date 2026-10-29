@@ -57,6 +57,27 @@ export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # -----------------------------------------------------------------------------
+# Pager and colors. zimfw/utility stays out of the plugin list: its ls aliases
+# assume BSD ls and break against eza.
+# -----------------------------------------------------------------------------
+export PAGER=less
+export LESS='--ignore-case --jump-target=4 --LONG-PROMPT --no-init --quit-if-one-screen --RAW-CONTROL-CHARS'
+
+# Colors for a pager that isn't bat; MANPAGER above means man does not use these.
+export LESS_TERMCAP_mb=$'\E[1;31m'  # Begins blinking
+export LESS_TERMCAP_md=$'\E[1;31m'  # Begins bold
+export LESS_TERMCAP_me=$'\E[0m'     # Ends mode
+export LESS_TERMCAP_ue=$'\E[0m'     # Ends underline
+export LESS_TERMCAP_us=$'\E[1;32m'  # Begins underline
+
+export GREP_COLOR='37;45'            # BSD
+export GREP_COLORS="mt=${GREP_COLOR}"  # GNU
+
+# BSD ls, reached through `command ls`; eza carries its own theme.
+# CLICOLOR itself is already exported from .zshenv.
+export LSCOLORS=ExfxcxdxbxGxDxabagacad
+
+# -----------------------------------------------------------------------------
 # Antidote Plugin Manager
 # -----------------------------------------------------------------------------
 for _antidote in /opt/homebrew/opt/antidote/share/antidote/antidote.zsh /usr/share/zsh-antidote/antidote.zsh "$HOME/.antidote/antidote.zsh"; do
@@ -149,15 +170,27 @@ fi
 if [[ "$OSTYPE" == darwin* ]]; then
   alias bu="brew update"
   alias buu="brew upgrade"
-  alias bc="brew cleanup"
+  # `bcl`, not `bc`: that name belongs to /usr/bin/bc, and shadowing the
+  # calculator with a destructive command surprises pipelines and agents.
+  alias bcl="brew cleanup"
   alias ud="brew update && brew upgrade && brew cleanup"
 elif command -v omarchy >/dev/null; then
   alias ud="omarchy update"
 fi
 
 # eza
+# Without a terminal on stdin, eza reads names from it and lists nothing at exit
+# 0 (eza-community/eza#1725), so agent and sandbox shells get the system ls.
+(( ${+aliases[ls]} )) && unalias ls
+function ls {
+  if [[ -t 0 ]]; then
+    command eza -al --color=auto --group-directories-first --git --icons=auto "$@"
+  else
+    command ls "$@"
+  fi
+}
+
 alias l="eza -al --color=auto --group-directories-first --git --icons=auto"
-alias ls="eza -al --color=auto --group-directories-first --git --icons=auto"
 alias la="eza -a --color=auto --group-directories-first --git --icons=auto"
 alias ll="eza -l --color=auto --group-directories-first --git --icons=auto"
 alias t="eza -aT --color=auto --group-directories-first --git --icons=auto"
@@ -173,6 +206,12 @@ alias c="clear"
 alias cp="cp -v"
 alias df="df -h"
 alias du1="du -d 1 -h"
+# Resumable download
+if (( ${+commands[wget]} )); then
+  alias get='wget --continue --progress=bar --timestamping'
+else
+  alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+fi
 alias duf="du -sh *"
 alias mkdir="mkdir -pv"
 alias mv="mv -v"
@@ -204,7 +243,8 @@ alias glg="git log --graph --decorate --oneline --abbrev-commit"
 alias glga="glg --all"
 alias gp="git push"
 alias gpa="git push origin --all"
-alias gpr="gp && git pr"
+# `gpp`, not `gpr`: coreutils installs a `gpr` on PATH.
+alias gpp="gp && git pr"
 alias addup="git add -u"
 alias addall="git add ."
 alias branch="git branch"
@@ -331,4 +371,8 @@ tmux() {
 }
 
 # Kiro CLI post block. Keep at the bottom of this file.
+# Sourced unconditionally: the OSC 697 markers it writes to stdout look like
+# noise in captured output, but harnesses that drive this shell through a pipe
+# use them to find command boundaries. Gating this on a tty broke exit-status
+# reporting in Cursor's agent shell.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

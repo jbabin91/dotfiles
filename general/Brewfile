@@ -135,8 +135,6 @@ cask "1password"
 cask "1password-cli"
 # Orchestrator for running parallel coding agents
 cask "agentwrapper/tap/agent-orchestrator", trusted: true
-# GPU-accelerated terminal emulator
-cask "alacritty"
 # Display management tool
 cask "betterdisplay"
 # Send any size file between devices

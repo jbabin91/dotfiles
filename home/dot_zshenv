@@ -6,8 +6,16 @@
 # Color Support (MUST be first - needed for all terminal applications)
 # -----------------------------------------------------------------------------
 export COLORTERM="${COLORTERM:-truecolor}"
-export FORCE_COLOR="${FORCE_COLOR:-1}"
 export CLICOLOR=1
+
+# Only default FORCE_COLOR on when stdout is a terminal. Forcing it everywhere
+# makes chalk and supports-color write escapes into pipes, where the tool's own
+# TTY detection would have kept them out. An explicit value always wins.
+if [[ -n ${FORCE_COLOR+x} ]]; then
+  export FORCE_COLOR
+elif [[ -t 1 ]]; then
+  export FORCE_COLOR=1
+fi
 
 # -----------------------------------------------------------------------------
 # Homebrew (sets PREFIX, CELLAR, REPOSITORY, fpath, MANPATH, INFOPATH, PATH)
@@ -17,6 +25,9 @@ if [[ -x /opt/homebrew/bin/brew ]]; then
   export HOMEBREW_NO_ENV_HINTS=1
   # Ask mode is on by default in current Homebrew; this turns it back off.
   export HOMEBREW_NO_ASK=1
+  # Without a terminal, keep read-only queries read-only: otherwise `brew
+  # outdated` self-updates the taps mid-command. `bu` and `ud` still update.
+  [[ -t 1 ]] || export HOMEBREW_NO_AUTO_UPDATE=1
   # Re-prepend after brew shellenv; path_helper can push /usr/bin ahead of Homebrew
   case "$PATH" in
     /opt/homebrew/bin:*) ;;
@@ -93,7 +104,20 @@ fi
 # -----------------------------------------------------------------------------
 export LC_ALL="en_US.UTF-8"
 export EDITOR=nvim
-export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
+
+# Without a terminal, core.editor's nvim blocks forever on a bare `git commit`,
+# `rebase -i`, or `tag -a` — a hang that reports nothing. `false` turns that into
+# an immediate "problem with the editor" error the caller can read and fix by
+# passing -m or --no-edit. GIT_SEQUENCE_EDITOR covers interactive rebase's todo
+# list, which git reads through a separate setting.
+if [[ ! -t 1 ]]; then
+  export GIT_EDITOR="${GIT_EDITOR-false}"
+  export GIT_SEQUENCE_EDITOR="${GIT_SEQUENCE_EDITOR-false}"
+fi
+# Exported only when the file is there: rg prints "failed to read the file
+# specified in RIPGREP_CONFIG_PATH" on every invocation otherwise, which lands
+# in the output of anything that shells out to rg.
+[[ -f "$HOME/.rgrc" ]] && export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
 
 # -----------------------------------------------------------------------------
 # kiro-cli
