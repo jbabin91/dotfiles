@@ -67,7 +67,6 @@ exec zsh
 │   ├── macos/          # System defaults script (not auto-run)
 │   ├── mise/           # Tool version manager (node, rust, dotnet)
 │   ├── nvim/           # Neovim config (LazyVim)
-│   ├── tmux/           # tmux, plus the which-key menu config
 │   ├── zed/            # Zed settings, keymap, tasks
 │   └── zellij/         # config.kdl only; zellij rewrites it on upgrade
 ├── general/

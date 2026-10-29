@@ -15,7 +15,6 @@ const REPO_FILES = [
   'home',
   'general/Brewfile',
   'config/mise/config.toml',
-  'config/tmux',
 ];
 
 /**

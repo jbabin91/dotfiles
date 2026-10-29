@@ -312,12 +312,23 @@ withChezmoi('against a real chezmoi', () => {
       '.config/zsh/.zsh_plugins.txt',
       '.config/zellij/layouts/default.kdl',
       '.config/zellij/layouts/claude-orch.kdl',
+      '.config/tmux/tmux.conf',
+      '.config/tmux/scripts/sesh-connect.sh',
+      '.config/tmux/scripts/session-kill.sh',
+      '.config/tmux/plugins/tmux-which-key/config.yaml',
     ]) {
       expect(existsSync(join(f.home, rel)), rel).toBe(true);
     }
     // The size, not only existence: a source that stops being empty deploys a
     // non-empty ~/.hushlogin, which an existence check passes.
     expect(statSync(join(f.home, '.hushlogin')).size).toBe(0);
+    // tmux.conf runs these with run-shell; chezmoi sets the bit only from the
+    // executable_ prefix, not from the source file's mode.
+    for (const script of ['sesh-connect.sh', 'session-kill.sh']) {
+      expect(statSync(join(f.home, '.config/tmux/scripts', script)).mode & 0o111, script).not.toBe(
+        0,
+      );
+    }
   });
 
   test('deploys every managed file byte-identical to its source', ({ fixture }) => {

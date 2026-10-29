@@ -46,7 +46,6 @@
     ~/.config/kitty: config/kitty
     # Karabiner - managed via shell sync (app replaces symlinks)
     ~/.config/mise: config/mise
-    ~/.config/tmux: config/tmux
     ~/.config/btop: config/btop
     ~/.config/nvim: config/nvim
     # Zellij regenerates config.kdl on upgrade; the layouts it never touches

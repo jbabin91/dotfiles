@@ -1,6 +1,6 @@
 #!/bin/sh
 # Re-runs when tmux.conf changes, tpack reaches PATH, or a plugin update renames
-# the which-key directory: {{ include "../config/tmux/tmux.conf" | sha256sum }} {{ lookPath "tpack" }} {{ glob (joinPath .chezmoi.homeDir ".local/share/tmux/plugins/tmux-which-key-*") }}
+# the which-key directory: {{ include "dot_config/tmux/tmux.conf" | sha256sum }} {{ lookPath "tpack" }} {{ glob (joinPath .chezmoi.homeDir ".local/share/tmux/plugins/tmux-which-key-*") }}
 
 if ! command -v tpack >/dev/null 2>&1; then
   echo "  tpack: not on PATH; tmux plugins were not installed"
