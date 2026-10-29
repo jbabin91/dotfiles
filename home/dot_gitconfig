@@ -194,7 +194,7 @@
   all = true
 [merge]
   ff = false
-  tool = code-insiders
+  tool = vscode
   conflictstyle = zdiff3
 [gitbutler]
   aiModelProvider = openai

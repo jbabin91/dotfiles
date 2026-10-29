@@ -9,9 +9,7 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   unset _vscode_shell_integration
 fi
 
-# =============================================================================
 # Zsh Configuration (Antidote)
-# =============================================================================
 
 # -----------------------------------------------------------------------------
 # Plugin Configuration (must be set BEFORE antidote loads plugins)
@@ -157,12 +155,6 @@ alias v="nvim"
 if [[ "$OSTYPE" == darwin* ]]; then
   function e() {
     open "$1" -a Visual\ Studio\ Code
-  }
-  function ec() {
-    open "$1" -a Cursor
-  }
-  function ie() {
-    open "${1:-.}" -a "Visual Studio Code - Insiders"
   }
 fi
 
@@ -338,13 +330,6 @@ for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search
 for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
-
-# -----------------------------------------------------------------------------
-# iTerm2 Integration
-# -----------------------------------------------------------------------------
-if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
-  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-fi
 
 # -----------------------------------------------------------------------------
 # Bun Completions

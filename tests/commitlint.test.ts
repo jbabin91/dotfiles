@@ -27,8 +27,8 @@ function scopes(): string[] {
 
 describe('commitlint scope derivation', () => {
   // The cz-git prompt sets allowCustomScopes: false, so a name missing here is
-  // a name the prompt rejects. Migrating a tool between the two config roots
-  // used to drop its scope silently -- measured, six vanished in one move.
+  // a name the prompt rejects. Measured, moving tools between the two config
+  // roots once dropped six scopes in one go.
   test('covers tools under both config roots', () => {
     const s = scopes();
     expect(s).toEqual(
@@ -39,7 +39,6 @@ describe('commitlint scope derivation', () => {
   test('carries no duplicates across the two roots', () => {
     // `git` is both an explicit entry and a directory under home/dot_config.
     const s = scopes();
-    expect(s).toContain('git');
     expect(new Set(s).size).toBe(s.length);
   });
 });

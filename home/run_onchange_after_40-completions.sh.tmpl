@@ -1,0 +1,45 @@
+#!/bin/sh
+# Re-runs when a tool below is installed or upgraded (its binary's size and
+# mtime), or the mise config moves pnpm: {{ range list "mise" "rex" "varlock" }}{{ $p := lookPath . }}{{ if $p }}{{ $s := stat $p }}{{ . }}:{{ $s.size }}:{{ $s.modTime }} {{ end }}{{ end }}{{ with stat (joinPath .chezmoi.homeDir ".cargo/bin/rustup") }}rustup:{{ .size }}:{{ .modTime }} {{ end }}{{ if lookPath "pnpm" }}pnpm {{ end }}{{ include "../config/mise/config.toml" | sha256sum }}
+# Version output would not do: pnpm's depends on the directory, and chezmoi's
+# output function passes mise's and rustup's stderr notices through. rustup is
+# found by path because on PATH it resolves to mise's shim.
+
+dir="$HOME/.zfunc"
+failed=0
+tmp=""
+
+# Staged under a dot name, which compinit does not load, so a partial file
+# never becomes a live completion; one a killed run left is cleared here.
+rm -f "$dir"/.*.tmp.* 2>/dev/null
+trap 'rm -f "$tmp"' EXIT
+trap 'exit 1' INT TERM
+
+gen() {
+  name=$1
+  shift
+  command -v "$1" >/dev/null 2>&1 || return 0
+  mkdir -p "$dir" || { failed=1; return 0; }
+  tmp="$dir/.$name.tmp.$$"
+  # macOS has no timeout(1) in base; perl's alarm stops a hung generator.
+  if perl -e 'alarm 30; exec @ARGV or exit 127' "$@" >"$tmp" 2>/dev/null &&
+    head -n 1 "$tmp" | grep -q '^#compdef'; then
+    # pnpm's script only registers itself, so compinit's first call would
+    # complete nothing; this runs it, as pnpm's older output did.
+    # shellcheck disable=SC2016
+    [ "$name" != _pnpm ] || printf '%s\n' '[[ $zsh_eval_context == *func ]] && _pnpm_completion "$@"' >>"$tmp"
+    mv -f "$tmp" "$dir/$name" && return 0
+  fi
+  rm -f "$tmp"
+  echo "  completions: $* failed; kept $dir/$name as it was" >&2
+  failed=1
+}
+
+gen _mise mise completion zsh
+gen _pnpm pnpm completion zsh
+gen _rustup rustup completions zsh rustup
+gen _cargo rustup completions zsh cargo
+gen _rex rex completion zsh
+gen _varlock varlock complete zsh
+# Nonzero after trying every tool, so the next apply retries the one that failed.
+exit "$failed"

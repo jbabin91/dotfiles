@@ -33,8 +33,9 @@ cd ~/.dotfiles
 ```
 
 2. Run the install script. It links and deploys the configs, then chezmoi's
-   `run_onchange_` scripts apply the Brewfile, install mise and its tools, and
-   install tmux plugins, each again only when its input file changes:
+   `run_onchange_` scripts apply the Brewfile, install mise and its tools,
+   install tmux plugins and regenerate zsh completions, each again only when
+   its inputs change:
 
 ```bash
 ./install

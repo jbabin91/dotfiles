@@ -3,9 +3,9 @@ import { cpSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } fr
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { test as base } from 'vitest';
+import { test as base, describe } from 'vitest';
 
-const REPO = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+export const REPO = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 /** Files `./install` needs, copied so a test that writes cannot reach the real repo. */
 const REPO_FILES = [
@@ -18,7 +18,6 @@ const REPO_FILES = [
 
 export type RunResult = {
   status: number | null;
-  signal: NodeJS.Signals | null;
   stdout: string;
   stderr: string;
 };
@@ -122,7 +121,6 @@ export function createFixture(opts: FixtureOptions = {}): Fixture {
       });
       return {
         status: result.status,
-        signal: result.signal,
         stdout: result.stdout ?? '',
         stderr: result.stderr ?? '',
       };
@@ -133,16 +131,18 @@ export function createFixture(opts: FixtureOptions = {}): Fixture {
   };
 }
 
+let found: string | null | undefined;
+
 /** Path to a working chezmoi, or null when none is installed. */
 export function realChezmoi(): string | null {
-  const found = spawnSync('/bin/sh', ['-c', 'command -v chezmoi'], { encoding: 'utf8' });
-  const path = (found.stdout ?? '').trim();
-  if (!path) return null;
-  return spawnSync(path, ['--version'], { encoding: 'utf8' }).status === 0 ? path : null;
+  if (found !== undefined) return found;
+  const which = spawnSync('/bin/sh', ['-c', 'command -v chezmoi'], { encoding: 'utf8' });
+  const path = (which.stdout ?? '').trim();
+  found = path && spawnSync(path, ['--version']).status === 0 ? path : null;
+  return found;
 }
 
 export type ChezmoiBehaviour = {
-  version?: string;
   init?: string;
   verify?: string;
 };
@@ -155,7 +155,7 @@ export function chezmoiStub(behaviour: ChezmoiBehaviour = {}): string {
   const arm = (name: string, body?: string) => (body ? `  ${name}) ${body} ;;\n` : '');
   return (
     '#!/bin/sh\ncase "$1" in\n' +
-    arm('--version', behaviour.version ?? 'echo "chezmoi version v0.0.0-stub"; exit 0') +
+    arm('--version', 'echo "chezmoi version v0.0.0-stub"; exit 0') +
     arm('init', behaviour.init) +
     arm('verify', behaviour.verify) +
     'esac\nexit 0\n'
@@ -189,3 +189,20 @@ export const test = base.extend<{ fixture: (opts?: FixtureOptions) => Fixture }>
     }
   },
 });
+
+export const CHEZMOI = realChezmoi();
+// Reported as skipped rather than passing: an early `return` would make these
+// green on a machine without chezmoi while asserting nothing.
+export const needsChezmoi = test.skipIf(!CHEZMOI);
+export const withChezmoi = describe.skipIf(!CHEZMOI);
+
+/** `chezmoi managed` from the fixture repo's root, so chezmoi reads `.chezmoiroot` itself. */
+export function managedFromRoot(f: Fixture, ...flags: string[]) {
+  return spawnSync(
+    CHEZMOI!,
+    ['managed', '--source', f.repo, '--destination', f.home, ...flags],
+    // Built, not inherited: an unpinned --config still reads
+    // $HOME/.config/chezmoi/chezmoi.toml, so the developer's own could fail it.
+    { encoding: 'utf8', env: { HOME: f.home, PATH: `${f.stubDir}:/usr/bin:/bin` } },
+  );
+}

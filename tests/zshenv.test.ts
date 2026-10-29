@@ -90,11 +90,16 @@ exit 0
 `;
 
 describe.skipIf(!hasZsh)('dot_zshenv PATH construction', () => {
-  test('puts ~/.local/bin ahead of the system path, not merely on it', ({ sourceZshenv }) => {
-    // Appending instead of prepending still satisfies "is on PATH", while
-    // letting a system-packaged tool outrank a uv-installed one.
+  test('reports a mise that does not activate, keeping ~/.local/bin first', ({ sourceZshenv }) => {
+    // The measured failure: a truncated mise stays executable, prints nothing
+    // and exits 0, so every pinned tool silently drops to its system version.
+    // Only PATH distinguishes that from a successful no-op activation.
     const r = sourceZshenv(silentMise);
     expect(r.status).toBe(0);
+    expect(r.stderr).toContain('mise did not activate');
+    expect(r.path.some((p) => p.endsWith('/.local/share/mise/shims'))).toBe(false);
+    // Appending instead of prepending still satisfies "is on PATH", while
+    // letting a system-packaged tool outrank a uv-installed one.
     const local = r.path.findIndex((p) => p.endsWith('/.local/bin'));
     expect(local).toBeGreaterThanOrEqual(0);
     expect(local).toBeLessThan(r.path.indexOf('/usr/bin'));
@@ -109,16 +114,6 @@ describe.skipIf(!hasZsh)('dot_zshenv PATH construction', () => {
     const local = r.path.findIndex((p) => p.endsWith('/.local/bin'));
     expect(shims).toBeGreaterThanOrEqual(0);
     expect(shims).toBeLessThan(local);
-  });
-
-  test('reports on stderr when mise runs but does not activate', ({ sourceZshenv }) => {
-    // The measured failure: a truncated mise stays executable, prints nothing
-    // and exits 0, so every pinned tool silently drops to its system version.
-    // Only PATH distinguishes that from a successful no-op activation.
-    const r = sourceZshenv(silentMise);
-    expect(r.status).toBe(0);
-    expect(r.stderr).toContain('mise did not activate');
-    expect(r.path.some((p) => p.endsWith('/.local/share/mise/shims'))).toBe(false);
   });
 
   test('does not evaluate what mise writes to stderr', ({ sourceZshenv }) => {

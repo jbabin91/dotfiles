@@ -51,18 +51,12 @@ if [ -z "${CHEZMOI}" ]; then
     { echo "  chezmoi: installer exited 0 but left no working binary at ${CHEZMOI}" >&2; exit 1; }
 fi
 
-# .chezmoiroot is the one place recording where source state lives, and
-# chezmoi init <url> reads it too, so deriving --source from it keeps both entry
-# points on the same directory. Trimmed the way chezmoi trims it, so a stray
-# space or a CRLF checkout still resolves.
-ROOT="$(cat "${BASEDIR}/.chezmoiroot" 2>/dev/null || true)"
-ROOT="${ROOT#"${ROOT%%[![:space:]]*}"}"
-ROOT="${ROOT%"${ROOT##*[![:space:]]}"}"
-SOURCE="${BASEDIR}/${ROOT}"
-# Checked before applying: pointed at the repo root instead, init exits 0 having
-# applied the whole repo into $HOME, and no later check undoes that.
-if [ -z "${ROOT}" ] || [ ! -d "${SOURCE}" ]; then
-  echo "  chezmoi: .chezmoiroot is missing, unreadable, or names no directory under ${BASEDIR}; refusing to apply the repo root into ${HOME}" >&2
+# chezmoi reads .chezmoiroot from the repo itself and rejects an empty or
+# unreadable one, but without the file it exits 0 having applied the whole repo
+# into $HOME, and no later check undoes that.
+SOURCE="${BASEDIR}"
+if [ ! -f "${SOURCE}/.chezmoiroot" ]; then
+  echo "  chezmoi: ${SOURCE}/.chezmoiroot is missing or not a regular file; refusing to apply the repo root into ${HOME}" >&2
   exit 1
 fi
 
@@ -82,4 +76,4 @@ fi
 "${CHEZMOI}" verify --exclude=scripts --source "${SOURCE}" --destination "${HOME}" ||
   { s=$?; echo "  chezmoi applied, but chezmoi verify exited ${s} (over 128 means killed by signal); if chezmoi printed an error above that is the cause, otherwise ${HOME} does not match ${SOURCE} -- run ${CHEZMOI} status --source ${SOURCE}" >&2; exit "${s}"; }
 "${CHEZMOI}" verify --source "${SOURCE}" --destination "${HOME}" "${HOME}/.zshrc" ||
-  { s=$?; echo "  chezmoi applied, but chezmoi verify of .zshrc exited ${s} (over 128 means killed by signal); if chezmoi printed an error above that is the cause, otherwise chezmoi manages no .zshrc from ${SOURCE} -- check ${SOURCE}/dot_zshrc exists and is not excluded by .chezmoiignore" >&2; exit "${s}"; }
+  { s=$?; echo "  chezmoi applied, but chezmoi verify of .zshrc exited ${s} (over 128 means killed by signal); if chezmoi printed an error above that is the cause, otherwise chezmoi manages no .zshrc from ${SOURCE} -- check .chezmoiroot names the source directory, and that its dot_zshrc exists and is not excluded by .chezmoiignore" >&2; exit "${s}"; }
