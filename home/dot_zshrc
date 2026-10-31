@@ -1,7 +1,4 @@
 #!/usr/bin/env zsh
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
-
 # VS Code shell integration (sourced manually; auto-injection is disabled for this config)
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   _vscode_shell_integration="/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
@@ -354,10 +351,3 @@ tmux() {
     command tmux "$@"
   fi
 }
-
-# Kiro CLI post block. Keep at the bottom of this file.
-# Sourced unconditionally: the OSC 697 markers it writes to stdout look like
-# noise in captured output, but harnesses that drive this shell through a pipe
-# use them to find command boundaries. Gating this on a tty broke exit-status
-# reporting in Cursor's agent shell.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
