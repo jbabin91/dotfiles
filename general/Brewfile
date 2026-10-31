@@ -12,6 +12,8 @@ brew "shellcheck"
 brew "actionlint"
 # Plugin manager for zsh, inspired by antigen and antibody
 brew "antidote"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Bash Automated Testing System
