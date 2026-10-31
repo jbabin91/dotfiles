@@ -12,11 +12,10 @@ fi
 # Plugin Configuration (must be set BEFORE antidote loads plugins)
 # -----------------------------------------------------------------------------
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
-export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion history)
-export ZSH_HIGHLIGHT_MAXLENGTH=300
 
 # -----------------------------------------------------------------------------
 # Completion fpath (must be set BEFORE compinit)
@@ -88,6 +87,8 @@ if (( $+functions[antidote] )); then
   fi
   source ${zsh_plugins}.zsh
 fi
+# After the plugins: fast-syntax-highlighting sets this to 10000 when sourced.
+ZSH_HIGHLIGHT_MAXLENGTH=300
 
 # -----------------------------------------------------------------------------
 # Cached compinit (rebuild once per 24h)
