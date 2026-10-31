@@ -50,6 +50,8 @@ export MANROFFOPT="-c"
 # -----------------------------------------------------------------------------
 export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# Empty leaves Ctrl-R unbound by fzf, so Atuin's binding stands.
+(( $+commands[atuin] )) && export FZF_CTRL_R_COMMAND=
 
 # -----------------------------------------------------------------------------
 # Pager and colors. zimfw/utility stays out of the plugin list: its ls aliases
@@ -121,6 +123,13 @@ zsh-defer -c 'eval "$(fzf --zsh)"'
 # -----------------------------------------------------------------------------
 eval "$(mise activate zsh)"
 eval "$(zoxide init zsh)"
+
+# -----------------------------------------------------------------------------
+# Atuin (history search, first autosuggestion strategy)
+# -----------------------------------------------------------------------------
+# Up stays with history-substring-search; without --disable-ai, `?` on an empty
+# line opens Atuin AI.
+(( $+commands[atuin] )) && eval "$(atuin init zsh --disable-up-arrow --disable-ai)"
 
 # -----------------------------------------------------------------------------
 # Omarchy shell integration (aliases/functions/envs only; tool inits are ours)
