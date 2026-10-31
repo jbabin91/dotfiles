@@ -198,7 +198,6 @@ mas "ControllerForHomeKit", id: 1198176727
 mas "Itsyhome", id: 6758070650
 mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
-vscode "amazonwebservices.codewhisperer-for-command-line-companion"
 vscode "amodio.toggle-excluded-files"
 vscode "arktypeio.arkdark"
 vscode "astro-build.astro-vscode"
