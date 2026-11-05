@@ -147,8 +147,6 @@ cask "chatgpt"
 cask "codex"
 # Voice and text chat software
 cask "discord"
-# App to build and share containerised applications and microservices
-cask "docker-desktop"
 cask "font-jetbrains-mono"
 cask "font-maple-mono"
 cask "font-symbols-only-nerd-font"
@@ -176,6 +174,8 @@ cask "obsidian"
 cask "opencode-desktop"
 # Local-first alternative to Logitech Options+ for HID++ devices
 cask "openlogi"
+# Fast, light Docker and Linux VM runtime for macOS
+cask "orbstack"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Music streaming service
