@@ -40,6 +40,8 @@ gen _pnpm pnpm completion zsh
 gen _rustup rustup completions zsh rustup
 gen _cargo rustup completions zsh cargo
 gen _rex rex completion zsh
+# mbx's mise shim outlives its pin and then errors, with no system binary to fall back to.
+! mise which mbx >/dev/null 2>&1 || gen _mbx mbx completion zsh
 gen _varlock varlock complete zsh
 # Nonzero after trying every tool, so the next apply retries the one that failed.
 exit "$failed"

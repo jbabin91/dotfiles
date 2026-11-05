@@ -7,7 +7,8 @@ pnpm = "12.16.1"
 # bump deliberately. This does NOT avoid mise's rustup round trips -- measured,
 # the symlink backend still shells out to `rustup show profile` and
 # `rustup component list` either way.
-rust = "1.99.1"
+rust = { version = "1.99.1", mr_boxington = true }
+"mr-boxington" = "1.29.2"
 
 # No Homebrew formula; declared here (not Brewfile's `cargo`) so mise resolves the
 # rust toolchain first. linesmith is absent — it's installed locally via
