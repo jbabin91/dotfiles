@@ -14,7 +14,7 @@ rust = "1.99.1"
 # `cargo install --path`, making the working tree the source of truth.
 "cargo:cargo-interactive-update" = "0.6.2"
 
-"npm:@obsfx/trekker" = "1.12.0"
+"npm:@obsfx/trekker" = "1.12.1"
 "npm:@tanstack/intent" = "0.5.6"
 "npm:czg" = "1.14.0"
 "cargo:knope" = "0.23.2"
