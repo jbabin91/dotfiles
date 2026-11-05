@@ -116,6 +116,16 @@ describe.skipIf(!hasZsh)('dot_zshenv PATH construction', () => {
     expect(shims).toBeLessThan(local);
   });
 
+  test('the mise shims outrank ~/.cargo/bin', ({ sourceZshenv }) => {
+    // Otherwise rustup's cargo wins in non-interactive shells and bypasses mbx.
+    const r = sourceZshenv(workingMise);
+    const shims = r.path.findIndex((p) => p.endsWith('/.local/share/mise/shims'));
+    const cargo = r.path.findIndex((p) => p.endsWith('/.cargo/bin'));
+    expect(shims).toBeGreaterThanOrEqual(0);
+    expect(cargo).toBeGreaterThanOrEqual(0);
+    expect(shims).toBeLessThan(cargo);
+  });
+
   test('does not evaluate what mise writes to stderr', ({ sourceZshenv }) => {
     // The capture redirects stderr to /dev/null because its output is eval'd:
     // real mise warnings carry backticks (`missing: \`node@24\``), so folding
