@@ -101,6 +101,15 @@ else
 fi
 
 # -----------------------------------------------------------------------------
+# fzf-tab
+# -----------------------------------------------------------------------------
+zstyle ':completion:*' menu no
+# fzf-tab groups matches only when descriptions have a format.
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:complete:(cd|z):*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
+
+# -----------------------------------------------------------------------------
 # GPG (git commit signing - needs a TTY)
 # -----------------------------------------------------------------------------
 # Skip GPG_TTY in VS Code terminals to avoid shell integration issues
