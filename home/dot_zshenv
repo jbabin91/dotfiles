@@ -68,9 +68,8 @@ esac
 # mise - manages node and other tools; --shims mode keeps tools resolvable in non-interactive shells (git hooks, GUI apps)
 #
 # The result is checked against PATH rather than against activate's output or
-# status: activate prints nothing once the shims dir is already there, and a
-# truncated mise binary also prints nothing while exiting 0. Only PATH tells
-# those apart, and an unnoticed failure silently drops every pinned tool to its
+# status: a truncated mise binary prints nothing while exiting 0, which only
+# PATH exposes, and an unnoticed failure silently drops every pinned tool to its
 # system version. stderr stays out of the capture because eval runs whatever it
 # holds — one mise warning would otherwise execute as shell code in every shell.
 if command -v mise >/dev/null; then
