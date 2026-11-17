@@ -2,7 +2,18 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect } from 'vitest';
 
-import { test, withChezmoi } from './helpers/fixture.ts';
+import {
+  REX_AGENT_RESUME_MARKER,
+  REX_AGENT_RESUME_REF,
+  test,
+  withChezmoi,
+} from './helpers/fixture.ts';
+
+/** Keeps the rex-agent-resume script, which a `rex` stub would otherwise wake, out of these runs. */
+const resumeInstalled = {
+  [REX_AGENT_RESUME_MARKER]: REX_AGENT_RESUME_REF,
+  '.local/share/rex-agent-resume/plugin.lua': '',
+};
 
 /** A tool stub that prints `body` for `<cmd...>`, records each call, and fails otherwise. */
 const completer = (calls: string, cmd: string, body: string) =>
@@ -10,7 +21,7 @@ const completer = (calls: string, cmd: string, body: string) =>
 
 withChezmoi('shell completions', () => {
   test('writes ~/.zfunc only for the tools installed', ({ fixture }) => {
-    const f = fixture({ useRealChezmoi: true });
+    const f = fixture({ useRealChezmoi: true, home: resumeInstalled });
     const calls = join(f.dir, 'calls');
     f.stub('rex', completer(calls, 'completion zsh', '#compdef rex'));
     f.stub('varlock', completer(calls, 'complete zsh', '#compdef varlock'));
@@ -22,7 +33,7 @@ withChezmoi('shell completions', () => {
   });
 
   test('regenerates only after a tool is upgraded', ({ fixture }) => {
-    const f = fixture({ useRealChezmoi: true });
+    const f = fixture({ useRealChezmoi: true, home: resumeInstalled });
     const calls = join(f.dir, 'calls');
     f.stub('rex', completer(calls, 'completion zsh', '#compdef rex'));
     expect(f.run().status).toBe(0);
@@ -38,7 +49,10 @@ withChezmoi('shell completions', () => {
     ['exits nonzero', '#!/bin/sh\nprintf partial\nexit 1\n'],
     ['prints an error and exits 0', '#!/bin/sh\necho "error: unknown command"\n'],
   ])('a generator that %s keeps the previous file and is retried', ([, body], { fixture }) => {
-    const f = fixture({ useRealChezmoi: true, home: { '.zfunc/_rex': 'previous\n' } });
+    const f = fixture({
+      useRealChezmoi: true,
+      home: { ...resumeInstalled, '.zfunc/_rex': 'previous\n' },
+    });
     f.stub('rex', body);
     const r = f.run();
     expect(r.stderr).toContain('completions: rex completion zsh failed');
@@ -52,14 +66,17 @@ withChezmoi('shell completions', () => {
   });
 
   test('clears a staging file a killed run left behind', ({ fixture }) => {
-    const f = fixture({ useRealChezmoi: true, home: { '.zfunc/._rex.tmp.123': 'partial' } });
+    const f = fixture({
+      useRealChezmoi: true,
+      home: { ...resumeInstalled, '.zfunc/._rex.tmp.123': 'partial' },
+    });
     f.stub('rex', completer(join(f.dir, 'calls'), 'completion zsh', '#compdef rex'));
     expect(f.run().status).toBe(0);
     expect(readdirSync(join(f.home, '.zfunc'))).toEqual(['_rex']);
   });
 
   test('makes the first pnpm completion call complete', ({ fixture }) => {
-    const f = fixture({ useRealChezmoi: true });
+    const f = fixture({ useRealChezmoi: true, home: resumeInstalled });
     f.stub(
       'pnpm',
       `#!/bin/sh\n[ "$*" = "completion zsh" ] && printf '#compdef pnpm pn\\ncompdef _pnpm_completion pnpm pn\\n'\n`,
@@ -71,7 +88,7 @@ withChezmoi('shell completions', () => {
   });
 
   test('creates nothing when no tool is installed', ({ fixture }) => {
-    const f = fixture({ useRealChezmoi: true });
+    const f = fixture({ useRealChezmoi: true, home: resumeInstalled });
     expect(f.run().status).toBe(0);
     expect(existsSync(join(f.home, '.zfunc'))).toBe(false);
   });

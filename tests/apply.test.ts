@@ -126,6 +126,7 @@ withChezmoi('against a real chezmoi', () => {
       '.config/mise': 'config/mise',
       '.config/btop': 'config/btop',
       '.config/nvim': 'config/nvim',
+      '.config/rex': 'config/rex',
       '.config/zellij/config.kdl': 'config/zellij/config.kdl',
       '.config/zed/settings.json': 'config/zed/settings.json',
       '.config/zed/keymap.json': 'config/zed/keymap.json',

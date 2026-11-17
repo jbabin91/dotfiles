@@ -17,6 +17,9 @@ node_modules/
 *.tmp
 *.log
 
+# Backups rex-agent-resume's installer writes beside the configs it edits
+*.bak-rex-agent-resume
+
 # ctags output
 /tags
 

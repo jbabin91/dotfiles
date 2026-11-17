@@ -1,0 +1,39 @@
+#!/bin/sh
+{{- $ref := "508535b777b747aa7587b507c12ec426eb068117" }}
+{{- $bundle := joinPath .chezmoi.homeDir "Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex" }}
+# Re-runs when the pinned ref changes, rex appears, or plugin.lua goes missing: {{ $ref }} {{ lookPath "rex" }} {{ stat $bundle | not | not }} {{ stat (joinPath .chezmoi.homeDir ".local/share/rex-agent-resume/plugin.lua") | not }}
+
+# config/rex/init.lua loads rex-agent-resume's plugin.lua, and Rex drops the
+# whole config when a loaded file is missing.
+ref={{ $ref }}
+dir="$HOME/.local/share/rex-agent-resume"
+marker="$dir/.installed-by-install-sh"
+
+[ -f "$dir/plugin.lua" ] && [ "$(cat "$marker" 2>/dev/null)" = "$ref" ] && exit 0
+# The Rex app ships rex inside its bundle, which a shell outside Rex lacks on PATH.
+bundle={{ $bundle | quote }}
+command -v rex >/dev/null 2>&1 || { [ -x "$bundle" ] && PATH="$(dirname "$bundle"):$PATH"; }
+if ! command -v rex >/dev/null 2>&1; then
+  echo "  rex-agent-resume: rex not on PATH; it was not installed"
+  exit 0
+fi
+# The installer talks to the server with --autostart=false; rex's default
+# --autostart starts a missing local server.
+rex ls >/dev/null || exit
+
+t=$(mktemp) || exit 1
+trap 'rm -f "$t"' EXIT
+url="https://raw.githubusercontent.com/YangJonghun/rex-agent-resume/$ref/install.sh"
+curl -fsSL "$url" -o "$t" ||
+  { s=$?; echo "  rex-agent-resume: could not download $url (curl exited $s)" >&2; exit "$s"; }
+head -n1 "$t" | grep -q '^#!' ||
+  { echo "  rex-agent-resume: $url is not a script" >&2; exit 1; }
+out=$(REX_AGENT_RESUME_REF=$ref sh "$t" 2>&1) ||
+  { s=$?; printf '%s\n' "$out" >&2; echo "  rex-agent-resume: installer exited $s" >&2; exit "$s"; }
+# A hook the installer could not add to one agent's settings is reported and
+# exits 0; it does not keep Rex from loading, so it warns rather than fails.
+printf '%s\n' "$out" | grep ': failed: ' >&2
+[ -f "$dir/plugin.lua" ] ||
+  { echo "  rex-agent-resume: installer exited 0 but left no $dir/plugin.lua" >&2; exit 1; }
+# The installer leaves its marker empty; the ref in it is what the check above reads.
+echo "$ref" >| "$marker"
