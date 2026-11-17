@@ -1,11 +1,26 @@
 import { spawnSync } from 'node:child_process';
-import { cpSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import {
+  cpSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test as base, describe } from 'vitest';
 
 export const REPO = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+
+/** The rex-agent-resume commit the onchange script pins, and the file recording an install of it. */
+export const REX_AGENT_RESUME_REF = readFileSync(
+  join(REPO, 'home/run_onchange_after_50-rex-agent-resume.sh.tmpl'),
+  'utf8',
+).match(/\$ref := "([0-9a-f]{40})"/)![1];
+export const REX_AGENT_RESUME_MARKER = '.local/share/rex-agent-resume/.installed-by-install-sh';
 
 /** Files `./install` needs, copied so a test that writes cannot reach the real repo. */
 const REPO_FILES = [
