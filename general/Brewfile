@@ -1,5 +1,6 @@
 tap "abue-ammar/tinycast", trusted: true
 tap "bjarneo/cliamp"
+tap "deepanshumishraa/tap"
 tap "dmno-dev/tap"
 tap "gastownhall/beads", "https://github.com/gastownhall/homebrew-beads.git", trusted: true
 tap "libsql/sqld", trusted: true
@@ -124,6 +125,8 @@ brew "zoxide"
 brew "zsh"
 # A retro terminal music player inspired by Winamp 2.x
 brew "bjarneo/cliamp/cliamp", trusted: true
+# Read PDFs, markdown files and web articles in the terminal, and review diffs
+brew "deepanshumishraa/tap/leaf", trusted: true
 # varlock is a tool to load and validate .env files
 brew "dmno-dev/tap/varlock", trusted: true
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
@@ -174,7 +177,7 @@ cask "obsidian"
 cask "opencode-desktop"
 # Local-first alternative to Logitech Options+ for HID++ devices
 cask "openlogi"
-# Fast, light Docker and Linux VM runtime for macOS
+# Replacement for Docker Desktop
 cask "orbstack"
 # Control your tools with a few keystrokes
 cask "raycast"
@@ -184,8 +187,8 @@ cask "spotify"
 cask "steam"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
-# Tiny, fully native launcher, hotkeys, and clipboard history
-cask "abue-ammar/tinycast/tinycast"
+# Application launcher and productivity tool
+cask "tinycast"
 # Open-source code editor
 cask "visual-studio-code"
 # Menu bar toolkit with keep-awake, system monitor and volume mixer
